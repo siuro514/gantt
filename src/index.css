@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* 導出模式：只隱藏操作按鈕和互動元素，保留 Toolbar 標題和卡片 */
+/* 隱藏 Toolbar 內的所有 IconButton 和 Tooltip */
+[data-exporting="true"] .MuiAppBar-root .MuiIconButton-root,
+[data-exporting="true"] .MuiAppBar-root .MuiTooltip-root {
+  display: none !important;
+}
+
+/* 隱藏工作區內的所有 IconButton */
+[data-exporting="true"] .MuiIconButton-root {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* 隱藏 Tooltip */
+[data-exporting="true"] .MuiTooltip-tooltip {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* 隱藏調整大小手柄 */
+[data-exporting="true"] [style*="cursor: nwse-resize"],
+[data-exporting="true"] [style*="cursor: nesw-resize"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* 隱藏 AddButton */
+[data-exporting="true"] button[class*="MuiButton"] {
+  display: none !important;
+}
+
+/* 隱藏所有 Popover（調色盤等） */
+[data-exporting="true"] ~ .MuiPopover-root,
+body:has([data-exporting="true"]) .MuiPopover-root {
+  display: none !important;
+  visibility: hidden !important;
+}
+
