@@ -311,12 +311,12 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <Box sx={{ p: 2, maxWidth: 320 }}>
+        <Box sx={{ p: 2.5 }}>
           <Box
             sx={{
               display: 'grid',
               gridTemplateColumns: 'repeat(7, 1fr)',
-              gap: 1,
+              gap: 1.5,
               mb: 2,
             }}
           >
@@ -328,16 +328,26 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
                   handleColorSelect(color);
                 }}
                 sx={{
-                  width: 32,
-                  height: 32,
+                  width: 36,
+                  height: 36,
                   backgroundColor: color,
-                  border: task.backgroundColor === color ? '3px solid #000' : '1px solid #ddd',
-                  borderRadius: 1,
+                  border: task.backgroundColor === color ? '3px solid transparent' : '1px solid #e0e0e0',
+                  borderRadius: 1.5,
                   cursor: 'pointer',
                   transition: 'all 0.2s',
+                  backgroundImage: task.backgroundColor === color 
+                    ? `linear-gradient(${color}, ${color}), linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)`
+                    : 'none',
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: task.backgroundColor === color ? 'padding-box, border-box' : 'padding-box',
+                  boxShadow: task.backgroundColor === color 
+                    ? '0 0 12px rgba(102, 126, 234, 0.4), 0 0 24px rgba(118, 75, 162, 0.2)' 
+                    : 'none',
                   '&:hover': {
                     transform: 'scale(1.15)',
-                    boxShadow: 2,
+                    boxShadow: task.backgroundColor === color
+                      ? '0 0 16px rgba(102, 126, 234, 0.5), 0 0 32px rgba(118, 75, 162, 0.3)'
+                      : '0 4px 12px rgba(0, 0, 0, 0.15)',
                   },
                   '&:active': {
                     transform: 'scale(0.95)',

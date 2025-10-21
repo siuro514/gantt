@@ -338,41 +338,50 @@ export default function Toolbar() {
             horizontal: 'right',
           }}
         >
-          <Box
-            sx={{
-              p: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(7, 1fr)',
-              gap: 1,
-              minWidth: 320,
-              maxHeight: 400,
-              overflow: 'auto',
-            }}
-          >
-            {THEME_COLORS.map((color) => (
-              <Box
-                key={color}
-                onClick={() => {
-                  updatePrimaryColor(color);
-                  setColorPickerAnchor(null);
-                }}
-                sx={{
-                  width: 40,
-                  height: 40,
-                  backgroundColor: color,
-                  borderRadius: '50%',
-                  cursor: 'pointer',
-                  border: primaryColor === color ? '3px solid' : '2px solid transparent',
-                  borderColor: primaryColor === color ? 'white' : 'transparent',
-                  boxShadow: primaryColor === color ? '0 0 0 2px ' + color : '0 2px 4px rgba(0,0,0,0.2)',
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    transform: 'scale(1.15)',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
-                  },
-                }}
-              />
-            ))}
+          <Box sx={{ p: 2.5, maxHeight: 450, overflow: 'auto' }}>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(7, 1fr)',
+                gap: 1.5,
+              }}
+            >
+              {THEME_COLORS.map((color) => (
+                <Box
+                  key={color}
+                  onClick={() => {
+                    updatePrimaryColor(color);
+                    setColorPickerAnchor(null);
+                  }}
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    backgroundColor: color,
+                    border: primaryColor === color ? '3px solid transparent' : '1px solid #e0e0e0',
+                    borderRadius: 1.5,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    backgroundImage: primaryColor === color 
+                      ? `linear-gradient(${color}, ${color}), linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)`
+                      : 'none',
+                    backgroundOrigin: 'border-box',
+                    backgroundClip: primaryColor === color ? 'padding-box, border-box' : 'padding-box',
+                    boxShadow: primaryColor === color 
+                      ? '0 0 12px rgba(102, 126, 234, 0.4), 0 0 24px rgba(118, 75, 162, 0.2)' 
+                      : 'none',
+                    '&:hover': {
+                      transform: 'scale(1.15)',
+                      boxShadow: primaryColor === color
+                        ? '0 0 16px rgba(102, 126, 234, 0.5), 0 0 32px rgba(118, 75, 162, 0.3)'
+                        : '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    },
+                    '&:active': {
+                      transform: 'scale(0.95)',
+                    },
+                  }}
+                />
+              ))}
+            </Box>
           </Box>
         </Popover>
 

@@ -59,39 +59,47 @@ export default function ColorPicker({ currentColor, onColorChange }: ColorPicker
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <Box
-          sx={{
-            p: 2,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 1,
-            width: 180,
-          }}
-        >
-          {MORANDI_COLORS.map((color) => (
-            <Box
-              key={color}
-              onClick={() => handleColorSelect(color)}
-              sx={{
-                width: 48,
-                height: 48,
-                backgroundColor: color,
-                borderRadius: 2,
-                cursor: 'pointer',
-                border: color === currentColor ? '3px solid #6750A4' : '2px solid #E0E0E0',
-                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                position: 'relative',
-                '&:hover': {
-                  transform: 'scale(1.15) rotate(5deg)',
-                  boxShadow: 3,
-                  zIndex: 1,
-                },
-                '&:active': {
-                  transform: 'scale(0.95)',
-                },
-              }}
-            />
-          ))}
+        <Box sx={{ p: 2.5 }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 1.5,
+            }}
+          >
+            {MORANDI_COLORS.map((color) => (
+              <Box
+                key={color}
+                onClick={() => handleColorSelect(color)}
+                sx={{
+                  width: 36,
+                  height: 36,
+                  backgroundColor: color,
+                  border: color === currentColor ? '3px solid transparent' : '1px solid #e0e0e0',
+                  borderRadius: 1.5,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  backgroundImage: color === currentColor 
+                    ? `linear-gradient(${color}, ${color}), linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)`
+                    : 'none',
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: color === currentColor ? 'padding-box, border-box' : 'padding-box',
+                  boxShadow: color === currentColor 
+                    ? '0 0 12px rgba(102, 126, 234, 0.4), 0 0 24px rgba(118, 75, 162, 0.2)' 
+                    : 'none',
+                  '&:hover': {
+                    transform: 'scale(1.15)',
+                    boxShadow: color === currentColor
+                      ? '0 0 16px rgba(102, 126, 234, 0.5), 0 0 32px rgba(118, 75, 162, 0.3)'
+                      : '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  },
+                  '&:active': {
+                    transform: 'scale(0.95)',
+                  },
+                }}
+              />
+            ))}
+          </Box>
         </Box>
       </Popover>
     </>
