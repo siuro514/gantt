@@ -50,9 +50,15 @@ export default function Toolbar() {
     // 初始化
     updateUndoRedoState();
 
-    // 訂閱 store 變化
-    const unsubscribe = useGanttStore.subscribe(updateUndoRedoState);
-    return () => unsubscribe();
+    // 訂閱主 store 變化
+    const unsubscribeMain = useGanttStore.subscribe(updateUndoRedoState);
+    // 訂閱 temporal store 變化
+    const unsubscribeTemporal = useGanttStore.temporal.subscribe(updateUndoRedoState);
+    
+    return () => {
+      unsubscribeMain();
+      unsubscribeTemporal();
+    };
   }, []);
 
   // 獲取 undo/redo 方法
@@ -73,6 +79,8 @@ export default function Toolbar() {
     const now = new Date();
     const twoWeeksLater = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
     
+    // 暫停歷史記錄，避免清空操作記錄到 undo 歷史
+    useGanttStore.temporal.getState().pause();
     loadData({
       sprints: [
         {
@@ -95,6 +103,9 @@ export default function Toolbar() {
       projectTitle: 'Gantt Chart - 團隊任務管理',
       primaryColor: '#6750A4',
     });
+    // 清空 undo/redo 歷史，從清空後的狀態開始
+    useGanttStore.temporal.getState().clear();
+    useGanttStore.temporal.getState().resume();
     setClearDialogOpen(false);
   };
 
@@ -216,6 +227,8 @@ export default function Toolbar() {
         try {
           const data = JSON.parse(event.target?.result as string);
           if (data.sprints && data.members && data.tasks) {
+            // 暫停歷史記錄，避免導入數據時記錄到 undo 歷史
+            useGanttStore.temporal.getState().pause();
             loadData({
               sprints: data.sprints,
               members: data.members,
@@ -223,6 +236,9 @@ export default function Toolbar() {
               projectTitle: data.projectTitle || 'Gantt Chart - 團隊任務管理',
               primaryColor: data.primaryColor || '#6750A4',
             });
+            // 清空 undo/redo 歷史，從導入的狀態開始
+            useGanttStore.temporal.getState().clear();
+            useGanttStore.temporal.getState().resume();
           } else {
             alert('Invalid file format');
           }

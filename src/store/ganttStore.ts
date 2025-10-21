@@ -452,6 +452,8 @@ export const useGanttStore = create<GanttStore>()(
         projectTitle: state.projectTitle,
         primaryColor: state.primaryColor,
       }),
+      equality: (pastState, currentState) => 
+        JSON.stringify(pastState) === JSON.stringify(currentState),
     }
   )
 );

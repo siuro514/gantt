@@ -82,7 +82,7 @@ function App() {
     },
   }), [primaryColor]);
 
-  // 從 localStorage 載入資料
+  // 從 localStorage 載入資料（不記錄到 undo 歷史）
   useEffect(() => {
     const savedData = localStorage.getItem('gantt-data');
     if (savedData) {
@@ -95,7 +95,13 @@ function App() {
         if (!data.primaryColor) {
           data.primaryColor = '#6750A4';
         }
+        
+        // 暫停歷史記錄，避免加載數據時記錄到 undo 歷史
+        useGanttStore.temporal.getState().pause();
         loadData(data);
+        // 清空當前的 undo/redo 歷史，從乾淨的狀態開始
+        useGanttStore.temporal.getState().clear();
+        useGanttStore.temporal.getState().resume();
       } catch (error) {
         console.error('Failed to load saved data:', error);
       }

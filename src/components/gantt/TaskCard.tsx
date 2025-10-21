@@ -31,9 +31,12 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
   const [resizeDirection, setResizeDirection] = useState<'left' | 'right' | null>(null);
   const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLElement | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const parentBoxRef = useRef<HTMLElement | null>(null);
   const startXRef = useRef(0);
   const startPositionRef = useRef(0);
   const startWidthRef = useRef(0);
+  const finalStartXRef = useRef(0);
+  const finalWidthRef = useRef(0);
 
   const updateTask = useGanttStore((state) => state.updateTask);
   const deleteTask = useGanttStore((state) => state.deleteTask);
@@ -84,36 +87,61 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
     startXRef.current = e.clientX;
     startPositionRef.current = task.startX;
     startWidthRef.current = task.width;
+    finalStartXRef.current = task.startX;
+    finalWidthRef.current = task.width;
+    
+    // 獲取父元素 Box 的引用（用於直接操作 DOM）
+    if (cardRef.current) {
+      parentBoxRef.current = cardRef.current.parentElement;
+    }
   };
 
   useEffect(() => {
-    if (!isResizing) return;
+    if (!isResizing || !parentBoxRef.current) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!cardRef.current || !task.memberId) return;
+      if (!parentBoxRef.current || !task.memberId) return;
 
       const deltaX = e.clientX - startXRef.current;
 
       if (resizeDirection === 'right') {
-        // 調整寬度
+        // 直接操作 DOM 更新寬度
         const newWidth = Math.max(50, startWidthRef.current + deltaX);
-        updateTask(task.id, { width: newWidth });
+        parentBoxRef.current.style.width = `${newWidth}px`;
+        finalWidthRef.current = newWidth;
       } else if (resizeDirection === 'left') {
-        // 調整位置和寬度
+        // 直接操作 DOM 更新位置和寬度
         const newStartX = Math.max(0, startPositionRef.current + deltaX);
         const deltaPosition = newStartX - startPositionRef.current;
         const newWidth = Math.max(50, startWidthRef.current - deltaPosition);
         
-        updateTask(task.id, { 
-          startX: newStartX, 
-          width: newWidth 
-        });
+        parentBoxRef.current.style.left = `${Math.max(8, newStartX)}px`;
+        parentBoxRef.current.style.width = `${newWidth}px`;
+        finalStartXRef.current = newStartX;
+        finalWidthRef.current = newWidth;
       }
     };
 
     const handleMouseUp = () => {
+      // 清除我們設置的 inline styles，讓 React 接管
+      if (parentBoxRef.current) {
+        parentBoxRef.current.style.width = '';
+        parentBoxRef.current.style.left = '';
+      }
+      
+      // 只在 mouseup 時調用一次 updateTask，這樣會被記錄到歷史
+      if (resizeDirection === 'right') {
+        updateTask(task.id, { width: finalWidthRef.current });
+      } else if (resizeDirection === 'left') {
+        updateTask(task.id, { 
+          startX: finalStartXRef.current, 
+          width: finalWidthRef.current 
+        });
+      }
+      
       setIsResizing(false);
       setResizeDirection(null);
+      parentBoxRef.current = null;
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -123,7 +151,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, resizeDirection, task.id, task.memberId, task.startX, task.width, updateTask]);
+  }, [isResizing, resizeDirection, task.id, task.memberId, updateTask]);
 
   // 不使用 dnd-kit 的 transform，因为我们使用 DragOverlay
   const style = undefined;
