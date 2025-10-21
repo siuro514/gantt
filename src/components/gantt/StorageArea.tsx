@@ -95,8 +95,11 @@ export default function StorageArea() {
         </Box>
       </Paper>
 
-      {/* 广告横幅 */}
-      <AdBanner />
+      {/* 广告横幅 - Bottom Banner */}
+      <AdBanner 
+        adClient="ca-pub-3690099986835456"
+        adSlot="6156267314"
+      />
     </>
   );
 }
