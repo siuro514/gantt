@@ -22,6 +22,7 @@ export interface Task {
   rowIndex: number; // 垂直位置（處理重疊）
   storageOrder?: number; // 暫存區排序
   backgroundColor?: string; // 卡片背景顏色
+  url?: string; // 超連結網址
 }
 
 export interface GanttState {

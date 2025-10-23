@@ -1,6 +1,10 @@
-import { Box, Card, CardContent, IconButton, Tooltip, Popover } from '@mui/material';
+import { Box, Card, CardContent, IconButton, Tooltip, Popover, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PaletteIcon from '@mui/icons-material/Palette';
+import LinkIcon from '@mui/icons-material/Link';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState, useRef, useEffect } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { Task } from '@/types/gantt.types';
@@ -30,6 +34,11 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
   const [isResizing, setIsResizing] = useState(false);
   const [resizeDirection, setResizeDirection] = useState<'left' | 'right' | null>(null);
   const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLElement | null>(null);
+  const [urlDialogOpen, setUrlDialogOpen] = useState(false);
+  const [urlInput, setUrlInput] = useState(task.url || '');
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
+  const [isNarrow, setIsNarrow] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const parentBoxRef = useRef<HTMLElement | null>(null);
   const startXRef = useRef(0);
@@ -40,6 +49,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
 
   const updateTask = useGanttStore((state) => state.updateTask);
   const deleteTask = useGanttStore((state) => state.deleteTask);
+  const duplicateTask = useGanttStore((state) => state.duplicateTask);
 
   const { attributes, listeners, setNodeRef, transform, isDragging: isDraggingDnd } = useDraggable({
     id: task.id,
@@ -48,6 +58,23 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
 
   const actualIsDragging = isDragging || isDraggingDnd;
 
+  // 檢測卡片寬度
+  useEffect(() => {
+    if (cardRef.current) {
+      const checkWidth = () => {
+        const width = cardRef.current?.offsetWidth || 0;
+        setIsNarrow(width < 150);
+      };
+      checkWidth();
+      
+      // 使用 ResizeObserver 監聽寬度變化
+      const resizeObserver = new ResizeObserver(checkWidth);
+      resizeObserver.observe(cardRef.current);
+      
+      return () => resizeObserver.disconnect();
+    }
+  }, [task.width]);
+
   const handleTitleChange = (newTitle: string) => {
     updateTask(task.id, { title: newTitle });
   };
@@ -55,6 +82,37 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     deleteTask(task.id);
+  };
+
+  const handleDuplicate = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    duplicateTask(task.id);
+    setIsHovered(false);
+    setMoreMenuAnchor(null);
+  };
+
+  const handleMoreMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setMoreMenuAnchor(e.currentTarget);
+  };
+
+  const handleMoreMenuClose = () => {
+    setMoreMenuAnchor(null);
+  };
+
+  const handleMoreMenuColorPicker = (e: React.MouseEvent<HTMLElement>) => {
+    handleMoreMenuClose();
+    handleColorPickerOpen(e);
+  };
+
+  const handleMoreMenuLink = (e: React.MouseEvent<HTMLElement>) => {
+    handleMoreMenuClose();
+    handleLinkClick(e);
+  };
+
+  const handleMoreMenuDuplicate = (e: React.MouseEvent<HTMLElement>) => {
+    handleMoreMenuClose();
+    handleDuplicate(e);
   };
 
   const handleColorPickerOpen = (e: React.MouseEvent<HTMLElement>) => {
@@ -77,6 +135,44 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
     updateTask(task.id, { backgroundColor: undefined });
     handleColorPickerClose();
     setIsHovered(false); // 隱藏操作按鈕
+  };
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (task.url) {
+      // 如果已有 URL，按住 Cmd/Ctrl 開啟連結，否則編輯
+      if (e.metaKey || e.ctrlKey) {
+        window.open(task.url, '_blank', 'noopener,noreferrer');
+      } else {
+        setUrlInput(task.url);
+        setUrlDialogOpen(true);
+      }
+    } else {
+      // 如果沒有 URL，開啟編輯
+      setUrlInput('');
+      setUrlDialogOpen(true);
+    }
+  };
+
+  const handleUrlSave = () => {
+    if (urlInput.trim()) {
+      // 確保 URL 有協議
+      let finalUrl = urlInput.trim();
+      if (!/^https?:\/\//i.test(finalUrl)) {
+        finalUrl = 'https://' + finalUrl;
+      }
+      updateTask(task.id, { url: finalUrl });
+    } else {
+      updateTask(task.id, { url: undefined });
+    }
+    setUrlDialogOpen(false);
+    setIsHovered(false);
+  };
+
+  const handleUrlClear = () => {
+    updateTask(task.id, { url: undefined });
+    setUrlDialogOpen(false);
+    setIsHovered(false);
   };
 
   const handleResizeStart = (e: React.MouseEvent, direction: 'left' | 'right') => {
@@ -191,43 +287,159 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
         justifyContent: 'center',
         textAlign: 'center'
       }}>
+        {/* 超連結標記 */}
+        {task.url && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 4,
+              right: 4,
+              width: 16,
+              height: 16,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(33, 150, 243, 0.15)',
+              borderRadius: '50%',
+              zIndex: 0,
+            }}
+          >
+            <LinkIcon sx={{ fontSize: 10, color: '#2196F3' }} />
+          </Box>
+        )}
+
         <EditableText
           value={task.title}
           onChange={handleTitleChange}
           variant="body2"
           placeholder="任務名稱"
+          onEditingChange={setIsEditingTitle}
+          sx={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontWeight: 400,
+            letterSpacing: '0.02em',
+            lineHeight: 1.2,
+          }}
         />
 
-        {/* Hover 時顯示的調色盤和刪除按鈕 */}
-        {isHovered && !actualIsDragging && (
+        {/* Hover 時顯示的操作按鈕（編輯標題時隱藏） */}
+        {isHovered && !actualIsDragging && !isEditingTitle && (
           <>
-            <Tooltip title="選擇顏色">
-              <IconButton
-                size="small"
-                onClick={handleColorPickerOpen}
-                onMouseDown={(e) => e.stopPropagation()}
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  right: 40,
-                  width: 24,
-                  height: 24,
-                  padding: 0.5,
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                  color: 'text.secondary',
-                  transition: 'background-color 0.2s, color 0.2s',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    color: 'primary.main',
-                    transform: 'translateY(-50%)',
-                  },
-                }}
-              >
-                <PaletteIcon sx={{ fontSize: 16 }} />
-              </IconButton>
-            </Tooltip>
+            {!isNarrow ? (
+              // 寬卡片：顯示所有按鈕
+              <>
+                <Tooltip title="選擇顏色">
+                  <IconButton
+                    size="small"
+                    onClick={handleColorPickerOpen}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      left: 14,
+                      width: 24,
+                      height: 24,
+                      padding: 0.5,
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      color: 'text.secondary',
+                      transition: 'background-color 0.2s, color 0.2s',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 1)',
+                        color: 'primary.main',
+                        transform: 'translateY(-50%)',
+                      },
+                    }}
+                  >
+                    <PaletteIcon sx={{ fontSize: 16 }} />
+                  </IconButton>
+                </Tooltip>
 
+                <Tooltip title="複製工作卡">
+                  <IconButton
+                    size="small"
+                    onClick={handleDuplicate}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      left: 40,
+                      width: 24,
+                      height: 24,
+                      padding: 0.5,
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      color: 'text.secondary',
+                      transition: 'background-color 0.2s, color 0.2s',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 1)',
+                        color: '#4CAF50',
+                        transform: 'translateY(-50%)',
+                      },
+                    }}
+                  >
+                    <ContentCopyIcon sx={{ fontSize: 16 }} />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title={task.url ? "Cmd+點擊開啟連結 / 點擊編輯" : "設定超連結"}>
+                  <IconButton
+                    size="small"
+                    onClick={handleLinkClick}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      right: 40,
+                      width: 24,
+                      height: 24,
+                      padding: 0.5,
+                      backgroundColor: task.url ? 'rgba(33, 150, 243, 0.1)' : 'rgba(255, 255, 255, 0.9)',
+                      color: task.url ? '#2196F3' : 'text.secondary',
+                      transition: 'background-color 0.2s, color 0.2s',
+                      '&:hover': {
+                        backgroundColor: task.url ? 'rgba(33, 150, 243, 0.2)' : 'rgba(255, 255, 255, 1)',
+                        color: '#2196F3',
+                        transform: 'translateY(-50%)',
+                      },
+                    }}
+                  >
+                    {task.url ? <OpenInNewIcon sx={{ fontSize: 16 }} /> : <LinkIcon sx={{ fontSize: 16 }} />}
+                  </IconButton>
+                </Tooltip>
+              </>
+            ) : (
+              // 窄卡片：顯示「更多」按鈕
+              <Tooltip title="更多操作">
+                <IconButton
+                  size="small"
+                  onClick={handleMoreMenuOpen}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    left: 14,
+                    width: 24,
+                    height: 24,
+                    padding: 0.5,
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    color: 'text.secondary',
+                    transition: 'background-color 0.2s, color 0.2s',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 1)',
+                      color: 'primary.main',
+                      transform: 'translateY(-50%)',
+                    },
+                  }}
+                >
+                  <MoreVertIcon sx={{ fontSize: 16 }} />
+                </IconButton>
+              </Tooltip>
+            )}
+
+            {/* 刪除按鈕：永遠顯示 */}
             <IconButton
               size="small"
               onClick={handleDelete}
@@ -254,8 +466,8 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           </>
         )}
 
-        {/* 左側伸縮手柄 */}
-        {isHovered && !actualIsDragging && task.memberId && (
+        {/* 左側伸縮手柄（編輯標題時隱藏） */}
+        {isHovered && !actualIsDragging && !isEditingTitle && task.memberId && (
           <Box
             onMouseDown={(e) => handleResizeStart(e, 'left')}
             sx={{
@@ -274,8 +486,8 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           />
         )}
 
-        {/* 右側伸縮手柄 */}
-        {isHovered && !actualIsDragging && task.memberId && (
+        {/* 右側伸縮手柄（編輯標題時隱藏） */}
+        {isHovered && !actualIsDragging && !isEditingTitle && task.memberId && (
           <Box
             onMouseDown={(e) => handleResizeStart(e, 'right')}
             sx={{
@@ -378,6 +590,85 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           )}
         </Box>
       </Popover>
+
+      {/* 更多操作選單（窄卡片使用） */}
+      <Menu
+        anchorEl={moreMenuAnchor}
+        open={Boolean(moreMenuAnchor)}
+        onClose={handleMoreMenuClose}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <MenuItem onClick={handleMoreMenuColorPicker}>
+          <ListItemIcon>
+            <PaletteIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>選擇顏色</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleMoreMenuDuplicate}>
+          <ListItemIcon>
+            <ContentCopyIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>複製工作卡</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleMoreMenuLink}>
+          <ListItemIcon>
+            {task.url ? <OpenInNewIcon fontSize="small" /> : <LinkIcon fontSize="small" />}
+          </ListItemIcon>
+          <ListItemText>{task.url ? '編輯連結' : '設定超連結'}</ListItemText>
+        </MenuItem>
+      </Menu>
+
+      {/* 超連結編輯對話框 */}
+      <Dialog
+        open={urlDialogOpen}
+        onClose={() => setUrlDialogOpen(false)}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <DialogTitle>設定超連結</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="網址"
+            type="url"
+            fullWidth
+            variant="outlined"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+            placeholder="https://example.com"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleUrlSave();
+              }
+            }}
+            sx={{ mt: 1 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          {task.url && (
+            <Button onClick={handleUrlClear} color="error">
+              清除連結
+            </Button>
+          )}
+          <Button onClick={() => setUrlDialogOpen(false)}>
+            取消
+          </Button>
+          <Button onClick={handleUrlSave} variant="contained">
+            確定
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }

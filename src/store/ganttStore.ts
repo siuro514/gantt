@@ -22,6 +22,7 @@ interface GanttStore extends GanttState {
   addTask: () => void;
   updateTask: (id: string, updates: Partial<Task>) => void;
   deleteTask: (id: string) => void;
+  duplicateTask: (id: string) => void;
   moveTask: (
     taskId: string,
     memberId: string | null,
@@ -286,6 +287,26 @@ export const useGanttStore = create<GanttStore>()(
           }
 
           return { tasks: updatedTasks };
+        });
+      },
+
+      duplicateTask: (id) => {
+        set((state) => {
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return state;
+
+          const storageTaskCount = state.tasks.filter((t) => t.memberId === null).length;
+          const duplicatedTask: Task = {
+            ...task,
+            id: nanoid(),
+            memberId: null, // 複製的卡片放到暫存區
+            startX: 0,
+            rowIndex: 0,
+            storageOrder: storageTaskCount,
+            title: `${task.title} (copy)`,
+          };
+
+          return { tasks: [...state.tasks, duplicatedTask] };
         });
       },
 

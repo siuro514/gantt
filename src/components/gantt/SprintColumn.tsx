@@ -65,7 +65,7 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
       }}
     >
       {/* 標題 */}
-      <Box sx={{ mb: 0.25, textAlign: 'center' }}>
+      <Box sx={{ mb: 0, textAlign: 'center' }}>
         <EditableText
           value={sprint.title}
           onChange={handleTitleChange}

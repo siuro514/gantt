@@ -8,6 +8,7 @@ interface EditableTextProps {
   placeholder?: string;
   multiline?: boolean;
   sx?: SxProps<Theme>;
+  onEditingChange?: (isEditing: boolean) => void;
 }
 
 export default function EditableText({
@@ -17,6 +18,7 @@ export default function EditableText({
   placeholder = 'Click to edit',
   multiline = false,
   sx = {},
+  onEditingChange,
 }: EditableTextProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempValue, setTempValue] = useState(value);
@@ -35,10 +37,12 @@ export default function EditableText({
 
   const handleClick = () => {
     setIsEditing(true);
+    onEditingChange?.(true);
   };
 
   const handleBlur = () => {
     setIsEditing(false);
+    onEditingChange?.(false);
     if (tempValue.trim() && tempValue !== value) {
       onChange(tempValue.trim());
     } else {
@@ -53,6 +57,7 @@ export default function EditableText({
     } else if (e.key === 'Escape') {
       setTempValue(value);
       setIsEditing(false);
+      onEditingChange?.(false);
     }
   };
 

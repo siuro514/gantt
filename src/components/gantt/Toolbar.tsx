@@ -254,8 +254,8 @@ export default function Toolbar() {
 
   return (
     <AppBar position="static" elevation={0} sx={{ backgroundColor: 'primary.main' }}>
-      <MuiToolbar>
-        <Box sx={{ flexGrow: 1 }}>
+      <MuiToolbar sx={{ flexWrap: 'wrap', gap: 1 }}>
+        <Box sx={{ flexGrow: 1, minWidth: 200 }}>
           <EditableText
             value={projectTitle}
             onChange={updateProjectTitle}
@@ -273,7 +273,7 @@ export default function Toolbar() {
           />
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Tooltip title="清除所有資料">
             <IconButton color="inherit" onClick={() => setClearDialogOpen(true)}>
               <DeleteSweepIcon />

@@ -3,7 +3,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { useDroppable } from '@dnd-kit/core';
 import { useGanttStore } from '@/store/ganttStore';
 import TaskCard from './TaskCard';
-import AdBanner from '../common/AdBanner';
 
 export default function StorageArea() {
   const tasks = useGanttStore((state) => state.tasks);
@@ -94,12 +93,6 @@ export default function StorageArea() {
           )}
         </Box>
       </Paper>
-
-      {/* 广告横幅 - Bottom Banner */}
-      {/* <AdBanner 
-        adClient="ca-pub-3690099986835456"
-        adSlot="6156267314"
-      /> */}
     </>
   );
 }
