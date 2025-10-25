@@ -5,11 +5,13 @@ import RedoIcon from '@mui/icons-material/Redo';
 import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
 import ImageIcon from '@mui/icons-material/Image';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PaletteIcon from '@mui/icons-material/Palette';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { useGanttStore } from '@/store/ganttStore';
 import EditableText from '../common/EditableText';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { nanoid } from 'nanoid';
 import { DEFAULT_SPRINT_COLOR } from '@/utils/colors';
 
@@ -33,7 +35,7 @@ const THEME_COLORS = [
 ];
 
 export default function Toolbar() {
-  const { exportData, loadData, projectTitle, updateProjectTitle, primaryColor, updatePrimaryColor } = useGanttStore();
+  const { exportData, loadData, projectTitle, updateProjectTitle, primaryColor, updatePrimaryColor, tasks } = useGanttStore();
   const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLElement | null>(null);
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
@@ -195,6 +197,121 @@ export default function Toolbar() {
     }
   };
 
+  const handleExportPDF = async () => {
+    const scrollContainer = document.getElementById('gantt-scroll-container');
+    const boardElement = document.getElementById('gantt-board');
+    if (!scrollContainer || !boardElement) return;
+
+    try {
+      // 關閉所有調色盤
+      handleColorPickerClose();
+      
+      // 保存原始狀態
+      const originalOverflow = scrollContainer.style.overflow;
+      const originalMaxHeight = scrollContainer.style.maxHeight;
+      const originalFlex = scrollContainer.style.flex;
+      const originalBoardHeight = boardElement.style.height;
+      const originalBoardWidth = boardElement.style.width;
+      
+      // 添加導出模式
+      boardElement.setAttribute('data-exporting', 'true');
+      
+      // 暫時移除所有限制
+      scrollContainer.style.overflow = 'visible';
+      scrollContainer.style.maxHeight = 'none';
+      scrollContainer.style.flex = 'none';
+      boardElement.style.height = 'auto';
+      boardElement.style.width = 'auto';
+      
+      // 等待 DOM 更新
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // 獲取實際尺寸
+      const actualHeight = boardElement.scrollHeight;
+      const actualWidth = boardElement.scrollWidth;
+
+      // 收集所有有超連結的卡片位置（在截圖前）
+      const taskLinks: Array<{ x: number; y: number; width: number; height: number; url: string }> = [];
+      tasks.forEach(task => {
+        if (task.url && task.memberId) {
+          const taskElements = document.querySelectorAll(`[data-task-id="${task.id}"]`);
+          if (taskElements.length > 0) {
+            const taskElement = taskElements[0] as HTMLElement;
+            const rect = taskElement.getBoundingClientRect();
+            const boardRect = boardElement.getBoundingClientRect();
+            
+            taskLinks.push({
+              x: rect.left - boardRect.left,
+              y: rect.top - boardRect.top,
+              width: rect.width,
+              height: rect.height,
+              url: task.url,
+            });
+          }
+        }
+      });
+
+      // 生成截圖
+      const canvas = await html2canvas(boardElement, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        width: actualWidth,
+        height: actualHeight,
+        windowWidth: actualWidth,
+        windowHeight: actualHeight,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0,
+      });
+
+      // 恢復原始狀態
+      boardElement.removeAttribute('data-exporting');
+      scrollContainer.style.overflow = originalOverflow;
+      scrollContainer.style.maxHeight = originalMaxHeight;
+      scrollContainer.style.flex = originalFlex;
+      boardElement.style.height = originalBoardHeight;
+      boardElement.style.width = originalBoardWidth;
+
+      // 創建 PDF
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: actualWidth > actualHeight ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [actualWidth, actualHeight],
+      });
+
+      // 添加圖片到 PDF
+      pdf.addImage(imgData, 'PNG', 0, 0, actualWidth, actualHeight);
+
+      // 添加超連結（使用之前收集的位置）
+      taskLinks.forEach(link => {
+        pdf.link(link.x, link.y, link.width, link.height, { url: link.url });
+      });
+
+      // 下載 PDF
+      pdf.save(`gantt-${Date.now()}.pdf`);
+    } catch (error) {
+      console.error('Failed to export PDF:', error);
+      
+      // 確保恢復原始狀態
+      const scrollContainer = document.getElementById('gantt-scroll-container');
+      const boardElement = document.getElementById('gantt-board');
+      if (scrollContainer) {
+        scrollContainer.style.overflow = 'auto';
+        scrollContainer.style.maxHeight = '';
+        scrollContainer.style.flex = '1';
+      }
+      if (boardElement) {
+        boardElement.removeAttribute('data-exporting');
+        boardElement.style.height = '';
+        boardElement.style.width = '';
+      }
+    }
+  };
+
   const handleExportJSON = () => {
     const data = exportData();
     const json = JSON.stringify(
@@ -299,6 +416,12 @@ export default function Toolbar() {
           <Tooltip title="匯出 PNG">
             <IconButton color="inherit" onClick={handleExportPNG}>
               <ImageIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="匯出 PDF（支援超連結）">
+            <IconButton color="inherit" onClick={handleExportPDF}>
+              <PictureAsPdfIcon />
             </IconButton>
           </Tooltip>
 

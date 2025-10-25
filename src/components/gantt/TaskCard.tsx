@@ -258,6 +258,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
         setNodeRef(node);
         (cardRef as any).current = node;
       }}
+      data-task-id={task.id}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={style}
