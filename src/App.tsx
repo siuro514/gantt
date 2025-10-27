@@ -1,10 +1,21 @@
 import { useEffect, useMemo } from 'react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { zhTW } from 'date-fns/locale';
-import GanttBoard from './components/gantt/GanttBoard';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useGanttStore } from './store/ganttStore';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Home from './pages/Home';
+import GanttPage from './pages/tools/GanttPage';
+import JsonParserPage from './pages/tools/JsonParserPage';
+import Base64Page from './pages/tools/Base64Page';
+import ImageCompressorPage from './pages/tools/ImageCompressorPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import AboutPage from './pages/AboutPage';
+import BlogPage from './pages/BlogPage';
 
 function App() {
   const loadData = useGanttStore((state) => state.loadData);
@@ -146,7 +157,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={zhTW}>
-        <GanttBoard />
+        <BrowserRouter>
+          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <Routes>
+              <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+              <Route path="/tools/gantt" element={<GanttPage />} />
+              <Route path="/tools/json-parser" element={<><Navbar /><JsonParserPage /><Footer /></>} />
+              <Route path="/tools/base64" element={<><Navbar /><Base64Page /><Footer /></>} />
+              <Route path="/tools/image-compressor" element={<><Navbar /><ImageCompressorPage /><Footer /></>} />
+              <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
+              <Route path="/blog" element={<><Navbar /><BlogPage /><Footer /></>} />
+              <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
+              <Route path="/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
       </LocalizationProvider>
     </ThemeProvider>
   );

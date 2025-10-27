@@ -1,8 +1,9 @@
 {
-  "name": "gantt2",
+  "name": "eazy-good-things",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "description": "Eazy & Good Things - 免費在線工具集合 - 甘特圖、JSON、Base64、圖片壓縮等實用工具",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -24,6 +25,7 @@
     "nanoid": "^5.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.4",
     "zundo": "^2.1.0",
     "zustand": "^4.5.0"
   },
