@@ -5,7 +5,7 @@ export default function AboutPage() {
     <Container maxWidth="lg" sx={{ py: 6 }}>
       <Box sx={{ mb: 6, textAlign: 'center' }}>
         <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-          關於 Eazy & Good Things
+          關於 Easy & Good Things
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}>
           我們致力於打造最實用的免費在線工具集合
@@ -21,7 +21,7 @@ export default function AboutPage() {
           雖然市面上有許多工具可以完成這些任務，但它們往往需要下載安裝、註冊帳號，或是需要付費使用。
         </Typography>
         <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-          Eazy & Good Things 的誕生，就是為了解決這個問題。我們提供完全免費、無需註冊、開箱即用的在線工具集合。
+          Easy & Good Things 的誕生，就是為了解決這個問題。我們提供完全免費、無需註冊、開箱即用的在線工具集合。
           所有工具都在瀏覽器本地運行，確保您的資料安全和隱私。
         </Typography>
       </Paper>
@@ -52,7 +52,7 @@ export default function AboutPage() {
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, height: '100%' }}>
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-              💡 為什麼選擇 Eazy & Good Things？
+              💡 為什麼選擇 Easy & Good Things？
             </Typography>
             <Box component="ul" sx={{ pl: 2 }}>
               <Typography component="li" variant="body1" paragraph>

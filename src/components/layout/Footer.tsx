@@ -16,7 +16,7 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            ⚡ Eazy & Good Things - 你的效率助手
+            ⚡ Easy & Good Things - 你的效率助手
           </Typography>
           <Typography variant="body2" color="text.secondary">
             免費在線工具集合 · 無需註冊 · 開箱即用
@@ -39,7 +39,7 @@ export default function Footer() {
             </Link>
           </Box>
           <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-            © {new Date().getFullYear()} Eazy & Good Things. All rights reserved.
+            © {new Date().getFullYear()} Easy & Good Things. All rights reserved.
           </Typography>
         </Box>
       </Container>

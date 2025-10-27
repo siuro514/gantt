@@ -17,7 +17,7 @@ export default function Navbar() {
                 color: 'primary.main',
                 fontSize: '1.5rem',
               }}>
-                ⚡ Eazy & Good Things
+                ⚡ Easy & Good Things
               </Typography>
             </Box>
           </Link>

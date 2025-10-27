@@ -26,7 +26,7 @@ export default function Home() {
                 textShadow: '0 2px 10px rgba(0,0,0,0.2)',
               }}
             >
-              ⚡ Eazy & Good Things
+              ⚡ Easy & Good Things
             </Typography>
             <Typography
               variant="h5"
@@ -88,7 +88,7 @@ export default function Home() {
         {/* Feature Highlights */}
         <Box sx={{ mt: 10, textAlign: 'center' }}>
           <Typography variant="h5" gutterBottom sx={{ fontWeight: 700, mb: 4 }}>
-            為什麼選擇 Eazy & Good Things？
+            為什麼選擇 Easy & Good Things？
           </Typography>
           <Grid container spacing={4}>
             <Grid item xs={12} md={3}>

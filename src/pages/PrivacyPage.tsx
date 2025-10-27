@@ -18,7 +18,7 @@ export default function PrivacyPage() {
               1. 資料收集
             </Typography>
             <Typography variant="body1" paragraph>
-              Eazy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本地運行，不會將您的資料上傳到我們的伺服器。
+              Easy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本地運行，不會將您的資料上傳到我們的伺服器。
             </Typography>
           </Box>
 

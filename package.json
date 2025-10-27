@@ -1,9 +1,9 @@
 {
-  "name": "eazy-good-things",
+  "name": "easy-good-things",
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Eazy & Good Things - 免費在線工具集合 - 甘特圖、JSON、Base64、圖片壓縮等實用工具",
+  "description": "Easy & Good Things - 免費在線工具集合 - 甘特圖、JSON、Base64、圖片壓縮等實用工具",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
