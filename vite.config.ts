@@ -27,7 +27,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './', // 使用相對路徑，方便本地打開和 GitHub Pages
+  base: '/', // 使用絕對路徑，確保子路由能正確加載資源
   build: {
     outDir: 'dist',
   },
