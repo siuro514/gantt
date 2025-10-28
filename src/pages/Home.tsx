@@ -1,10 +1,11 @@
 import { Container, Box, Typography, Grid } from '@mui/material';
 import { tools } from '@/data/tools';
 import ToolCard from '@/components/ToolCard';
+import ThemeColorPicker from '@/components/ThemeColorPicker';
 
 export default function Home() {
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -138,6 +139,18 @@ export default function Home() {
           </Grid>
         </Box>
       </Container>
+
+      {/* 浮動主題顏色選擇器 */}
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 1000,
+        }}
+      >
+        <ThemeColorPicker />
+      </Box>
     </Box>
   );
 }
