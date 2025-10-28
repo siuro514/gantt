@@ -1,56 +1,83 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Box,
   Typography,
   TextField,
-  Button,
   Paper,
   Alert,
   IconButton,
   Tooltip,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import EditIcon from '@mui/icons-material/Edit';
+import CodeIcon from '@mui/icons-material/Code';
+import CompressIcon from '@mui/icons-material/Compress';
+import JsonEditor from '@/components/JsonEditor';
+import ResizablePanels from '@/components/ResizablePanels';
+
+type ViewMode = 'text' | 'tree';
+
+const STORAGE_KEY = 'json_parser_input';
 
 export default function JsonParserPage() {
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [parsedData, setParsedData] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>('text');
+  const [isMinified, setIsMinified] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  // 从 localStorage 加载数据
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setInput(saved);
+      }
+    } catch (err) {
+      console.error('Failed to load from localStorage:', err);
+    }
+  }, []);
+
+  // 保存到 localStorage
+  const saveToLocalStorage = (value: string) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, value);
+    } catch (err) {
+      console.error('Failed to save to localStorage:', err);
+    }
+  };
 
   const handleFormat = () => {
     try {
       const parsed = JSON.parse(input);
-      const formatted = JSON.stringify(parsed, null, 2);
-      setOutput(formatted);
+      setParsedData(parsed);
+      setViewMode('tree');
+      setIsMinified(false); // 重置简洁化状态
       setError('');
-      setSuccess('格式化成功！');
+      setSuccess('解析成功！現在可以編輯 JSON 資料');
     } catch (err) {
       setError('JSON 格式錯誤：' + (err as Error).message);
-      setOutput('');
-      setSuccess('');
-    }
-  };
-
-  const handleMinify = () => {
-    try {
-      const parsed = JSON.parse(input);
-      const minified = JSON.stringify(parsed);
-      setOutput(minified);
-      setError('');
-      setSuccess('壓縮成功！');
-    } catch (err) {
-      setError('JSON 格式錯誤：' + (err as Error).message);
-      setOutput('');
+      setParsedData(null);
       setSuccess('');
     }
   };
 
   const handleCopy = () => {
-    if (output) {
-      navigator.clipboard.writeText(output);
+    if (parsedData) {
+      let textToCopy: string;
+      if (viewMode === 'text') {
+        textToCopy = isMinified 
+          ? JSON.stringify(parsedData)
+          : JSON.stringify(parsedData, null, 2);
+      } else {
+        textToCopy = JSON.stringify(parsedData, null, 2);
+      }
+      navigator.clipboard.writeText(textToCopy);
       setSuccess('已複製到剪貼簿！');
       setTimeout(() => setSuccess(''), 2000);
     }
@@ -58,9 +85,34 @@ export default function JsonParserPage() {
 
   const handleClear = () => {
     setInput('');
-    setOutput('');
+    setParsedData(null);
+    setIsMinified(false);
     setError('');
     setSuccess('');
+  };
+
+  const handleDataChange = (newData: any) => {
+    setParsedData(newData);
+  };
+
+  const handleSave = () => {
+    if (parsedData) {
+      let formatted: string;
+      if (viewMode === 'text' && isMinified) {
+        formatted = JSON.stringify(parsedData);
+      } else {
+        formatted = JSON.stringify(parsedData, null, 2);
+      }
+      setInput(formatted);
+      saveToLocalStorage(formatted);
+      setSuccess('已更新到左側輸入框！');
+      setTimeout(() => setSuccess(''), 2000);
+    }
+  };
+
+  const handleInputChange = (value: string) => {
+    setInput(value);
+    saveToLocalStorage(value);
   };
 
   return (
@@ -70,82 +122,140 @@ export default function JsonParserPage() {
           📝 JSON 格式化工具
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          格式化、驗證和美化 JSON 資料，支援語法檢測和一鍵複製
+          格式化、驗證和編輯 JSON 資料，支援可視化編輯、增刪節點等功能
         </Typography>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>
-          {error}
-        </Alert>
-      )}
-
-      {success && (
-        <Alert severity="success" sx={{ mb: 2 }} onClose={() => setSuccess('')}>
-          {success}
-        </Alert>
-      )}
-
-      <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', md: 'row' } }}>
-        <Paper sx={{ flex: 1, p: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">輸入 JSON</Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button variant="contained" onClick={handleFormat} startIcon={<FormatAlignLeftIcon />}>
-                格式化
-              </Button>
-              <Button variant="outlined" onClick={handleMinify}>
-                壓縮
-              </Button>
-              <Tooltip title="清空">
-                <IconButton onClick={handleClear} size="small">
-                  <DeleteSweepIcon />
-                </IconButton>
-              </Tooltip>
+      <Box sx={{ minHeight: '600px', display: 'flex', flexDirection: 'column' }}>
+        <ResizablePanels
+          onParse={handleFormat}
+          onSave={handleSave}
+          canParse={!!input}
+          canSave={!!parsedData}
+          leftPanel={
+            <Box sx={{ minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 2, pr: 2, pt: 2, minHeight: '64px' }}>
+                <Typography variant="h6" sx={{ pt: 0.5 }}>輸入 JSON</Typography>
+                <Tooltip title="清空">
+                  <IconButton onClick={handleClear} size="small">
+                    <DeleteSweepIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Box sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}>
+                <TextField
+                  multiline
+                  fullWidth
+                  value={input}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder='{"name": "John", "age": 30}'
+                  sx={{
+                    flex: '1 1 auto',
+                    minHeight: '450px',
+                    '& .MuiInputBase-root': {
+                      fontFamily: 'monospace',
+                      fontSize: '0.9rem',
+                      minHeight: '450px',
+                      alignItems: 'flex-start',
+                      borderRadius: 1,
+                    },
+                  }}
+                />
+                {error && (
+                  <Alert severity="error" onClose={() => setError('')}>
+                    {error}
+                  </Alert>
+                )}
+                {success && (
+                  <Alert severity="success" onClose={() => setSuccess('')}>
+                    {success}
+                  </Alert>
+                )}
+              </Box>
             </Box>
-          </Box>
-          <TextField
-            multiline
-            fullWidth
-            rows={20}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder='{"name": "John", "age": 30}'
-            sx={{
-              '& .MuiInputBase-root': {
-                fontFamily: 'monospace',
-                fontSize: '0.9rem',
-              },
-            }}
-          />
-        </Paper>
-
-        <Paper sx={{ flex: 1, p: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">輸出結果</Typography>
-            <Tooltip title="複製到剪貼簿">
-              <IconButton onClick={handleCopy} disabled={!output}>
-                <ContentCopyIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-          <TextField
-            multiline
-            fullWidth
-            rows={20}
-            value={output}
-            InputProps={{
-              readOnly: true,
-            }}
-            sx={{
-              '& .MuiInputBase-root': {
-                fontFamily: 'monospace',
-                fontSize: '0.9rem',
-                backgroundColor: 'grey.50',
-              },
-            }}
-          />
-        </Paper>
+          }
+          rightPanel={
+            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 2, pr: 2, pt: 2, minHeight: '64px' }}>
+                <Typography variant="h6" sx={{ pt: 0.5 }}>可編輯結果</Typography>
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                  <ToggleButtonGroup
+                    value={viewMode}
+                    exclusive
+                    onChange={(_, newMode) => {
+                      if (newMode !== null) {
+                        setViewMode(newMode);
+                        setIsMinified(false); // 切换模式时重置简洁化状态
+                      }
+                    }}
+                    size="small"
+                  >
+                    <ToggleButton value="tree">
+                      <Tooltip title="樹狀編輯">
+                        <EditIcon fontSize="small" />
+                      </Tooltip>
+                    </ToggleButton>
+                    <ToggleButton value="text">
+                      <Tooltip title="文字檢視">
+                        <CodeIcon fontSize="small" />
+                      </Tooltip>
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  {viewMode === 'text' && parsedData && (
+                    <Tooltip title={isMinified ? "格式化" : "簡潔化"}>
+                      <IconButton 
+                        onClick={() => setIsMinified(!isMinified)}
+                        color={isMinified ? "primary" : "default"}
+                      >
+                        <CompressIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  <Tooltip title="複製到剪貼簿">
+                    <IconButton onClick={handleCopy} disabled={!parsedData}>
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: 1,
+                  p: 2,
+                  mt: 2,
+                  overflowX: 'auto',
+                  minWidth: 0,
+                  minHeight: '450px',
+                }}
+              >
+                {parsedData ? (
+                  viewMode === 'tree' ? (
+                    <JsonEditor data={parsedData} onChange={handleDataChange} />
+                  ) : (
+                    <Box sx={{ 
+                      fontFamily: 'monospace',
+                      fontSize: '0.9rem',
+                      whiteSpace: isMinified ? 'pre-wrap' : 'pre',
+                      wordBreak: isMinified ? 'break-all' : 'normal',
+                    }}>
+                      {isMinified 
+                        ? JSON.stringify(parsedData)
+                        : JSON.stringify(parsedData, null, 2)
+                      }
+                    </Box>
+                  )
+                ) : (
+                  <Typography color="text.secondary" sx={{ textAlign: 'center', py: 10 }}>
+                    點擊中間分隔欄的向右箭頭開始編輯 JSON
+                  </Typography>
+                )}
+              </Box>
+            </Box>
+          }
+        />
       </Box>
 
       {/* Usage Tips */}
@@ -158,13 +268,25 @@ export default function JsonParserPage() {
             將 JSON 字串貼到左側輸入框
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            點擊「格式化」按鈕可以美化 JSON，使其更易讀
+            點擊「解析並編輯」按鈕解析 JSON 並進入可視化編輯模式
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            點擊「壓縮」按鈕可以去除空格和換行，減少檔案大小
+            在樹狀編輯模式中，可以直接修改值、類型轉換、增刪節點
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            工具會自動驗證 JSON 語法，如有錯誤會顯示提示
+            陣列和物件可以點擊「+」按鈕添加新項目/屬性
+          </Typography>
+          <Typography component="li" variant="body2" sx={{ mb: 1 }}>
+            每個節點都可以透過下拉選單轉換類型（字串、數字、布林值等）
+          </Typography>
+          <Typography component="li" variant="body2" sx={{ mb: 1 }}>
+            在文字檢視模式中，點擊「簡潔化」按鈕可壓縮 JSON（去除空格和換行）
+          </Typography>
+          <Typography component="li" variant="body2" sx={{ mb: 1 }}>
+            拖曳中間分隔線可調整左右窗格大小
+          </Typography>
+          <Typography component="li" variant="body2" sx={{ mb: 1 }}>
+            編輯完成後點擊「儲存」按鈕將結果更新回左側輸入框
           </Typography>
           <Typography component="li" variant="body2">
             所有處理都在瀏覽器本地完成，不會上傳你的資料
