@@ -125,7 +125,7 @@ export default function ImageCompressorPage() {
           🖼️ 圖片壓縮工具
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          在線壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式
+          線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式
         </Typography>
       </Box>
 
@@ -295,7 +295,7 @@ export default function ImageCompressorPage() {
             壓縮後的圖片格式為 JPEG，適合照片類圖片
           </Typography>
           <Typography component="li" variant="body2">
-            所有處理都在瀏覽器本地完成，不會上傳你的圖片
+            所有處理都在瀏覽器本機完成，不會上傳你的圖片
           </Typography>
         </Box>
       </Paper>

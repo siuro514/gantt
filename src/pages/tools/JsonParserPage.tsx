@@ -289,7 +289,7 @@ export default function JsonParserPage() {
             編輯完成後點擊「儲存」按鈕將結果更新回左側輸入框
           </Typography>
           <Typography component="li" variant="body2">
-            所有處理都在瀏覽器本地完成，不會上傳你的資料
+            所有處理都在瀏覽器本機完成，不會上傳你的資料
           </Typography>
         </Box>
       </Paper>

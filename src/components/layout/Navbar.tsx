@@ -2,8 +2,11 @@ import { AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/materi
 import { Link, useLocation } from 'react-router-dom';
 import BoltIcon from '@mui/icons-material/Bolt';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const [scrolled, setScrolled] = useState(false);
@@ -83,17 +86,23 @@ export default function Navbar() {
                 textShadow: useLightText ? '0 2px 8px rgba(0, 0, 0, 0.15)' : 'none',
                 transition: 'all 0.3s ease',
               }}>
-                Easy & Good Things
+                {t('site.title')}
               </Typography>
             </Box>
           </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: 1, 
+            alignItems: 'center',
+            color: useLightText ? 'white' : 'text.primary',
+            transition: 'all 0.3s ease',
+          }}>
             <Button 
               component={Link} 
               to="/about" 
               sx={{ 
-                color: useLightText ? 'white' : 'text.primary',
+                color: 'inherit',
                 fontWeight: 500,
                 px: 2,
                 transition: 'all 0.3s ease',
@@ -104,8 +113,9 @@ export default function Navbar() {
                 },
               }}
             >
-              關於
+              {t('nav.about')}
             </Button>
+            <LanguageSwitcher />
           </Box>
         </Toolbar>
       </Container>

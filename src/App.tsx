@@ -32,8 +32,8 @@ function App() {
         main: '#625B71',
       },
       background: {
-        default: '#FFFBFE',
-        paper: '#FFFBFE',
+        default: '#f7f6f4', // 暖灰调雾面背景，与铁灰色系更搭配
+        paper: '#fafafa',   // 卡片背景，稍亮一些以保持层次感
       },
     },
     shape: {

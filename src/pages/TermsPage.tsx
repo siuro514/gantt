@@ -18,7 +18,7 @@ export default function TermsPage() {
               1. 服務說明
             </Typography>
             <Typography variant="body1" paragraph>
-              Easy & Good Things 提供免費的在線工具集合，包括但不限於甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等功能。
+              Easy & Good Things 提供免費的線上工具集合，包括但不限於甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等功能。
               所有工具均可免費使用，無需註冊。
             </Typography>
           </Box>

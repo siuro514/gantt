@@ -6,8 +6,10 @@ import BoltIcon from '@mui/icons-material/Bolt';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import SecurityIcon from '@mui/icons-material/Security';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       {/* Hero Section */}
@@ -121,7 +123,7 @@ export default function Home() {
                 },
               }}
             >
-              Easy & Good Things
+              {t('hero.title')}
             </Typography>
             
             <Typography
@@ -138,7 +140,7 @@ export default function Home() {
                 letterSpacing: '0.02em',
               }}
             >
-              你的效率助手 · 免費在線工具集合
+              {t('hero.subtitle')}
             </Typography>
             
             {/* Feature Tags */}
@@ -150,10 +152,10 @@ export default function Home() {
               mt: 5,
             }}>
               {[
-                { icon: <BoltIcon />, text: '快速' },
-                { icon: <AdjustIcon />, text: '簡單' },
-                { icon: <CardGiftcardIcon />, text: '免費' },
-                { icon: <SecurityIcon />, text: '安全' },
+                { icon: <BoltIcon />, key: 'fast' },
+                { icon: <AdjustIcon />, key: 'simple' },
+                { icon: <CardGiftcardIcon />, key: 'free' },
+                { icon: <SecurityIcon />, key: 'secure' },
               ].map((feature, index) => (
                 <Box
                   key={index}
@@ -182,7 +184,7 @@ export default function Home() {
                     fontFamily: '"Noto Sans TC", "Inter", -apple-system, sans-serif',
                     letterSpacing: '0.03em',
                   }}>
-                    {feature.text}
+                    {t(`hero.features.${feature.key}`)}
                   </Typography>
                 </Box>
               ))}
@@ -199,7 +201,7 @@ export default function Home() {
             fontFamily: '"Noto Sans TC", "Inter", -apple-system, sans-serif',
             letterSpacing: '-0.01em',
           }}>
-            精選工具
+            {t('tools.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ 
             maxWidth: 600, 
@@ -207,8 +209,7 @@ export default function Home() {
             lineHeight: 1.8,
             fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
           }}>
-            我們提供一系列實用的在線工具，幫助你提升工作效率。
-            所有工具完全免費，無需註冊，在瀏覽器中即可使用。
+            {t('tools.description')}
           </Typography>
         </Box>
 
@@ -228,7 +229,7 @@ export default function Home() {
             fontFamily: '"Noto Sans TC", "Inter", -apple-system, sans-serif',
             letterSpacing: '-0.01em',
           }}>
-            為什麼選擇 Easy & Good Things？
+            {t('features.title')}
           </Typography>
           <Grid container spacing={4}>
             <Grid item xs={12} md={3}>
@@ -248,13 +249,13 @@ export default function Home() {
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                   letterSpacing: '0.01em',
                 }}>
-                  快速啟動
+                  {t('features.fast.title')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{
                   lineHeight: 1.7,
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                 }}>
-                  無需安裝任何軟體，打開瀏覽器即可使用
+                  {t('features.fast.description')}
                 </Typography>
               </Box>
             </Grid>
@@ -275,13 +276,13 @@ export default function Home() {
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                   letterSpacing: '0.01em',
                 }}>
-                  隱私安全
+                  {t('features.secure.title')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{
                   lineHeight: 1.7,
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                 }}>
-                  所有處理都在本地完成，不會上傳你的資料
+                  {t('features.secure.description')}
                 </Typography>
               </Box>
             </Grid>
@@ -302,13 +303,13 @@ export default function Home() {
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                   letterSpacing: '0.01em',
                 }}>
-                  簡單易用
+                  {t('features.simple.title')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{
                   lineHeight: 1.7,
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                 }}>
-                  清晰的介面設計，無需學習即可上手
+                  {t('features.simple.description')}
                 </Typography>
               </Box>
             </Grid>
@@ -329,13 +330,13 @@ export default function Home() {
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                   letterSpacing: '0.01em',
                 }}>
-                  完全免費
+                  {t('features.free.title')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{
                   lineHeight: 1.7,
                   fontFamily: '"Noto Sans TC", -apple-system, sans-serif',
                 }}>
-                  所有功能永久免費，無需註冊或付費
+                  {t('features.free.description')}
                 </Typography>
               </Box>
             </Grid>

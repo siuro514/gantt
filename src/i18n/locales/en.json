@@ -1,0 +1,134 @@
+{
+  "site": {
+    "title": "Easy & Good Things",
+    "subtitle": "Your Productivity Assistant · Free Online Tools Collection",
+    "description": "Free online tools collection, offering Gantt charts, JSON formatter, Base64 encoder/decoder, image compressor, and more. Fast, Simple, Secure, Free."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Easy & Good Things",
+    "subtitle": "Your Productivity Assistant · Free Online Tools Collection",
+    "features": {
+      "fast": "Fast",
+      "simple": "Simple",
+      "free": "Free",
+      "secure": "Secure"
+    }
+  },
+  "tools": {
+    "title": "Featured Tools",
+    "description": "We provide a series of practical online tools to help you boost your work efficiency. All tools are completely free, no registration required, and work right in your browser.",
+    "startUsing": "Get Started",
+    "gantt": {
+      "name": "Resource Gantt Chart",
+      "description": "Visual team task management and scheduling tool with drag-and-drop editing, PDF export, and more"
+    },
+    "jsonParser": {
+      "name": "JSON Formatter",
+      "description": "Format, validate, and beautify JSON data with syntax highlighting and error detection"
+    },
+    "base64": {
+      "name": "Base64 Encoder/Decoder",
+      "description": "Quickly encode and decode Base64, supporting both text and image formats"
+    },
+    "imageCompressor": {
+      "name": "Image Compressor",
+      "description": "Compress images online while maintaining quality, supporting JPG, PNG, WebP formats"
+    }
+  },
+  "features": {
+    "title": "Why Choose Easy & Good Things?",
+    "fast": {
+      "title": "Quick Start",
+      "description": "No software installation needed, just open your browser and start"
+    },
+    "secure": {
+      "title": "Privacy & Security",
+      "description": "All processing is done locally, your data never leaves your device"
+    },
+    "simple": {
+      "title": "Easy to Use",
+      "description": "Clean interface design, no learning curve required"
+    },
+    "free": {
+      "title": "Completely Free",
+      "description": "All features are permanently free, no registration or payment required"
+    }
+  },
+  "footer": {
+    "tagline": "Your Productivity Assistant",
+    "description": "Free Online Tools Collection · No Registration · Ready to Use",
+    "links": {
+      "about": "About",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us"
+    },
+    "copyright": "© {{year}} Easy & Good Things. All rights reserved."
+  },
+  "about": {
+    "title": "About Easy & Good Things",
+    "subtitle": "We are committed to creating the most practical free online tools collection",
+    "mission": {
+      "title": "Our Mission",
+      "p1": "In this digital age, we need to handle various tasks every day: formatting code, encoding/decoding data, compressing images, managing project schedules, and more. Although there are many tools available for these tasks, they often require downloads, account registration, or paid subscriptions.",
+      "p2": "Easy & Good Things was created to solve this problem. We provide a completely free, no-registration-required, ready-to-use collection of online tools. All tools run locally in your browser, ensuring your data security and privacy."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "simple": {
+        "title": "Easy to Use",
+        "description": "Clean interface design, no learning required"
+      },
+      "free": {
+        "title": "Completely Free",
+        "description": "All features are permanently free with no hidden costs"
+      },
+      "privacy": {
+        "title": "Privacy First",
+        "description": "All processing is done locally to protect your data security"
+      },
+      "update": {
+        "title": "Continuous Updates",
+        "description": "We constantly add new tools and improve existing features"
+      }
+    },
+    "why": {
+      "title": "Why Choose Easy & Good Things?",
+      "reason1": "No software installation needed, just open your browser",
+      "reason2": "No account registration or personal information required",
+      "reason3": "Cross-platform support: Windows, Mac, Linux, and mobile devices",
+      "reason4": "Fast loading, smooth operation, best user experience"
+    },
+    "ourTools": {
+      "title": "Our Tools",
+      "intro": "Currently, we offer four categories of practical tools:",
+      "pm": {
+        "title": "Project Management",
+        "description": "Resource Gantt Chart for visualizing team task and schedule management"
+      },
+      "dev": {
+        "title": "Development Tools",
+        "description": "JSON formatter for clearer and more readable data structures"
+      },
+      "encode": {
+        "title": "Encoding Tools",
+        "description": "Base64 encoder/decoder for quick text and data format conversion"
+      },
+      "image": {
+        "title": "Image Processing",
+        "description": "Image compressor to reduce file size while maintaining quality"
+      },
+      "more": "We will continue to develop more practical tools, stay tuned!"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "If you have any suggestions, questions, or cooperation opportunities, please feel free to contact us",
+      "email": "Email"
+    }
+  }
+}

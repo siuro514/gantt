@@ -6,6 +6,7 @@ import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 import CodeIcon from '@mui/icons-material/Code';
 import LockIcon from '@mui/icons-material/Lock';
 import ImageIcon from '@mui/icons-material/Image';
+import { useTranslation } from 'react-i18next';
 
 interface ToolCardProps {
   tool: Tool;
@@ -18,7 +19,16 @@ const iconMap: Record<string, React.ReactElement> = {
   Image: <ImageIcon />,
 };
 
+// Map tool IDs to translation keys
+const toolI18nMap: Record<string, string> = {
+  'gantt': 'gantt',
+  'json-parser': 'jsonParser',
+  'base64': 'base64',
+  'image-compressor': 'imageCompressor',
+};
+
 export default function ToolCard({ tool }: ToolCardProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -56,10 +66,10 @@ export default function ToolCard({ tool }: ToolCardProps) {
           {iconMap[tool.icon] || <CodeIcon />}
         </Box>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-          {tool.name}
+          {t(`tools.${toolI18nMap[tool.id]}.name`)}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1, mb: 2 }}>
-          {tool.description}
+          {t(`tools.${toolI18nMap[tool.id]}.description`)}
         </Typography>
         <Button
           variant="text"
@@ -72,7 +82,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
             },
           }}
         >
-          開始使用
+          {t('tools.startUsing')}
         </Button>
       </CardContent>
     </Card>

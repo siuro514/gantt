@@ -1,0 +1,134 @@
+{
+  "site": {
+    "title": "Easy & Good Things",
+    "subtitle": "Tu Asistente de Productividad · Colección de Herramientas Online Gratuitas",
+    "description": "Colección de herramientas online gratuitas, ofreciendo diagramas de Gantt, formateador JSON, codificador/decodificador Base64, compresor de imágenes y más. Rápido, Simple, Seguro, Gratis."
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Easy & Good Things",
+    "subtitle": "Tu Asistente de Productividad · Colección de Herramientas Online Gratuitas",
+    "features": {
+      "fast": "Rápido",
+      "simple": "Simple",
+      "free": "Gratis",
+      "secure": "Seguro"
+    }
+  },
+  "tools": {
+    "title": "Herramientas Destacadas",
+    "description": "Proporcionamos una serie de herramientas online prácticas para ayudarte a mejorar tu eficiencia laboral. Todas las herramientas son completamente gratuitas, sin registro requerido, y funcionan directamente en tu navegador.",
+    "startUsing": "Comenzar",
+    "gantt": {
+      "name": "Diagrama de Gantt de Recursos",
+      "description": "Herramienta visual de gestión de tareas y planificación de equipos con edición de arrastrar y soltar, exportación PDF y más"
+    },
+    "jsonParser": {
+      "name": "Formateador JSON",
+      "description": "Formatear, validar y embellecer datos JSON con resaltado de sintaxis y detección de errores"
+    },
+    "base64": {
+      "name": "Codificador/Decodificador Base64",
+      "description": "Codificar y decodificar Base64 rápidamente, soportando formatos de texto e imagen"
+    },
+    "imageCompressor": {
+      "name": "Compresor de Imágenes",
+      "description": "Comprimir imágenes online manteniendo la calidad, soportando formatos JPG, PNG, WebP"
+    }
+  },
+  "features": {
+    "title": "¿Por qué elegir Easy & Good Things?",
+    "fast": {
+      "title": "Inicio Rápido",
+      "description": "No se necesita instalación de software, solo abre tu navegador y comienza"
+    },
+    "secure": {
+      "title": "Privacidad y Seguridad",
+      "description": "Todo el procesamiento se realiza localmente, tus datos nunca salen de tu dispositivo"
+    },
+    "simple": {
+      "title": "Fácil de Usar",
+      "description": "Diseño de interfaz limpia, sin curva de aprendizaje requerida"
+    },
+    "free": {
+      "title": "Completamente Gratis",
+      "description": "Todas las funciones son permanentemente gratuitas, sin registro ni pago requerido"
+    }
+  },
+  "footer": {
+    "tagline": "Tu Asistente de Productividad",
+    "description": "Colección de Herramientas Online Gratuitas · Sin Registro · Listo para Usar",
+    "links": {
+      "about": "Acerca de",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio",
+      "contact": "Contáctanos"
+    },
+    "copyright": "© {{year}} Easy & Good Things. Todos los derechos reservados."
+  },
+  "about": {
+    "title": "Acerca de Easy & Good Things",
+    "subtitle": "Estamos comprometidos a crear la colección de herramientas online gratuitas más práctica",
+    "mission": {
+      "title": "Nuestra Misión",
+      "p1": "En esta era digital, necesitamos manejar diversas tareas todos los días: formatear código, codificar/decodificar datos, comprimir imágenes, gestionar horarios de proyectos y más. Aunque hay muchas herramientas disponibles para estas tareas, a menudo requieren descargas, registro de cuenta o suscripciones de pago.",
+      "p2": "Easy & Good Things fue creado para resolver este problema. Proporcionamos una colección de herramientas online completamente gratuita, sin registro requerido y lista para usar. Todas las herramientas se ejecutan localmente en tu navegador, garantizando la seguridad y privacidad de tus datos."
+    },
+    "values": {
+      "title": "Nuestros Valores Fundamentales",
+      "simple": {
+        "title": "Fácil de Usar",
+        "description": "Diseño de interfaz limpia, sin aprendizaje requerido"
+      },
+      "free": {
+        "title": "Completamente Gratis",
+        "description": "Todas las funciones son permanentemente gratuitas sin costos ocultos"
+      },
+      "privacy": {
+        "title": "Privacidad Primero",
+        "description": "Todo el procesamiento se realiza localmente para proteger la seguridad de tus datos"
+      },
+      "update": {
+        "title": "Actualizaciones Continuas",
+        "description": "Constantemente agregamos nuevas herramientas y mejoramos las funciones existentes"
+      }
+    },
+    "why": {
+      "title": "¿Por qué elegir Easy & Good Things?",
+      "reason1": "No se necesita instalación de software, solo abre tu navegador",
+      "reason2": "No se requiere registro de cuenta ni información personal",
+      "reason3": "Soporte multiplataforma: Windows, Mac, Linux y dispositivos móviles",
+      "reason4": "Carga rápida, operación fluida, mejor experiencia de usuario"
+    },
+    "ourTools": {
+      "title": "Nuestras Herramientas",
+      "intro": "Actualmente, ofrecemos cuatro categorías de herramientas prácticas:",
+      "pm": {
+        "title": "Gestión de Proyectos",
+        "description": "Diagrama de Gantt de Recursos para visualizar la gestión de tareas y horarios del equipo"
+      },
+      "dev": {
+        "title": "Herramientas de Desarrollo",
+        "description": "Formateador JSON para estructuras de datos más claras y legibles"
+      },
+      "encode": {
+        "title": "Herramientas de Codificación",
+        "description": "Codificador/decodificador Base64 para conversión rápida de texto y formatos de datos"
+      },
+      "image": {
+        "title": "Procesamiento de Imágenes",
+        "description": "Compresor de imágenes para reducir el tamaño del archivo manteniendo la calidad"
+      },
+      "more": "¡Continuaremos desarrollando más herramientas prácticas, mantente atento!"
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "description": "Si tienes alguna sugerencia, pregunta u oportunidad de cooperación, no dudes en contactarnos",
+      "email": "Correo Electrónico"
+    }
+  }
+}

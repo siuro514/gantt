@@ -1,0 +1,135 @@
+{
+  "site": {
+    "title": "Easy & Good Things",
+    "subtitle": "你的效率助手 · 免費線上工具集合",
+    "description": "免費線上工具集合，提供甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等實用工具。快速、簡單、安全、免費。"
+  },
+  "nav": {
+    "home": "首頁",
+    "about": "關於",
+    "blog": "文章"
+  },
+  "hero": {
+    "title": "Easy & Good Things",
+    "subtitle": "你的效率助手 · 免費線上工具集合",
+    "features": {
+      "fast": "快速",
+      "simple": "簡單",
+      "free": "免費",
+      "secure": "安全"
+    }
+  },
+  "tools": {
+    "title": "精選工具",
+    "description": "我們提供一系列實用的線上工具，幫助你提升工作效率。所有工具完全免費，無需註冊，在瀏覽器中即可使用。",
+    "startUsing": "開始使用",
+    "gantt": {
+      "name": "人力資源甘特圖",
+      "description": "視覺化團隊任務管理和時程規劃工具，支援拖放編輯、PDF 匯出等功能"
+    },
+    "jsonParser": {
+      "name": "JSON 格式化工具",
+      "description": "格式化、驗證和美化 JSON 資料，支援語法高亮和錯誤檢測"
+    },
+    "base64": {
+      "name": "Base64 編碼/解碼",
+      "description": "快速進行 Base64 編碼和解碼，支援文字和圖片格式"
+    },
+    "imageCompressor": {
+      "name": "圖片壓縮工具",
+      "description": "線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式"
+    }
+  },
+  "features": {
+    "title": "為什麼選擇 Easy & Good Things？",
+    "fast": {
+      "title": "快速啟動",
+      "description": "無需安裝任何軟體，打開瀏覽器即可使用"
+    },
+    "secure": {
+      "title": "隱私安全",
+      "description": "所有處理都在本機完成，不會上傳你的資料"
+    },
+    "simple": {
+      "title": "簡單易用",
+      "description": "清晰的介面設計，無需學習即可上手"
+    },
+    "free": {
+      "title": "完全免費",
+      "description": "所有功能永久免費，無需註冊或付費"
+    }
+  },
+  "footer": {
+    "tagline": "你的效率助手",
+    "description": "免費線上工具集合 · 無需註冊 · 開箱即用",
+    "links": {
+      "about": "關於",
+      "privacy": "隱私政策",
+      "terms": "使用條款",
+      "contact": "聯絡我們"
+    },
+    "copyright": "© {{year}} Easy & Good Things. All rights reserved."
+  },
+  "about": {
+    "title": "關於 Easy & Good Things",
+    "subtitle": "我們致力於打造最實用的免費線上工具集合",
+    "mission": {
+      "title": "我們的使命",
+      "p1": "在這個數位化的時代，我們每天都需要處理各種不同的任務：格式化程式碼、編碼解碼資料、壓縮圖片、管理專案進度等等。雖然市面上有許多工具可以完成這些任務，但它們往往需要下載安裝、註冊帳號，或是需要付費使用。",
+      "p2": "Easy & Good Things 的誕生，就是為了解決這個問題。我們提供完全免費、無需註冊、開箱即用的線上工具集合。所有工具都在瀏覽器本機運行，確保您的資料安全和隱私。"
+    },
+    "values": {
+      "title": "我們的核心價值",
+      "simple": {
+        "title": "簡單易用",
+        "description": "清晰的介面設計，無需學習即可上手"
+      },
+      "free": {
+        "title": "完全免費",
+        "description": "所有功能永久免費，沒有隱藏費用"
+      },
+      "privacy": {
+        "title": "隱私優先",
+        "description": "所有處理都在本機完成，保護您的資料安全"
+      },
+      "update": {
+        "title": "持續更新",
+        "description": "我們會不斷添加新工具，改進現有功能"
+      }
+    },
+    "why": {
+      "title": "為什麼選擇 Easy & Good Things？",
+      "reason1": "無需安裝任何軟體，打開瀏覽器即可使用",
+      "reason2": "不需要註冊帳號或提供個人資訊",
+      "reason3": "跨平台支援：Windows、Mac、Linux、行動裝置都能使用",
+      "reason4": "快速載入，流暢運行，提供最佳使用體驗"
+    },
+    "ourTools": {
+      "title": "我們的工具",
+      "intro": "目前我們提供四大類實用工具：",
+      "pm": {
+        "title": "專案管理",
+        "description": "人力資源甘特圖，幫助團隊視覺化管理任務和時程"
+      },
+      "dev": {
+        "title": "開發工具",
+        "description": "JSON 格式化工具，讓資料結構更清晰易讀"
+      },
+      "encode": {
+        "title": "編碼工具",
+        "description": "Base64 編解碼，快速轉換文字和資料格式"
+      },
+      "image": {
+        "title": "圖片處理",
+        "description": "圖片壓縮工具，減少檔案大小並保持畫質"
+      },
+      "more": "我們會持續開發更多實用工具，敬請期待！"
+    },
+    "contact": {
+      "title": "聯絡我們",
+      "description": "如有任何建議、問題或合作機會，歡迎與我們聯繫",
+      "email": "Email"
+    }
+  }
+}
+

@@ -18,13 +18,13 @@ export default function PrivacyPage() {
               1. 資料收集
             </Typography>
             <Typography variant="body1" paragraph>
-              Easy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本地運行，不會將您的資料上傳到我們的伺服器。
+              Easy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本機運行，不會將您的資料上傳到我們的伺服器。
             </Typography>
           </Box>
 
           <Box>
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-              2. 本地儲存
+              2. 本機儲存
             </Typography>
             <Typography variant="body1" paragraph>
               部分工具（如甘特圖）會使用瀏覽器的 LocalStorage 功能來儲存您的資料，以便您下次訪問時可以繼續使用。
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
             </Typography>
             <Typography variant="body1" paragraph>
               由於我們不收集或儲存您的個人資料，因此不存在資料洩露的風險。
-              所有處理都在您的瀏覽器本地完成。
+              所有處理都在您的瀏覽器本機完成。
             </Typography>
           </Box>
 

@@ -1,6 +1,10 @@
 import { Box, Container, Typography, Link } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
+
   return (
     <Box
       component="footer"
@@ -16,27 +20,27 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            ⚡ Easy & Good Things - 你的效率助手
+            ⚡ {t('site.title')} - {t('footer.tagline')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            免費在線工具集合 · 無需註冊 · 開箱即用
+            {t('footer.description')}
           </Typography>
           <Box sx={{ mt: 2 }}>
             <Link href="/about" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
-              關於
+              {t('footer.links.about')}
             </Link>
             <Link href="/privacy" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
-              隱私政策
+              {t('footer.links.privacy')}
             </Link>
             <Link href="/terms" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
-              使用條款
+              {t('footer.links.terms')}
             </Link>
             <Link href="mailto:ezgoodthings@gmail.com" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
-              聯絡我們
+              {t('footer.links.contact')}
             </Link>
           </Box>
           <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-            © {new Date().getFullYear()} Easy & Good Things. All rights reserved.
+            {t('footer.copyright', { year: currentYear })}
           </Typography>
         </Box>
       </Container>

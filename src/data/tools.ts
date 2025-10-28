@@ -35,7 +35,7 @@ export const tools: Tool[] = [
   {
     id: 'image-compressor',
     name: '圖片壓縮工具',
-    description: '在線壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式',
+    description: '線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式',
     icon: 'Image',
     path: '/tools/image-compressor',
     color: '#E89C5C',
