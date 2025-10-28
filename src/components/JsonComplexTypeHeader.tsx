@@ -74,7 +74,6 @@ export default function JsonComplexTypeHeader({
             gap: 1,
             px: 1.5,
             py: 0.5,
-            backgroundColor: 'grey.100',
             borderRadius: 2,
             border: '1px solid',
             borderColor: 'divider',

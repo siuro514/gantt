@@ -21,7 +21,11 @@ export default function JsonEditor({ data, onChange, path = [] }: JsonEditorProp
   const [editingKeys, setEditingKeys] = useState<Record<string, string>>({});
 
   const toggleExpand = (key: string) => {
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
+    setExpanded((prev) => {
+      // 如果 key 不存在，默认是展开的（true），所以要设为 false
+      const currentState = prev[key] !== false;
+      return { ...prev, [key]: !currentState };
+    });
   };
 
   const updateValue = (keys: string[], value: any) => {
