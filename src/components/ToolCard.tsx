@@ -2,10 +2,21 @@ import { Card, CardContent, Typography, Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Tool } from '@/data/tools';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
+import CodeIcon from '@mui/icons-material/Code';
+import LockIcon from '@mui/icons-material/Lock';
+import ImageIcon from '@mui/icons-material/Image';
 
 interface ToolCardProps {
   tool: Tool;
 }
+
+const iconMap: Record<string, React.ReactElement> = {
+  ViewTimeline: <ViewTimelineIcon />,
+  Code: <CodeIcon />,
+  Lock: <LockIcon />,
+  Image: <ImageIcon />,
+};
 
 export default function ToolCard({ tool }: ToolCardProps) {
   const navigate = useNavigate();
@@ -31,15 +42,18 @@ export default function ToolCard({ tool }: ToolCardProps) {
             width: 64,
             height: 64,
             borderRadius: 2,
-            backgroundColor: tool.color + '15',
+            backgroundColor: tool.color + '20',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             mb: 2,
-            fontSize: '2rem',
+            color: tool.color,
+            '& svg': {
+              fontSize: '2rem',
+            },
           }}
         >
-          {tool.icon}
+          {iconMap[tool.icon] || <CodeIcon />}
         </Box>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
           {tool.name}
