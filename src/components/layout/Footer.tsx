@@ -25,9 +25,6 @@ export default function Footer() {
             <Link href="/about" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
               關於
             </Link>
-            <Link href="/blog" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
-              文章
-            </Link>
             <Link href="/privacy" color="text.secondary" sx={{ mx: 1, fontSize: '0.875rem' }}>
               隱私政策
             </Link>

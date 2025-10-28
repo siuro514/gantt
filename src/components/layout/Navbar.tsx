@@ -23,9 +23,6 @@ export default function Navbar() {
           </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button component={Link} to="/blog" sx={{ color: 'text.primary' }}>
-              文章
-            </Button>
             <Button component={Link} to="/about" sx={{ color: 'text.primary' }}>
               關於
             </Button>
