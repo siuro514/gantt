@@ -8,6 +8,7 @@ import { useGanttStore } from '@/store/ganttStore';
 import { formatDateShort } from '@/utils/dateUtils';
 import EditableText from '../common/EditableText';
 import ColorPicker from '../common/ColorPicker';
+import { useTranslation } from 'react-i18next';
 
 interface SprintColumnProps {
   sprint: Sprint;
@@ -16,6 +17,7 @@ interface SprintColumnProps {
 }
 
 export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: SprintColumnProps) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [isLeftLineHovered, setIsLeftLineHovered] = useState(false);
   const [isRightLineHovered, setIsRightLineHovered] = useState(false);
@@ -70,7 +72,7 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
           value={sprint.title}
           onChange={handleTitleChange}
           variant="subtitle1"
-          placeholder="Sprint 名稱"
+          placeholder={t('gantt.sprint.namePlaceholder')}
           sx={{ fontSize: '1.05rem', fontWeight: 500, fontFamily: '"Barlow Condensed", "Arial Narrow", sans-serif' }}
         />
       </Box>
@@ -110,13 +112,13 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
           onMouseLeave={() => setIsEditingDate(false)}
         >
           <DatePicker
-            label="開始日期"
+            label={t('gantt.sprint.startDate')}
             value={new Date(sprint.startDate)}
             onChange={(date) => handleDateChange('startDate', date)}
             slotProps={{ textField: { size: 'small' } }}
           />
           <DatePicker
-            label="結束日期"
+            label={t('gantt.sprint.endDate')}
             value={new Date(sprint.endDate)}
             onChange={(date) => handleDateChange('endDate', date)}
             slotProps={{ textField: { size: 'small' } }}
@@ -137,7 +139,7 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
         >
           <ColorPicker currentColor={sprint.color} onColorChange={handleColorChange} />
           
-          <Tooltip title="刪除 Sprint">
+          <Tooltip title={t('gantt.sprint.delete')}>
             <IconButton
               size="small"
               onClick={handleDelete}
@@ -175,7 +177,7 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
           }}
         >
           {isLeftLineHovered && (
-            <Tooltip title="在左側插入 Sprint">
+            <Tooltip title={t('gantt.sprint.insertLeft')}>
               <IconButton
                 size="small"
                 onClick={() => onAddSprint(sprint.order - 1)}
@@ -220,7 +222,7 @@ export default function SprintColumn({ sprint, sprintIndex, onAddSprint }: Sprin
         }}
       >
         {isRightLineHovered && (
-          <Tooltip title="在右側插入 Sprint">
+          <Tooltip title={t('gantt.sprint.insertRight')}>
             <IconButton
               size="small"
               onClick={() => onAddSprint(sprint.order)}

@@ -3,8 +3,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { useDroppable } from '@dnd-kit/core';
 import { useGanttStore } from '@/store/ganttStore';
 import TaskCard from './TaskCard';
+import { useTranslation } from 'react-i18next';
 
 export default function StorageArea() {
+  const { t } = useTranslation();
   const tasks = useGanttStore((state) => state.tasks);
   const addTask = useGanttStore((state) => state.addTask);
   const { setNodeRef, isOver } = useDroppable({ id: 'storage' });
@@ -39,7 +41,7 @@ export default function StorageArea() {
           }}
         >
           <Typography variant="h6" fontWeight={600}>
-            Task Storage
+            {t('gantt.storage.title')}
           </Typography>
 
           <Button
@@ -48,7 +50,7 @@ export default function StorageArea() {
             onClick={addTask}
             sx={{ borderRadius: 2 }}
           >
-            新增工作
+            {t('gantt.storage.addTask')}
           </Button>
         </Box>
 
@@ -87,7 +89,7 @@ export default function StorageArea() {
               }}
             >
               <Typography variant="body2">
-                暫時沒有工作卡片，點擊「新增工作」開始
+                {t('gantt.storage.emptyHint')}
               </Typography>
             </Box>
           )}

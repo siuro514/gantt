@@ -1,5 +1,6 @@
 import { Box, IconButton, Tooltip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from 'react-i18next';
 
 interface AddButtonProps {
   onClick: () => void;
@@ -11,9 +12,11 @@ interface AddButtonProps {
 export default function AddButton({
   onClick,
   position = 'center',
-  label = '新增',
+  label,
   className,
 }: AddButtonProps) {
+  const { t } = useTranslation();
+  const buttonLabel = label || t('gantt.add');
   const positionStyles = {
     right: {
       position: 'absolute',
@@ -37,7 +40,7 @@ export default function AddButton({
   };
 
   return (
-    <Tooltip title={label} arrow>
+    <Tooltip title={buttonLabel} arrow>
       <Box
         className={className}
         sx={{

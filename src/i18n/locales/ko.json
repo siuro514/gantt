@@ -130,5 +130,271 @@
       "description": "제안, 질문 또는 협력 기회가 있으시면 언제든지 문의해 주세요",
       "email": "이메일"
     }
+  },
+  "privacy": {
+    "title": "개인정보 보호정책",
+    "lastUpdated": "마지막 업데이트",
+    "section1": {
+      "title": "데이터 수집",
+      "content": "Easy & Good Things는 귀하의 개인정보 보호에 최선을 다하고 있습니다. 저희의 모든 도구는 귀하의 브라우저에서 로컬로 실행되며 귀하의 데이터를 서버에 업로드하지 않습니다."
+    },
+    "section2": {
+      "title": "로컬 저장소",
+      "content": "일부 도구(예: 간트 차트)는 다음 방문 시 계속 사용할 수 있도록 브라우저의 LocalStorage 기능을 사용하여 데이터를 저장합니다. 이러한 데이터는 귀하의 기기에만 저장되며 저희는 액세스할 수 없습니다."
+    },
+    "section3": {
+      "title": "쿠키 및 추적",
+      "content": "저희는 웹사이트 사용 현황을 파악하기 위해 Google Analytics를 사용하고 광고를 표시하기 위해 Google AdSense를 사용합니다. 이러한 서비스는 익명의 사용 통계를 수집하기 위해 쿠키를 사용할 수 있습니다."
+    },
+    "section4": {
+      "title": "제3자 서비스",
+      "intro": "저희 웹사이트는 다음과 같은 제3자 서비스를 사용합니다:",
+      "item1": "Google AdSense - 광고 표시용",
+      "item2": "Google Analytics - 웹사이트 트래픽 분석용",
+      "outro": "이러한 서비스에는 자체 개인정보 보호정책이 있으므로 관련 설명을 확인하시기 바랍니다."
+    },
+    "section5": {
+      "title": "데이터 보안",
+      "content": "저희는 귀하의 개인 데이터를 수집하거나 저장하지 않으므로 데이터 유출 위험이 없습니다. 모든 처리는 귀하의 브라우저에서 로컬로 완료됩니다."
+    },
+    "section6": {
+      "title": "어린이 개인정보 보호",
+      "content": "저희 서비스는 일반 대중을 대상으로 하며 13세 미만 어린이의 개인 정보를 고의로 수집하지 않습니다."
+    },
+    "section7": {
+      "title": "정책 변경",
+      "content": "저희는 이 개인정보 보호정책을 수시로 업데이트할 수 있습니다. 변경 사항은 이 페이지에 게시되며 '마지막 업데이트' 날짜가 업데이트됩니다."
+    },
+    "section8": {
+      "title": "문의하기",
+      "content": "이 개인정보 보호정책에 대해 질문이 있으시면 이메일로 문의해 주세요:"
+    }
+  },
+  "terms": {
+    "title": "이용 약관",
+    "lastUpdated": "마지막 업데이트",
+    "section1": {
+      "title": "서비스 설명",
+      "content": "Easy & Good Things는 간트 차트, JSON 포맷팅, Base64 인코딩/디코딩, 이미지 압축 등의 기능을 포함한 무료 온라인 도구 모음을 제공합니다. 모든 도구는 등록 없이 무료로 사용할 수 있습니다."
+    },
+    "section2": {
+      "title": "사용 라이선스",
+      "content": "저희는 이 웹사이트의 서비스를 사용할 수 있는 제한적이고 비독점적이며 양도 불가능한 권리를 부여합니다. 귀하는 이 서비스를 합법적인 목적으로만 사용하고 어떤 방식으로든 이 서비스를 남용하지 않는 데 동의합니다."
+    },
+    "section3": {
+      "title": "사용 제한",
+      "intro": "귀하는 다음을 하지 않는 데 동의합니다:",
+      "item1": "웹사이트의 정상적인 운영을 방해하거나 간섭하려고 시도하는 행위",
+      "item2": "자동화 도구를 사용하여 웹사이트에 과도하게 액세스하는 행위",
+      "item3": "명시적으로 승인되지 않는 한 웹사이트의 일부를 복사, 수정 또는 배포하는 행위",
+      "item4": "불법적이거나 승인되지 않은 목적으로 서비스를 사용하는 행위"
+    },
+    "section4": {
+      "title": "면책 조항",
+      "content": "이 서비스는 '있는 그대로' 제공되며 명시적 또는 묵시적 보증이 없습니다. 저희는 서비스가 중단되지 않고 적시에 안전하며 오류가 없음을 보증하지 않습니다. 이 서비스 사용으로 인해 발생하는 데이터 손실, 오류 또는 손해에 대해 저희는 책임을 지지 않습니다."
+    },
+    "section5": {
+      "title": "책임 제한",
+      "content": "법률이 허용하는 최대 범위 내에서 Easy & Good Things 및 개발자는 직접적, 간접적, 우발적, 특별 또는 결과적 손해에 대해 책임을 지지 않습니다."
+    },
+    "section6": {
+      "title": "지적 재산권",
+      "content": "이 웹사이트의 모든 콘텐츠(텍스트, 그래픽, 로고, 아이콘, 이미지 및 소프트웨어 포함)는 저작권법 및 기타 지적 재산권법의 보호를 받습니다."
+    },
+    "section7": {
+      "title": "제3자 링크",
+      "content": "이 웹사이트에는 제3자 웹사이트로 연결되는 링크가 포함될 수 있습니다. 저희는 이러한 웹사이트의 콘텐츠나 관행에 대해 책임을 지지 않습니다."
+    },
+    "section8": {
+      "title": "약관 수정",
+      "content": "저희는 언제든지 이 약관을 수정할 권리를 보유합니다. 이 서비스를 계속 사용하면 수정된 약관에 동의하는 것으로 간주됩니다."
+    },
+    "section9": {
+      "title": "준거법",
+      "content": "이 약관은 중화민국(대만) 법률의 적용을 받으며, 모든 분쟁은 대만 법원의 관할에 제출됩니다."
+    },
+    "section10": {
+      "title": "연락처 정보",
+      "content": "질문이나 우려 사항이 있으시면 문의해 주세요:"
+    }
+  },
+  "jsonParser": {
+    "title": "JSON 포맷터",
+    "description": "JSON 데이터 포맷팅, 검증, 편집을 지원. 시각적 편집, 노드 추가/제거 등의 기능 제공",
+    "parseButton": "파싱 및 편집",
+    "saveButton": "왼쪽에 저장",
+    "inputTitle": "JSON 입력",
+    "outputTitle": "편집 가능한 결과",
+    "placeholder": "{\"name\": \"John\", \"age\": 30}",
+    "buttons": {
+      "clear": "지우기",
+      "copy": "클립보드에 복사",
+      "treeEdit": "트리 편집",
+      "textView": "텍스트 보기",
+      "format": "포맷",
+      "minify": "최소화"
+    },
+    "messages": {
+      "parseSuccess": "파싱 성공! 이제 JSON 데이터를 편집할 수 있습니다",
+      "parseError": "JSON 파싱 오류: ",
+      "copySuccess": "클립보드에 복사했습니다!",
+      "saveSuccess": "왼쪽 입력 상자에 업데이트했습니다!",
+      "emptyState": "중앙 구분선의 오른쪽 화살표를 클릭하여 JSON 편집 시작"
+    },
+    "tips": {
+      "title": "사용 팁",
+      "tip1": "JSON 문자열을 왼쪽 입력 상자에 붙여넣습니다",
+      "tip2": "'파싱 및 편집' 버튼을 클릭하여 JSON을 파싱하고 시각적 편집 모드로 들어갑니다",
+      "tip3": "트리 편집 모드에서는 값 직접 수정, 타입 변환, 노드 추가/제거가 가능합니다",
+      "tip4": "배열과 객체는 '+' 버튼을 클릭하여 새 항목/속성을 추가할 수 있습니다",
+      "tip5": "각 노드는 드롭다운 메뉴를 통해 다른 타입(문자열, 숫자, 불린 등)으로 변환할 수 있습니다",
+      "tip6": "텍스트 보기 모드에서 '최소화' 버튼을 클릭하여 JSON을 압축할 수 있습니다(공백 및 줄바꿈 제거)",
+      "tip7": "중앙 구분선을 드래그하여 왼쪽 및 오른쪽 패널 크기를 조정할 수 있습니다",
+      "tip8": "편집 후 '저장' 버튼을 클릭하여 결과를 왼쪽 입력 상자에 업데이트합니다",
+      "tip9": "모든 처리는 브라우저에서 로컬로 완료되며 데이터가 업로드되지 않습니다"
+    }
+  },
+  "base64": {
+    "title": "Base64 인코딩/디코딩",
+    "description": "Base64를 빠르게 인코딩 및 디코딩하고 중국어 및 특수 문자를 지원합니다",
+    "mode": {
+      "encode": "인코딩",
+      "decode": "디코딩"
+    },
+    "inputTitle": {
+      "encode": "원본 텍스트",
+      "decode": "Base64 문자열"
+    },
+    "outputTitle": {
+      "encode": "Base64 결과",
+      "decode": "디코딩 결과"
+    },
+    "placeholder": {
+      "encode": "인코딩할 텍스트 입력...",
+      "decode": "디코딩할 Base64 문자열 입력..."
+    },
+    "buttons": {
+      "encode": "인코딩",
+      "decode": "디코딩",
+      "swap": "입력/출력 교환",
+      "clear": "지우기",
+      "copy": "클립보드에 복사"
+    },
+    "messages": {
+      "encodeSuccess": "인코딩 성공!",
+      "decodeSuccess": "디코딩 성공!",
+      "encodeFailed": "인코딩 실패: ",
+      "decodeFailed": "디코딩 실패: 입력이 유효한 Base64 문자열인지 확인하세요",
+      "copySuccess": "클립보드에 복사되었습니다!"
+    },
+    "info": {
+      "whatIsBase64": "Base64란 무엇인가요?",
+      "description": "Base64는 64개의 인쇄 가능한 문자를 사용하여 이진 데이터를 표현하는 인코딩 방식입니다. 이메일 첨부 파일, 데이터 URL 등 텍스트 환경에서 이진 데이터를 전송하는 데 일반적으로 사용됩니다.",
+      "useCases": "사용 사례",
+      "useCase1": "HTML/CSS에 이미지 포함(Data URL)",
+      "useCase2": "HTTP 기본 인증",
+      "useCase3": "URL에서 복잡한 매개변수 전달",
+      "useCase4": "데이터 암호화 전 인코딩(참고: Base64는 암호화가 아닙니다!)"
+    }
+  },
+  "imageCompressor": {
+    "title": "이미지 압축 도구",
+    "description": "좋은 품질을 유지하면서 온라인으로 이미지를 압축하고 JPG, PNG, WebP 형식을 지원합니다",
+    "upload": {
+      "title": "클릭하거나 이미지를 여기로 드래그하세요",
+      "subtitle": "JPG, PNG, WebP 형식 지원",
+      "error": "이미지 파일을 선택하세요"
+    },
+    "compression": {
+      "quality": "압축 품질: {{quality}}%",
+      "originalSize": "원본 크기: ",
+      "compressedSize": "압축 후: ",
+      "reduction": "({{ratio}}% 감소)"
+    },
+    "buttons": {
+      "download": "다운로드",
+      "clear": "지우기"
+    },
+    "preview": {
+      "original": "원본 이미지",
+      "compressed": "압축 후",
+      "size": "크기: "
+    },
+    "tips": {
+      "title": "사용 팁",
+      "tip1": "품질 슬라이더를 조정하여 압축 수준을 제어할 수 있습니다. 값이 낮을수록 파일 크기는 작아지지만 품질이 떨어집니다",
+      "tip2": "권장 품질 설정은 70-85%입니다. 파일 크기와 품질 간의 균형이 좋습니다",
+      "tip3": "압축된 이미지 형식은 JPEG이며 사진에 적합합니다",
+      "tip4": "모든 처리는 브라우저에서 로컬로 완료되며 이미지가 업로드되지 않습니다"
+    }
+  },
+  "gantt": {
+    "toolbar": {
+      "back": "이전 페이지로 돌아가기",
+      "projectTitle": "프로젝트 제목",
+      "clearAll": "모든 데이터 지우기",
+      "undo": "실행 취소 (Cmd+Z)",
+      "redo": "다시 실행 (Cmd+Shift+Z)",
+      "exportPNG": "PNG로 내보내기",
+      "exportPDF": "PDF로 내보내기（하이퍼링크 지원）",
+      "exportJSON": "JSON으로 내보내기",
+      "importJSON": "JSON 가져오기",
+      "clearDialog": {
+        "title": "모든 데이터 지우기",
+        "content": "모든 데이터를 지우시겠습니까? 모든 Sprint, Member 및 Task가 삭제되며 실행 취소할 수 없습니다.",
+        "cancel": "취소",
+        "confirm": "지우기 확인"
+      },
+      "importError": {
+        "invalidFormat": "잘못된 파일 형식",
+        "failed": "파일 가져오기 실패"
+      }
+    },
+    "defaults": {
+      "projectTitle": "Gantt Chart - 팀 작업 관리",
+      "sprintName": "Sprint {{number}}",
+      "memberName": "Member {{number}}",
+      "taskName": "작업 {{number}}"
+    },
+    "member": {
+      "namePlaceholder": "Member 이름",
+      "drag": "드래그하여 재정렬",
+      "delete": "Member 삭제",
+      "insertAbove": "위에 Member 삽입",
+      "insertBelow": "아래에 Member 삽입"
+    },
+    "sprint": {
+      "namePlaceholder": "Sprint 이름",
+      "startDate": "시작 날짜",
+      "endDate": "종료 날짜",
+      "delete": "Sprint 삭제",
+      "insertLeft": "왼쪽에 Sprint 삽입",
+      "insertRight": "오른쪽에 Sprint 삽입"
+    },
+    "storage": {
+      "title": "Task Storage",
+      "addTask": "작업 추가",
+      "emptyHint": "작업 카드가 아직 없습니다. '작업 추가'를 클릭하여 시작하세요"
+    },
+    "task": {
+      "namePlaceholder": "작업 이름",
+      "selectColor": "색상 선택",
+      "duplicate": "작업 복제",
+      "linkTooltip": "Cmd+클릭으로 링크 열기 / 클릭으로 편집",
+      "setLink": "하이퍼링크 설정",
+      "moreActions": "더 많은 작업",
+      "clearColor": "색상 지우기",
+      "editLink": "링크 편집",
+        "linkDialog": {
+          "title": "하이퍼링크 설정",
+          "urlLabel": "URL",
+          "urlPlaceholder": "https://example.com",
+          "clearLink": "링크 지우기",
+          "cancel": "취소",
+          "confirm": "확인"
+        },
+        "copySuffix": "(복사)"
+      },
+    "add": "추가"
   }
 }

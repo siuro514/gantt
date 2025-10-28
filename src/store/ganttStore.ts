@@ -5,6 +5,7 @@ import { Sprint, Member, Task, GanttState } from '@/types/gantt.types';
 import { DEFAULT_SPRINT_COLOR } from '@/utils/colors';
 import { detectOverlap } from '@/utils/overlapDetection';
 import { getCurrentDateISO } from '@/utils/dateUtils';
+import i18n from '@/i18n/config';
 
 interface GanttStore extends GanttState {
   // Sprint actions
@@ -47,11 +48,11 @@ interface GanttStore extends GanttState {
   canRedo: () => boolean;
 }
 
-const initialState: GanttState = {
+const getInitialState = (): GanttState => ({
   sprints: [
     {
       id: nanoid(),
-      title: 'Sprint 1',
+      title: i18n.t('gantt.defaults.sprintName', { number: 1 }),
       startDate: getCurrentDateISO(),
       endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       color: DEFAULT_SPRINT_COLOR,
@@ -59,7 +60,7 @@ const initialState: GanttState = {
     },
     {
       id: nanoid(),
-      title: 'Sprint 2',
+      title: i18n.t('gantt.defaults.sprintName', { number: 2 }),
       startDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       endDate: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       color: '#D9B5B0',
@@ -69,19 +70,19 @@ const initialState: GanttState = {
   members: [
     {
       id: nanoid(),
-      name: 'Member 1',
+      name: i18n.t('gantt.defaults.memberName', { number: 1 }),
       order: 0,
     },
   ],
   tasks: [],
-  projectTitle: 'Gantt Chart - 團隊任務管理',
+  projectTitle: i18n.t('gantt.defaults.projectTitle'),
   primaryColor: '#6750A4',
-};
+});
 
 export const useGanttStore = create<GanttStore>()(
   temporal(
     (set, get) => ({
-      ...initialState,
+      ...getInitialState(),
 
       // Sprint actions
       addSprint: (afterOrder) => {
@@ -98,7 +99,7 @@ export const useGanttStore = create<GanttStore>()(
           
           const newSprint: Sprint = {
             id: nanoid(),
-            title: `Sprint ${state.sprints.length + 1}`,
+            title: i18n.t('gantt.defaults.sprintName', { number: state.sprints.length + 1 }),
             startDate: getCurrentDateISO(),
             endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             color: DEFAULT_SPRINT_COLOR,
@@ -146,7 +147,7 @@ export const useGanttStore = create<GanttStore>()(
           
           const newMember: Member = {
             id: nanoid(),
-            name: `Member ${state.members.length + 1}`,
+            name: i18n.t('gantt.defaults.memberName', { number: state.members.length + 1 }),
             order: newOrder,
           };
           
@@ -201,7 +202,7 @@ export const useGanttStore = create<GanttStore>()(
           const storageTaskCount = state.tasks.filter((t) => t.memberId === null).length;
           const newTask: Task = {
             id: nanoid(),
-            title: `Task ${state.tasks.length + 1}`,
+            title: i18n.t('gantt.defaults.taskName', { number: state.tasks.length + 1 }),
             memberId: null,
             startX: 0,
             width: 171.5, // 默認寬度 = Sprint 寬度 (187.5) - 16
@@ -303,7 +304,7 @@ export const useGanttStore = create<GanttStore>()(
             startX: 0,
             rowIndex: 0,
             storageOrder: storageTaskCount,
-            title: `${task.title} (copy)`,
+            title: `${task.title} ${i18n.t('gantt.task.copySuffix')}`,
           };
 
           return { tasks: [...state.tasks, duplicatedTask] };

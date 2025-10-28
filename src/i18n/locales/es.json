@@ -130,5 +130,270 @@
       "description": "Si tienes alguna sugerencia, pregunta u oportunidad de cooperación, no dudes en contactarnos",
       "email": "Correo Electrónico"
     }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización",
+    "section1": {
+      "title": "Recopilación de datos",
+      "content": "Easy & Good Things se compromete a proteger su privacidad. Todas nuestras herramientas se ejecutan localmente en su navegador y no cargan sus datos en nuestros servidores."
+    },
+    "section2": {
+      "title": "Almacenamiento local",
+      "content": "Algunas herramientas (como los diagramas de Gantt) utilizan la función LocalStorage del navegador para almacenar sus datos, lo que le permite continuar usándolo en su próxima visita. Estos datos solo se almacenan en su dispositivo y no podemos acceder a ellos."
+    },
+    "section3": {
+      "title": "Cookies y seguimiento",
+      "content": "Utilizamos Google Analytics para comprender el uso del sitio web y Google AdSense para mostrar anuncios. Estos servicios pueden utilizar cookies para recopilar estadísticas de uso anónimas."
+    },
+    "section4": {
+      "title": "Servicios de terceros",
+      "intro": "Nuestro sitio web utiliza los siguientes servicios de terceros:",
+      "item1": "Google AdSense - para mostrar anuncios",
+      "item2": "Google Analytics - para analizar el tráfico del sitio web",
+      "outro": "Estos servicios tienen sus propias políticas de privacidad y le recomendamos que las revise."
+    },
+    "section5": {
+      "title": "Seguridad de datos",
+      "content": "Como no recopilamos ni almacenamos sus datos personales, no existe riesgo de fuga de datos. Todo el procesamiento se completa localmente en su navegador."
+    },
+    "section6": {
+      "title": "Privacidad infantil",
+      "content": "Nuestros servicios están dirigidos al público en general y no recopilamos intencionalmente información personal de niños menores de 13 años."
+    },
+    "section7": {
+      "title": "Cambios en la política",
+      "content": "Podemos actualizar esta política de privacidad de vez en cuando. Cualquier cambio se publicará en esta página y se actualizará la fecha de 'Última actualización'."
+    },
+    "section8": {
+      "title": "Contáctanos",
+      "content": "Si tiene alguna pregunta sobre esta política de privacidad, contáctenos por correo electrónico:"
+    }
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última actualización",
+    "section1": {
+      "title": "Descripción del servicio",
+      "content": "Easy & Good Things proporciona una colección de herramientas en línea gratuitas, que incluyen, entre otras, diagramas de Gantt, formato JSON, codificación/decodificación Base64, compresión de imágenes y otras funciones. Todas las herramientas son gratuitas y no requieren registro."
+    },
+    "section2": {
+      "title": "Licencia de uso",
+      "content": "Le otorgamos un derecho limitado, no exclusivo e intransferible para usar los servicios de este sitio web. Usted acepta usar este servicio solo con fines legales y no abusar de este servicio de ninguna manera."
+    },
+    "section3": {
+      "title": "Restricciones de uso",
+      "intro": "Usted acepta no:",
+      "item1": "Intentar interrumpir o interferir con el funcionamiento normal del sitio web",
+      "item2": "Usar herramientas automatizadas para acceder excesivamente al sitio web",
+      "item3": "Copiar, modificar o distribuir cualquier parte del sitio web (a menos que esté explícitamente autorizado)",
+      "item4": "Usar el servicio para cualquier propósito ilegal o no autorizado"
+    },
+    "section4": {
+      "title": "Descargo de responsabilidad",
+      "content": "Este servicio se proporciona 'tal cual' sin garantías expresas o implícitas. No garantizamos que el servicio sea ininterrumpido, oportuno, seguro o libre de errores. No somos responsables de ninguna pérdida de datos, errores o daños que surjan del uso de este servicio."
+    },
+    "section5": {
+      "title": "Limitación de responsabilidad",
+      "content": "En la medida máxima permitida por la ley, Easy & Good Things y sus desarrolladores no serán responsables de ningún daño directo, indirecto, incidental, especial o consecuente."
+    },
+    "section6": {
+      "title": "Propiedad intelectual",
+      "content": "Todo el contenido de este sitio web, incluidos, entre otros, texto, gráficos, logotipos, iconos, imágenes y software, está protegido por las leyes de derechos de autor y otras leyes de propiedad intelectual."
+    },
+    "section7": {
+      "title": "Enlaces de terceros",
+      "content": "Este sitio web puede contener enlaces a sitios web de terceros. No somos responsables del contenido o las prácticas de estos sitios web."
+    },
+    "section8": {
+      "title": "Modificación de términos",
+      "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de este servicio indica su aceptación de los términos modificados."
+    },
+    "section9": {
+      "title": "Ley aplicable",
+      "content": "Estos términos se rigen por las leyes de la República de China (Taiwán), y cualquier disputa se someterá a la jurisdicción de los tribunales taiwaneses."
+    },
+    "section10": {
+      "title": "Información de contacto",
+      "content": "Si tiene alguna pregunta o inquietud, contáctenos:"
+    }
+  },
+  "jsonParser": {
+    "title": "Formateador JSON",
+    "description": "Formatee, valide y edite datos JSON con soporte para edición visual, agregar/eliminar nodos y más",
+    "parseButton": "Analizar y Editar",
+    "saveButton": "Guardar a la Izquierda",
+    "inputTitle": "Entrada JSON",
+    "outputTitle": "Resultado Editable",
+    "placeholder": "{\"name\": \"John\", \"age\": 30}",
+    "buttons": {
+      "clear": "Limpiar",
+      "copy": "Copiar al Portapapeles",
+      "treeEdit": "Editar Árbol",
+      "textView": "Vista de Texto",
+      "format": "Formatear",
+      "minify": "Minificar"
+    },
+    "messages": {
+      "parseSuccess": "¡Análisis exitoso! Ahora puedes editar los datos JSON",
+      "parseError": "Error de análisis JSON: ",
+      "copySuccess": "¡Copiado al portapapeles!",
+      "saveSuccess": "¡Actualizado en el cuadro de entrada izquierdo!",
+      "emptyState": "Haz clic en la flecha derecha del divisor central para comenzar a editar JSON"
+    },
+    "tips": {
+      "title": "Consejos de Uso",
+      "tip1": "Pega tu cadena JSON en el cuadro de entrada izquierdo",
+      "tip2": "Haz clic en el botón 'Analizar y Editar' para analizar JSON y entrar en modo de edición visual",
+      "tip3": "En modo de edición de árbol, puedes modificar directamente valores, convertir tipos, agregar/eliminar nodos",
+      "tip4": "Los arrays y objetos pueden agregar nuevos elementos/propiedades haciendo clic en el botón '+'",
+      "tip5": "Cada nodo se puede convertir a diferentes tipos (cadena, número, booleano, etc.) mediante el menú desplegable",
+      "tip6": "En modo de vista de texto, haz clic en el botón 'Minificar' para comprimir JSON (eliminar espacios y saltos de línea)",
+      "tip7": "Arrastra el divisor central para cambiar el tamaño de los paneles izquierdo y derecho",
+      "tip8": "Después de editar, haz clic en el botón 'Guardar' para actualizar el resultado en el cuadro de entrada izquierdo",
+      "tip9": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus datos"
+    }
+  },
+  "base64": {
+    "title": "Codificador/Decodificador Base64",
+    "description": "Codifica y decodifica Base64 rápidamente, compatible con chino y caracteres especiales",
+    "mode": {
+      "encode": "Codificar",
+      "decode": "Decodificar"
+    },
+    "inputTitle": {
+      "encode": "Texto original",
+      "decode": "Cadena Base64"
+    },
+    "outputTitle": {
+      "encode": "Resultado Base64",
+      "decode": "Resultado decodificado"
+    },
+    "placeholder": {
+      "encode": "Ingresa el texto a codificar...",
+      "decode": "Ingresa la cadena Base64 a decodificar..."
+    },
+    "buttons": {
+      "encode": "Codificar",
+      "decode": "Decodificar",
+      "swap": "Intercambiar entrada/salida",
+      "clear": "Limpiar",
+      "copy": "Copiar al portapapeles"
+    },
+    "messages": {
+      "encodeSuccess": "¡Codificación exitosa!",
+      "decodeSuccess": "¡Decodificación exitosa!",
+      "encodeFailed": "Codificación fallida: ",
+      "decodeFailed": "Decodificación fallida: Asegúrate de que la entrada es una cadena Base64 válida",
+      "copySuccess": "¡Copiado al portapapeles!"
+    },
+    "info": {
+      "whatIsBase64": "¿Qué es Base64?",
+      "description": "Base64 es un esquema de codificación que utiliza 64 caracteres imprimibles para representar datos binarios. Se usa comúnmente para transmitir datos binarios en entornos de texto, como archivos adjuntos de correo electrónico, URLs de datos, etc.",
+      "useCases": "Casos de uso",
+      "useCase1": "Incrustar imágenes en HTML/CSS (Data URL)",
+      "useCase2": "Autenticación básica HTTP",
+      "useCase3": "Pasar parámetros complejos en URLs",
+      "useCase4": "Codificación antes del cifrado de datos (Nota: ¡Base64 no es cifrado!)"
+    }
+  },
+  "imageCompressor": {
+    "title": "Compresor de imágenes",
+    "description": "Comprime imágenes en línea manteniendo buena calidad, compatible con formatos JPG, PNG, WebP",
+    "upload": {
+      "title": "Haz clic o arrastra la imagen aquí",
+      "subtitle": "Compatible con formatos JPG, PNG, WebP",
+      "error": "Por favor selecciona un archivo de imagen"
+    },
+    "compression": {
+      "quality": "Calidad de compresión: {{quality}}%",
+      "originalSize": "Tamaño original: ",
+      "compressedSize": "Comprimido: ",
+      "reduction": "(Reducido {{ratio}}%)"
+    },
+    "buttons": {
+      "download": "Descargar",
+      "clear": "Limpiar"
+    },
+    "preview": {
+      "original": "Imagen original",
+      "compressed": "Comprimida",
+      "size": "Tamaño: "
+    },
+    "tips": {
+      "title": "Consejos de uso",
+      "tip1": "Ajusta el control deslizante de calidad para controlar el nivel de compresión: valores más bajos significan menor tamaño de archivo pero calidad reducida",
+      "tip2": "La configuración de calidad recomendada está entre 70-85% para un buen equilibrio entre tamaño de archivo y calidad",
+      "tip3": "El formato de imagen comprimida es JPEG, adecuado para fotos",
+      "tip4": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus imágenes"
+    }
+  },
+  "gantt": {
+    "toolbar": {
+      "back": "Volver",
+      "projectTitle": "Título del proyecto",
+      "clearAll": "Borrar todos los datos",
+      "undo": "Deshacer (Cmd+Z)",
+      "redo": "Rehacer (Cmd+Shift+Z)",
+      "exportPNG": "Exportar PNG",
+      "exportPDF": "Exportar PDF (con hipervínculos)",
+      "exportJSON": "Exportar JSON",
+      "importJSON": "Importar JSON",
+      "clearDialog": {
+        "title": "Borrar todos los datos",
+        "content": "¿Estás seguro de que quieres borrar todos los datos? Esto eliminará todos los Sprints, Members y Tasks y no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar borrado"
+      },
+      "importError": {
+        "invalidFormat": "Formato de archivo inválido",
+        "failed": "Error al importar el archivo"
+      }
+    },
+    "defaults": {
+      "projectTitle": "Gantt Chart - Gestión de tareas del equipo",
+      "sprintName": "Sprint {{number}}",
+      "memberName": "Member {{number}}",
+      "taskName": "Tarea {{number}}"
+    },
+    "member": {
+      "namePlaceholder": "Nombre del Member",
+      "drag": "Arrastra para reordenar",
+      "delete": "Eliminar Member",
+      "insertAbove": "Insertar Member arriba",
+      "insertBelow": "Insertar Member abajo"
+    },
+    "sprint": {
+      "namePlaceholder": "Nombre del Sprint",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "delete": "Eliminar Sprint",
+      "insertLeft": "Insertar Sprint a la izquierda",
+      "insertRight": "Insertar Sprint a la derecha"
+    },
+    "storage": {
+      "title": "Task Storage",
+      "addTask": "Agregar tarea",
+      "emptyHint": "No hay tarjetas de tareas todavía, haz clic en 'Agregar tarea' para comenzar"
+    },
+    "task": {
+      "namePlaceholder": "Nombre de la tarea",
+      "selectColor": "Seleccionar color",
+      "duplicate": "Duplicar tarea",
+      "linkTooltip": "Cmd+Clic para abrir enlace / Clic para editar",
+      "setLink": "Establecer hipervínculo",
+      "moreActions": "Más acciones",
+      "clearColor": "Limpiar color",
+      "editLink": "Editar enlace",
+      "linkDialog": {
+        "title": "Establecer hipervínculo",
+        "urlLabel": "URL",
+        "urlPlaceholder": "https://example.com",
+        "clearLink": "Limpiar enlace",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar"
+      }
+    },
+    "add": "Agregar"
   }
 }

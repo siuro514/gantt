@@ -130,6 +130,272 @@
       "description": "如有任何建議、問題或合作機會，歡迎與我們聯繫",
       "email": "Email"
     }
+  },
+  "privacy": {
+    "title": "隱私政策",
+    "lastUpdated": "最後更新",
+    "section1": {
+      "title": "資料收集",
+      "content": "Easy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本機運行，不會將您的資料上傳到我們的伺服器。"
+    },
+    "section2": {
+      "title": "本機儲存",
+      "content": "部分工具（如甘特圖）會使用瀏覽器的 LocalStorage 功能來儲存您的資料，以便您下次訪問時可以繼續使用。這些資料僅儲存在您的設備上，我們無法訪問。"
+    },
+    "section3": {
+      "title": "Cookies 與追蹤",
+      "content": "我們使用 Google Analytics 來了解網站的使用情況，以及 Google AdSense 來顯示廣告。這些服務可能會使用 Cookies 來收集匿名的使用統計資料。"
+    },
+    "section4": {
+      "title": "第三方服務",
+      "intro": "我們的網站使用以下第三方服務：",
+      "item1": "Google AdSense - 用於顯示廣告",
+      "item2": "Google Analytics - 用於分析網站流量",
+      "outro": "這些服務有各自的隱私政策，我們建議您查閱相關說明。"
+    },
+    "section5": {
+      "title": "資料安全",
+      "content": "由於我們不收集或儲存您的個人資料，因此不存在資料洩露的風險。所有處理都在您的瀏覽器本機完成。"
+    },
+    "section6": {
+      "title": "兒童隱私",
+      "content": "我們的服務面向一般大眾，不會故意收集 13 歲以下兒童的個人資訊。"
+    },
+    "section7": {
+      "title": "政策變更",
+      "content": "我們可能會不時更新本隱私政策。任何變更都會在本頁面上發布，並更新「最後更新」日期。"
+    },
+    "section8": {
+      "title": "聯絡我們",
+      "content": "如果您對本隱私政策有任何疑問，請透過電子郵件聯絡我們："
+    }
+  },
+  "terms": {
+    "title": "使用條款",
+    "lastUpdated": "最後更新",
+    "section1": {
+      "title": "服務說明",
+      "content": "Easy & Good Things 提供免費的線上工具集合，包括但不限於甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等功能。所有工具均可免費使用，無需註冊。"
+    },
+    "section2": {
+      "title": "使用授權",
+      "content": "我們授予您有限的、非獨占的、不可轉讓的權利來使用本網站的服務。您同意僅將本服務用於合法目的，且不會以任何方式濫用本服務。"
+    },
+    "section3": {
+      "title": "使用限制",
+      "intro": "您同意不會：",
+      "item1": "試圖破壞或干擾網站的正常運作",
+      "item2": "使用自動化工具過度訪問網站",
+      "item3": "複製、修改或分發網站的任何部分（除非獲得明確授權）",
+      "item4": "將服務用於任何非法或未經授權的目的"
+    },
+    "section4": {
+      "title": "免責聲明",
+      "content": "本服務按「現狀」提供，不提供任何明示或暗示的保證。我們不保證服務將不間斷、及時、安全或無錯誤。使用本服務產生的任何資料遺失、錯誤或損害，我們概不負責。"
+    },
+    "section5": {
+      "title": "責任限制",
+      "content": "在法律允許的最大範圍內，Easy & Good Things 及其開發者不對任何直接、間接、偶然、特殊或後果性損害承擔責任。"
+    },
+    "section6": {
+      "title": "知識產權",
+      "content": "本網站的所有內容，包括但不限於文字、圖形、標誌、圖示、圖像和軟體，均受版權法和其他知識產權法的保護。"
+    },
+    "section7": {
+      "title": "第三方連結",
+      "content": "本網站可能包含指向第三方網站的連結。我們不對這些網站的內容或做法負責。"
+    },
+    "section8": {
+      "title": "條款修改",
+      "content": "我們保留隨時修改這些條款的權利。繼續使用本服務即表示您接受修改後的條款。"
+    },
+    "section9": {
+      "title": "適用法律",
+      "content": "本條款受中華民國法律管轄，任何爭議應提交台灣法院管轄。"
+    },
+    "section10": {
+      "title": "聯絡資訊",
+      "content": "如有任何問題或疑慮，請聯絡我們："
+    }
+  },
+  "jsonParser": {
+    "title": "JSON 格式化工具",
+    "description": "格式化、驗證和編輯 JSON 資料，支援可視化編輯、增刪節點等功能",
+    "parseButton": "解析並編輯",
+    "saveButton": "儲存到左側",
+    "inputTitle": "輸入 JSON",
+    "outputTitle": "可編輯結果",
+    "placeholder": "{\"name\": \"John\", \"age\": 30}",
+    "buttons": {
+      "clear": "清空",
+      "copy": "複製到剪貼簿",
+      "treeEdit": "樹狀編輯",
+      "textView": "文字檢視",
+      "format": "格式化",
+      "minify": "簡潔化"
+    },
+    "messages": {
+      "parseSuccess": "解析成功！現在可以編輯 JSON 資料",
+      "parseError": "JSON 格式錯誤：",
+      "copySuccess": "已複製到剪貼簿！",
+      "saveSuccess": "已更新到左側輸入框！",
+      "emptyState": "點擊中間分隔欄的向右箭頭開始編輯 JSON"
+    },
+    "tips": {
+      "title": "使用說明",
+      "tip1": "將 JSON 字串貼到左側輸入框",
+      "tip2": "點擊「解析並編輯」按鈕解析 JSON 並進入可視化編輯模式",
+      "tip3": "在樹狀編輯模式中，可以直接修改值、類型轉換、增刪節點",
+      "tip4": "陣列和物件可以點擊「+」按鈕添加新項目/屬性",
+      "tip5": "每個節點都可以透過下拉選單轉換類型（字串、數字、布林值等）",
+      "tip6": "在文字檢視模式中，點擊「簡潔化」按鈕可壓縮 JSON（去除空格和換行）",
+      "tip7": "拖曳中間分隔線可調整左右窗格大小",
+      "tip8": "編輯完成後點擊「儲存」按鈕將結果更新回左側輸入框",
+      "tip9": "所有處理都在瀏覽器本機完成，不會上傳你的資料"
+    }
+  },
+  "base64": {
+    "title": "Base64 編碼/解碼",
+    "description": "快速進行 Base64 編碼和解碼，支援中文和特殊字元",
+    "mode": {
+      "encode": "編碼 (Encode)",
+      "decode": "解碼 (Decode)"
+    },
+    "inputTitle": {
+      "encode": "原始文字",
+      "decode": "Base64 字串"
+    },
+    "outputTitle": {
+      "encode": "Base64 結果",
+      "decode": "解碼結果"
+    },
+    "placeholder": {
+      "encode": "輸入要編碼的文字...",
+      "decode": "輸入要解碼的 Base64 字串..."
+    },
+    "buttons": {
+      "encode": "編碼",
+      "decode": "解碼",
+      "swap": "交換輸入輸出",
+      "clear": "清空",
+      "copy": "複製到剪貼簿"
+    },
+    "messages": {
+      "encodeSuccess": "編碼成功！",
+      "decodeSuccess": "解碼成功！",
+      "encodeFailed": "編碼失敗：",
+      "decodeFailed": "解碼失敗：請確認輸入的是有效的 Base64 字串",
+      "copySuccess": "已複製到剪貼簿！"
+    },
+    "info": {
+      "whatIsBase64": "什麼是 Base64？",
+      "description": "Base64 是一種用 64 個可列印字元來表示二進位資料的編碼方式。常用於在文字環境中傳輸二進位資料，如電子郵件附件、資料 URL 等。",
+      "useCases": "使用場景",
+      "useCase1": "將圖片嵌入 HTML/CSS 中（Data URL）",
+      "useCase2": "HTTP Basic Authentication",
+      "useCase3": "在 URL 中傳遞複雜參數",
+      "useCase4": "資料加密前的編碼（注意：Base64 不是加密！）"
+    }
+  },
+  "imageCompressor": {
+    "title": "圖片壓縮工具",
+    "description": "線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式",
+    "upload": {
+      "title": "點擊或拖曳圖片到此處",
+      "subtitle": "支援 JPG、PNG、WebP 格式",
+      "error": "請選擇圖片檔案"
+    },
+    "compression": {
+      "quality": "壓縮品質：{{quality}}%",
+      "originalSize": "原始大小：",
+      "compressedSize": "壓縮後：",
+      "reduction": "(減少 {{ratio}}%)"
+    },
+    "buttons": {
+      "download": "下載",
+      "clear": "清除"
+    },
+    "preview": {
+      "original": "原始圖片",
+      "compressed": "壓縮後",
+      "size": "大小："
+    },
+    "tips": {
+      "title": "使用提示",
+      "tip1": "調整品質滑桿可以控制壓縮程度，數值越低檔案越小但畫質會降低",
+      "tip2": "建議品質設定在 70-85% 之間，可以在檔案大小和畫質間取得良好平衡",
+      "tip3": "壓縮後的圖片格式為 JPEG，適合照片類圖片",
+      "tip4": "所有處理都在瀏覽器本機完成，不會上傳你的圖片"
+    }
+  },
+  "gantt": {
+    "toolbar": {
+      "back": "回上一頁",
+      "projectTitle": "專案標題",
+      "clearAll": "清除所有資料",
+      "undo": "復原 (Cmd+Z)",
+      "redo": "重做 (Cmd+Shift+Z)",
+      "exportPNG": "匯出 PNG",
+      "exportPDF": "匯出 PDF（支援超連結）",
+      "exportJSON": "匯出 JSON",
+      "importJSON": "匯入 JSON",
+      "clearDialog": {
+        "title": "清除所有資料",
+        "content": "確定要清除所有資料嗎？這將刪除所有 Sprint、Member 和 Task，並且無法復原。",
+        "cancel": "取消",
+        "confirm": "確定清除"
+      },
+      "importError": {
+        "invalidFormat": "檔案格式無效",
+        "failed": "匯入失敗"
+      }
+    },
+    "defaults": {
+      "projectTitle": "Gantt Chart - 團隊任務管理",
+      "sprintName": "Sprint {{number}}",
+      "memberName": "Member {{number}}",
+      "taskName": "任務 {{number}}"
+    },
+    "member": {
+      "namePlaceholder": "Member 名稱",
+      "drag": "拖曳排序",
+      "delete": "刪除 Member",
+      "insertAbove": "在上方插入 Member",
+      "insertBelow": "在下方插入 Member"
+    },
+    "sprint": {
+      "namePlaceholder": "Sprint 名稱",
+      "startDate": "開始日期",
+      "endDate": "結束日期",
+      "delete": "刪除 Sprint",
+      "insertLeft": "在左側插入 Sprint",
+      "insertRight": "在右側插入 Sprint"
+    },
+    "storage": {
+      "title": "Task Storage",
+      "addTask": "新增工作",
+      "emptyHint": "暫時沒有工作卡片，點擊「新增工作」開始"
+    },
+    "task": {
+      "namePlaceholder": "任務名稱",
+      "selectColor": "選擇顏色",
+      "duplicate": "複製工作卡",
+      "linkTooltip": "Cmd+點擊開啟連結 / 點擊編輯",
+      "setLink": "設定超連結",
+      "moreActions": "更多操作",
+      "clearColor": "清除顏色",
+      "editLink": "編輯連結",
+        "linkDialog": {
+          "title": "設定超連結",
+          "urlLabel": "網址",
+          "urlPlaceholder": "https://example.com",
+          "clearLink": "清除連結",
+          "cancel": "取消",
+          "confirm": "確定"
+        },
+        "copySuffix": "(副本)"
+      },
+    "add": "新增"
   }
 }
 

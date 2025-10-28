@@ -15,8 +15,10 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { nanoid } from 'nanoid';
 import { DEFAULT_SPRINT_COLOR } from '@/utils/colors';
+import { useTranslation } from 'react-i18next';
 
 export default function Toolbar() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { exportData, loadData, projectTitle, updateProjectTitle, tasks } = useGanttStore();
   const [canUndo, setCanUndo] = useState(false);
@@ -65,7 +67,7 @@ export default function Toolbar() {
       sprints: [
         {
           id: nanoid(),
-          title: 'Sprint 1',
+          title: t('gantt.defaults.sprintName', { number: 1 }),
           startDate: now.toISOString().split('T')[0],
           endDate: twoWeeksLater.toISOString().split('T')[0],
           color: DEFAULT_SPRINT_COLOR,
@@ -75,12 +77,12 @@ export default function Toolbar() {
       members: [
         {
           id: nanoid(),
-          name: 'Member 1',
+          name: t('gantt.defaults.memberName', { number: 1 }),
           order: 0,
         },
       ],
       tasks: [],
-      projectTitle: 'Gantt Chart - 團隊任務管理',
+      projectTitle: t('gantt.defaults.projectTitle'),
       primaryColor: '#6750A4',
     });
     // 清空 undo/redo 歷史，從清空後的狀態開始
@@ -322,18 +324,18 @@ export default function Toolbar() {
               sprints: data.sprints,
               members: data.members,
               tasks: data.tasks,
-              projectTitle: data.projectTitle || 'Gantt Chart - 團隊任務管理',
+              projectTitle: data.projectTitle || t('gantt.defaults.projectTitle'),
               primaryColor: data.primaryColor || '#6750A4',
             });
             // 清空 undo/redo 歷史，從導入的狀態開始
             useGanttStore.temporal.getState().clear();
             useGanttStore.temporal.getState().resume();
           } else {
-            alert('Invalid file format');
+            alert(t('gantt.toolbar.importError.invalidFormat'));
           }
         } catch (error) {
           console.error('Failed to import JSON:', error);
-          alert('Failed to import file');
+          alert(t('gantt.toolbar.importError.failed'));
         }
       };
       reader.readAsText(file);
@@ -344,7 +346,7 @@ export default function Toolbar() {
   return (
     <AppBar position="static" elevation={0} sx={{ backgroundColor: 'primary.main' }}>
       <MuiToolbar sx={{ flexWrap: 'wrap', gap: 1 }}>
-        <Tooltip title="回上一頁">
+        <Tooltip title={t('gantt.toolbar.back')}>
           <IconButton 
             color="inherit" 
             onClick={() => navigate('/')}
@@ -359,7 +361,7 @@ export default function Toolbar() {
             value={projectTitle}
             onChange={updateProjectTitle}
             variant="h6"
-            placeholder="Project Title"
+            placeholder={t('gantt.toolbar.projectTitle')}
             sx={{
               color: 'inherit',
               '& .MuiInputBase-input': {
@@ -373,13 +375,13 @@ export default function Toolbar() {
         </Box>
 
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          <Tooltip title="清除所有資料">
+          <Tooltip title={t('gantt.toolbar.clearAll')}>
             <IconButton color="inherit" onClick={() => setClearDialogOpen(true)}>
               <DeleteSweepIcon />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="復原 (Cmd+Z)">
+          <Tooltip title={t('gantt.toolbar.undo')}>
             <span>
               <IconButton color="inherit" onClick={handleUndo} disabled={!canUndo}>
                 <UndoIcon />
@@ -387,7 +389,7 @@ export default function Toolbar() {
             </span>
           </Tooltip>
 
-          <Tooltip title="重做 (Cmd+Shift+Z)">
+          <Tooltip title={t('gantt.toolbar.redo')}>
             <span>
               <IconButton color="inherit" onClick={handleRedo} disabled={!canRedo}>
                 <RedoIcon />
@@ -395,25 +397,25 @@ export default function Toolbar() {
             </span>
           </Tooltip>
 
-          <Tooltip title="匯出 PNG">
+          <Tooltip title={t('gantt.toolbar.exportPNG')}>
             <IconButton color="inherit" onClick={handleExportPNG}>
               <ImageIcon />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="匯出 PDF（支援超連結）">
+          <Tooltip title={t('gantt.toolbar.exportPDF')}>
             <IconButton color="inherit" onClick={handleExportPDF}>
               <PictureAsPdfIcon />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="匯出 JSON">
+          <Tooltip title={t('gantt.toolbar.exportJSON')}>
             <IconButton color="inherit" onClick={handleExportJSON}>
               <DownloadIcon />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="匯入 JSON">
+          <Tooltip title={t('gantt.toolbar.importJSON')}>
             <IconButton color="inherit" onClick={handleImportJSON}>
               <UploadIcon />
             </IconButton>
@@ -425,18 +427,18 @@ export default function Toolbar() {
           open={clearDialogOpen}
           onClose={() => setClearDialogOpen(false)}
         >
-          <DialogTitle>清除所有資料</DialogTitle>
+          <DialogTitle>{t('gantt.toolbar.clearDialog.title')}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              確定要清除所有資料嗎？這將刪除所有 Sprint、Member 和 Task，並且無法復原。
+              {t('gantt.toolbar.clearDialog.content')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setClearDialogOpen(false)}>
-              取消
+              {t('gantt.toolbar.clearDialog.cancel')}
             </Button>
             <Button onClick={handleClearAll} color="error" variant="contained">
-              確定清除
+              {t('gantt.toolbar.clearDialog.confirm')}
             </Button>
           </DialogActions>
         </Dialog>

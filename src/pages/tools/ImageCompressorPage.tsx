@@ -13,8 +13,10 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 
 export default function ImageCompressorPage() {
+  const { t } = useTranslation();
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const [originalSize, setOriginalSize] = useState<number>(0);
@@ -29,7 +31,7 @@ export default function ImageCompressorPage() {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setError('請選擇圖片檔案');
+      setError(t('imageCompressor.upload.error'));
       return;
     }
 
@@ -122,10 +124,10 @@ export default function ImageCompressorPage() {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          🖼️ 圖片壓縮工具
+          🖼️ {t('imageCompressor.title')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式
+          {t('imageCompressor.description')}
         </Typography>
       </Box>
 
@@ -155,10 +157,10 @@ export default function ImageCompressorPage() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
           <Typography variant="h6" gutterBottom>
-            點擊或拖曳圖片到此處
+            {t('imageCompressor.upload.title')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            支援 JPG、PNG、WebP 格式
+            {t('imageCompressor.upload.subtitle')}
           </Typography>
           <input
             ref={fileInputRef}
@@ -177,13 +179,13 @@ export default function ImageCompressorPage() {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
               <Box>
                 <Typography variant="h6" gutterBottom>
-                  壓縮品質：{quality}%
+                  {t('imageCompressor.compression.quality', { quality })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  原始大小：{formatSize(originalSize)} → 壓縮後：{formatSize(compressedSize)} 
+                  {t('imageCompressor.compression.originalSize')}{formatSize(originalSize)} → {t('imageCompressor.compression.compressedSize')}{formatSize(compressedSize)} 
                   {compressionRatio > 0 && (
                     <Typography component="span" color="success.main" sx={{ ml: 1, fontWeight: 600 }}>
-                      (減少 {compressionRatio}%)
+                      {t('imageCompressor.compression.reduction', { ratio: compressionRatio })}
                     </Typography>
                   )}
                 </Typography>
@@ -195,14 +197,14 @@ export default function ImageCompressorPage() {
                   onClick={handleDownload}
                   disabled={!compressedImage || loading}
                 >
-                  下載
+                  {t('imageCompressor.buttons.download')}
                 </Button>
                 <Button
                   variant="outlined"
                   startIcon={<DeleteIcon />}
                   onClick={handleClear}
                 >
-                  清除
+                  {t('imageCompressor.buttons.clear')}
                 </Button>
               </Box>
             </Box>
@@ -227,7 +229,7 @@ export default function ImageCompressorPage() {
             <Grid item xs={12} md={6}>
               <Paper sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
-                  原始圖片
+                  {t('imageCompressor.preview.original')}
                 </Typography>
                 <Box
                   component="img"
@@ -243,14 +245,14 @@ export default function ImageCompressorPage() {
                   }}
                 />
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                  大小：{formatSize(originalSize)}
+                  {t('imageCompressor.preview.size')}{formatSize(originalSize)}
                 </Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={6}>
               <Paper sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
-                  壓縮後
+                  {t('imageCompressor.preview.compressed')}
                   {loading && <CircularProgress size={20} sx={{ ml: 2 }} />}
                 </Typography>
                 {compressedImage && (
@@ -269,7 +271,7 @@ export default function ImageCompressorPage() {
                       }}
                     />
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      大小：{formatSize(compressedSize)}
+                      {t('imageCompressor.preview.size')}{formatSize(compressedSize)}
                     </Typography>
                   </>
                 )}
@@ -282,20 +284,20 @@ export default function ImageCompressorPage() {
       {/* Usage Tips */}
       <Paper sx={{ mt: 4, p: 3, backgroundColor: 'grey.50' }}>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-          💡 使用提示
+          💡 {t('imageCompressor.tips.title')}
         </Typography>
         <Box component="ul" sx={{ pl: 2 }}>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            調整品質滑桿可以控制壓縮程度，數值越低檔案越小但畫質會降低
+            {t('imageCompressor.tips.tip1')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            建議品質設定在 70-85% 之間，可以在檔案大小和畫質間取得良好平衡
+            {t('imageCompressor.tips.tip2')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            壓縮後的圖片格式為 JPEG，適合照片類圖片
+            {t('imageCompressor.tips.tip3')}
           </Typography>
           <Typography component="li" variant="body2">
-            所有處理都在瀏覽器本機完成，不會上傳你的圖片
+            {t('imageCompressor.tips.tip4')}
           </Typography>
         </Box>
       </Paper>

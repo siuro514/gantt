@@ -130,5 +130,271 @@
       "description": "If you have any suggestions, questions, or cooperation opportunities, please feel free to contact us",
       "email": "Email"
     }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "section1": {
+      "title": "Data Collection",
+      "content": "Easy & Good Things is committed to protecting your privacy. All our tools run locally in your browser and do not upload your data to our servers."
+    },
+    "section2": {
+      "title": "Local Storage",
+      "content": "Some tools (such as Gantt charts) use the browser's LocalStorage feature to store your data, allowing you to continue using it on your next visit. This data is only stored on your device and we cannot access it."
+    },
+    "section3": {
+      "title": "Cookies and Tracking",
+      "content": "We use Google Analytics to understand website usage and Google AdSense to display advertisements. These services may use Cookies to collect anonymous usage statistics."
+    },
+    "section4": {
+      "title": "Third-Party Services",
+      "intro": "Our website uses the following third-party services:",
+      "item1": "Google AdSense - for displaying advertisements",
+      "item2": "Google Analytics - for analyzing website traffic",
+      "outro": "These services have their own privacy policies, and we recommend that you review them."
+    },
+    "section5": {
+      "title": "Data Security",
+      "content": "Since we do not collect or store your personal data, there is no risk of data leakage. All processing is completed locally in your browser."
+    },
+    "section6": {
+      "title": "Children's Privacy",
+      "content": "Our services are aimed at the general public and do not intentionally collect personal information from children under the age of 13."
+    },
+    "section7": {
+      "title": "Policy Changes",
+      "content": "We may update this privacy policy from time to time. Any changes will be posted on this page and the 'Last Updated' date will be updated."
+    },
+    "section8": {
+      "title": "Contact Us",
+      "content": "If you have any questions about this privacy policy, please contact us via email:"
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated",
+    "section1": {
+      "title": "Service Description",
+      "content": "Easy & Good Things provides a collection of free online tools, including but not limited to Gantt charts, JSON formatting, Base64 encoding/decoding, image compression, and other features. All tools are free to use without registration."
+    },
+    "section2": {
+      "title": "License to Use",
+      "content": "We grant you a limited, non-exclusive, non-transferable right to use the services of this website. You agree to use this service only for lawful purposes and will not abuse this service in any way."
+    },
+    "section3": {
+      "title": "Usage Restrictions",
+      "intro": "You agree not to:",
+      "item1": "Attempt to disrupt or interfere with the normal operation of the website",
+      "item2": "Use automated tools to excessively access the website",
+      "item3": "Copy, modify, or distribute any part of the website (unless explicitly authorized)",
+      "item4": "Use the service for any illegal or unauthorized purpose"
+    },
+    "section4": {
+      "title": "Disclaimer",
+      "content": "This service is provided 'as is' without any express or implied warranties. We do not guarantee that the service will be uninterrupted, timely, secure, or error-free. We are not responsible for any data loss, errors, or damages arising from the use of this service."
+    },
+    "section5": {
+      "title": "Limitation of Liability",
+      "content": "To the maximum extent permitted by law, Easy & Good Things and its developers shall not be liable for any direct, indirect, incidental, special, or consequential damages."
+    },
+    "section6": {
+      "title": "Intellectual Property",
+      "content": "All content on this website, including but not limited to text, graphics, logos, icons, images, and software, is protected by copyright law and other intellectual property laws."
+    },
+    "section7": {
+      "title": "Third-Party Links",
+      "content": "This website may contain links to third-party websites. We are not responsible for the content or practices of these websites."
+    },
+    "section8": {
+      "title": "Terms Modification",
+      "content": "We reserve the right to modify these terms at any time. Continued use of this service indicates your acceptance of the modified terms."
+    },
+    "section9": {
+      "title": "Governing Law",
+      "content": "These terms are governed by the laws of the Republic of China (Taiwan), and any disputes shall be submitted to the jurisdiction of Taiwanese courts."
+    },
+    "section10": {
+      "title": "Contact Information",
+      "content": "If you have any questions or concerns, please contact us:"
+    }
+  },
+  "jsonParser": {
+    "title": "JSON Formatter",
+    "description": "Format, validate, and edit JSON data with support for visual editing, adding/removing nodes, and more",
+    "parseButton": "Parse & Edit",
+    "saveButton": "Save to Left",
+    "inputTitle": "Input JSON",
+    "outputTitle": "Editable Result",
+    "placeholder": "{\"name\": \"John\", \"age\": 30}",
+    "buttons": {
+      "clear": "Clear",
+      "copy": "Copy to Clipboard",
+      "treeEdit": "Tree Edit",
+      "textView": "Text View",
+      "format": "Format",
+      "minify": "Minify"
+    },
+    "messages": {
+      "parseSuccess": "Parsed successfully! You can now edit the JSON data",
+      "parseError": "JSON parse error: ",
+      "copySuccess": "Copied to clipboard!",
+      "saveSuccess": "Updated to left input box!",
+      "emptyState": "Click the right arrow in the middle divider to start editing JSON"
+    },
+    "tips": {
+      "title": "Usage Tips",
+      "tip1": "Paste your JSON string into the left input box",
+      "tip2": "Click the 'Parse and Edit' button to parse JSON and enter visual editing mode",
+      "tip3": "In tree edit mode, you can directly modify values, convert types, add/remove nodes",
+      "tip4": "Arrays and objects can add new items/properties by clicking the '+' button",
+      "tip5": "Each node can be converted to different types (string, number, boolean, etc.) via dropdown menu",
+      "tip6": "In text view mode, click 'Minify' button to compress JSON (remove spaces and newlines)",
+      "tip7": "Drag the middle divider to resize the left and right panels",
+      "tip8": "After editing, click the 'Save' button to update the result back to the left input box",
+      "tip9": "All processing is completed locally in your browser and will not upload your data"
+    }
+  },
+  "base64": {
+    "title": "Base64 Encoder/Decoder",
+    "description": "Quickly encode and decode Base64, supports Chinese and special characters",
+    "mode": {
+      "encode": "Encode",
+      "decode": "Decode"
+    },
+    "inputTitle": {
+      "encode": "Original Text",
+      "decode": "Base64 String"
+    },
+    "outputTitle": {
+      "encode": "Base64 Result",
+      "decode": "Decoded Result"
+    },
+    "placeholder": {
+      "encode": "Enter text to encode...",
+      "decode": "Enter Base64 string to decode..."
+    },
+    "buttons": {
+      "encode": "Encode",
+      "decode": "Decode",
+      "swap": "Swap Input/Output",
+      "clear": "Clear",
+      "copy": "Copy to Clipboard"
+    },
+    "messages": {
+      "encodeSuccess": "Encoded successfully!",
+      "decodeSuccess": "Decoded successfully!",
+      "encodeFailed": "Encoding failed: ",
+      "decodeFailed": "Decoding failed: Please ensure the input is a valid Base64 string",
+      "copySuccess": "Copied to clipboard!"
+    },
+    "info": {
+      "whatIsBase64": "What is Base64?",
+      "description": "Base64 is an encoding scheme that uses 64 printable characters to represent binary data. It is commonly used to transmit binary data in text environments, such as email attachments, data URLs, etc.",
+      "useCases": "Use Cases",
+      "useCase1": "Embedding images in HTML/CSS (Data URL)",
+      "useCase2": "HTTP Basic Authentication",
+      "useCase3": "Passing complex parameters in URLs",
+      "useCase4": "Encoding before data encryption (Note: Base64 is not encryption!)"
+    }
+  },
+  "imageCompressor": {
+    "title": "Image Compressor",
+    "description": "Compress images online while maintaining good quality, supports JPG, PNG, WebP formats",
+    "upload": {
+      "title": "Click or drag image here",
+      "subtitle": "Supports JPG, PNG, WebP formats",
+      "error": "Please select an image file"
+    },
+    "compression": {
+      "quality": "Compression Quality: {{quality}}%",
+      "originalSize": "Original Size: ",
+      "compressedSize": "Compressed: ",
+      "reduction": "(Reduced {{ratio}}%)"
+    },
+    "buttons": {
+      "download": "Download",
+      "clear": "Clear"
+    },
+    "preview": {
+      "original": "Original Image",
+      "compressed": "Compressed",
+      "size": "Size: "
+    },
+    "tips": {
+      "title": "Usage Tips",
+      "tip1": "Adjust the quality slider to control compression level - lower values mean smaller file size but reduced quality",
+      "tip2": "Recommended quality setting is between 70-85% for a good balance between file size and quality",
+      "tip3": "Compressed image format is JPEG, suitable for photos",
+      "tip4": "All processing is completed locally in your browser and will not upload your images"
+    }
+  },
+  "gantt": {
+    "toolbar": {
+      "back": "Back",
+      "projectTitle": "Project Title",
+      "clearAll": "Clear All Data",
+      "undo": "Undo (Cmd+Z)",
+      "redo": "Redo (Cmd+Shift+Z)",
+      "exportPNG": "Export PNG",
+      "exportPDF": "Export PDF (with hyperlinks)",
+      "exportJSON": "Export JSON",
+      "importJSON": "Import JSON",
+      "clearDialog": {
+        "title": "Clear All Data",
+        "content": "Are you sure you want to clear all data? This will delete all Sprints, Members, and Tasks and cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Confirm Clear"
+      },
+      "importError": {
+        "invalidFormat": "Invalid file format",
+        "failed": "Failed to import file"
+      }
+    },
+    "defaults": {
+      "projectTitle": "Gantt Chart - Team Task Management",
+      "sprintName": "Sprint {{number}}",
+      "memberName": "Member {{number}}",
+      "taskName": "Task {{number}}"
+    },
+    "member": {
+      "namePlaceholder": "Member Name",
+      "drag": "Drag to Reorder",
+      "delete": "Delete Member",
+      "insertAbove": "Insert Member Above",
+      "insertBelow": "Insert Member Below"
+    },
+    "sprint": {
+      "namePlaceholder": "Sprint Name",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "delete": "Delete Sprint",
+      "insertLeft": "Insert Sprint on Left",
+      "insertRight": "Insert Sprint on Right"
+    },
+    "storage": {
+      "title": "Task Storage",
+      "addTask": "Add Task",
+      "emptyHint": "No task cards yet, click 'Add Task' to start"
+    },
+    "task": {
+      "namePlaceholder": "Task Name",
+      "selectColor": "Select Color",
+      "duplicate": "Duplicate Task",
+      "linkTooltip": "Cmd+Click to open link / Click to edit",
+      "setLink": "Set Hyperlink",
+      "moreActions": "More Actions",
+      "clearColor": "Clear Color",
+      "editLink": "Edit Link",
+        "linkDialog": {
+          "title": "Set Hyperlink",
+          "urlLabel": "URL",
+          "urlPlaceholder": "https://example.com",
+          "clearLink": "Clear Link",
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        },
+        "copySuffix": "(copy)"
+      },
+    "add": "Add"
   }
 }

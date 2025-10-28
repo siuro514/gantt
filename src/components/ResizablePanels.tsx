@@ -3,6 +3,7 @@ import { Box, IconButton, Tooltip } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import { useTranslation } from 'react-i18next';
 
 interface ResizablePanelsProps {
   leftPanel: ReactNode;
@@ -27,6 +28,7 @@ export default function ResizablePanels({
   canParse = false,
   canSave = false,
 }: ResizablePanelsProps) {
+  const { t } = useTranslation();
   const [leftWidth, setLeftWidth] = useState(defaultLeftWidth);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -106,7 +108,7 @@ export default function ResizablePanels({
       >
         {/* 解析按钮（向右箭头） */}
         {onParse && (
-          <Tooltip title="解析並編輯" placement="right">
+          <Tooltip title={t('jsonParser.parseButton')} placement="right">
             <span>
               <IconButton
                 onClick={(e) => {
@@ -137,7 +139,7 @@ export default function ResizablePanels({
         
         {/* 保存按钮（向左箭头） */}
         {onSave && (
-          <Tooltip title="儲存到左側" placement="left">
+          <Tooltip title={t('jsonParser.saveButton')} placement="left">
             <span>
               <IconButton
                 onClick={(e) => {

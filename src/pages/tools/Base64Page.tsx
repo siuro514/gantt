@@ -15,8 +15,10 @@ import {
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { useTranslation } from 'react-i18next';
 
 export default function Base64Page() {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -28,9 +30,9 @@ export default function Base64Page() {
       const encoded = btoa(unescape(encodeURIComponent(input)));
       setOutput(encoded);
       setError('');
-      setSuccess('編碼成功！');
+      setSuccess(t('base64.messages.encodeSuccess'));
     } catch (err) {
-      setError('編碼失敗：' + (err as Error).message);
+      setError(t('base64.messages.encodeFailed') + (err as Error).message);
       setOutput('');
       setSuccess('');
     }
@@ -41,9 +43,9 @@ export default function Base64Page() {
       const decoded = decodeURIComponent(escape(atob(input)));
       setOutput(decoded);
       setError('');
-      setSuccess('解碼成功！');
+      setSuccess(t('base64.messages.decodeSuccess'));
     } catch (err) {
-      setError('解碼失敗：請確認輸入的是有效的 Base64 字串');
+      setError(t('base64.messages.decodeFailed'));
       setOutput('');
       setSuccess('');
     }
@@ -60,7 +62,7 @@ export default function Base64Page() {
   const handleCopy = () => {
     if (output) {
       navigator.clipboard.writeText(output);
-      setSuccess('已複製到剪貼簿！');
+      setSuccess(t('base64.messages.copySuccess'));
       setTimeout(() => setSuccess(''), 2000);
     }
   };
@@ -82,10 +84,10 @@ export default function Base64Page() {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          🔐 Base64 編碼/解碼
+          🔐 {t('base64.title')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          快速進行 Base64 編碼和解碼，支援中文和特殊字元
+          {t('base64.description')}
         </Typography>
       </Box>
 
@@ -104,10 +106,10 @@ export default function Base64Page() {
           aria-label="mode"
         >
           <ToggleButton value="encode" aria-label="encode">
-            編碼 (Encode)
+            {t('base64.mode.encode')}
           </ToggleButton>
           <ToggleButton value="decode" aria-label="decode">
-            解碼 (Decode)
+            {t('base64.mode.decode')}
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
@@ -128,18 +130,18 @@ export default function Base64Page() {
         <Paper sx={{ flex: 1, p: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h6">
-              {mode === 'encode' ? '原始文字' : 'Base64 字串'}
+              {t(`base64.inputTitle.${mode}`)}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Button variant="contained" onClick={handleProcess}>
-                {mode === 'encode' ? '編碼' : '解碼'}
+                {t(`base64.buttons.${mode}`)}
               </Button>
-              <Tooltip title="交換輸入輸出">
+              <Tooltip title={t('base64.buttons.swap')}>
                 <IconButton onClick={handleSwap} size="small">
                   <SwapVertIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="清空">
+              <Tooltip title={t('base64.buttons.clear')}>
                 <IconButton onClick={handleClear} size="small">
                   <DeleteSweepIcon />
                 </IconButton>
@@ -152,11 +154,7 @@ export default function Base64Page() {
             rows={15}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={
-              mode === 'encode'
-                ? '輸入要編碼的文字...'
-                : '輸入要解碼的 Base64 字串...'
-            }
+            placeholder={t(`base64.placeholder.${mode}`)}
             sx={{
               '& .MuiInputBase-root': {
                 fontFamily: 'monospace',
@@ -169,9 +167,9 @@ export default function Base64Page() {
         <Paper sx={{ flex: 1, p: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h6">
-              {mode === 'encode' ? 'Base64 結果' : '解碼結果'}
+              {t(`base64.outputTitle.${mode}`)}
             </Typography>
-            <Tooltip title="複製到剪貼簿">
+            <Tooltip title={t('base64.buttons.copy')}>
               <IconButton onClick={handleCopy} disabled={!output}>
                 <ContentCopyIcon />
               </IconButton>
@@ -199,27 +197,26 @@ export default function Base64Page() {
       {/* Usage Tips */}
       <Paper sx={{ mt: 4, p: 3, backgroundColor: 'grey.50' }}>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-          💡 什麼是 Base64？
+          💡 {t('base64.info.whatIsBase64')}
         </Typography>
         <Typography variant="body2" paragraph>
-          Base64 是一種用 64 個可列印字元來表示二進位資料的編碼方式。
-          常用於在文字環境中傳輸二進位資料，如電子郵件附件、資料 URL 等。
+          {t('base64.info.description')}
         </Typography>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mt: 2 }}>
-          🔧 使用場景
+          🔧 {t('base64.info.useCases')}
         </Typography>
         <Box component="ul" sx={{ pl: 2 }}>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            將圖片嵌入 HTML/CSS 中（Data URL）
+            {t('base64.info.useCase1')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            HTTP Basic Authentication
+            {t('base64.info.useCase2')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            在 URL 中傳遞複雜參數
+            {t('base64.info.useCase3')}
           </Typography>
           <Typography component="li" variant="body2">
-            資料加密前的編碼（注意：Base64 不是加密！）
+            {t('base64.info.useCase4')}
           </Typography>
         </Box>
       </Paper>

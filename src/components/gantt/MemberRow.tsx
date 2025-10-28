@@ -10,6 +10,7 @@ import { Member } from '@/types/gantt.types';
 import { useGanttStore } from '@/store/ganttStore';
 import EditableText from '../common/EditableText';
 import TaskCard from './TaskCard';
+import { useTranslation } from 'react-i18next';
 
 interface MemberRowProps {
   member: Member;
@@ -18,6 +19,7 @@ interface MemberRowProps {
 }
 
 export default function MemberRow({ member, memberIndex, onAddMember }: MemberRowProps) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [isNameHovered, setIsNameHovered] = useState(false);
   const [isTopLineHovered, setIsTopLineHovered] = useState(false);
@@ -120,14 +122,14 @@ export default function MemberRow({ member, memberIndex, onAddMember }: MemberRo
             value={member.name}
             onChange={handleNameChange}
             variant="body2"
-            placeholder="Member 名稱"
+            placeholder={t('gantt.member.namePlaceholder')}
             sx={{ fontFamily: '"Barlow Condensed", "Arial Narrow", sans-serif', fontWeight: 500, fontSize: '1.05rem' }}
           />
         </Box>
 
         {/* 左側拖曳按鈕 - 浮動 */}
         {isNameHovered && (
-          <Tooltip title="拖曳排序">
+          <Tooltip title={t('gantt.member.drag')}>
             <IconButton
               size="small"
               {...attributes}
@@ -160,7 +162,7 @@ export default function MemberRow({ member, memberIndex, onAddMember }: MemberRo
 
         {/* 右側刪除按鈕 - 浮動 */}
         {isNameHovered && (
-          <Tooltip title="刪除 Member">
+          <Tooltip title={t('gantt.member.delete')}>
             <IconButton
               size="small"
               onClick={handleDelete}
@@ -202,7 +204,7 @@ export default function MemberRow({ member, memberIndex, onAddMember }: MemberRo
             }}
           >
             {isTopLineHovered && (
-              <Tooltip title="在上方插入 Member">
+              <Tooltip title={t('gantt.member.insertAbove')}>
                 <IconButton
                   size="small"
                   onClick={() => onAddMember(member.order - 1)}
@@ -247,7 +249,7 @@ export default function MemberRow({ member, memberIndex, onAddMember }: MemberRo
           }}
         >
           {isBottomLineHovered && (
-            <Tooltip title="在下方插入 Member">
+            <Tooltip title={t('gantt.member.insertBelow')}>
               <IconButton
                 size="small"
                 onClick={() => onAddMember(member.order)}

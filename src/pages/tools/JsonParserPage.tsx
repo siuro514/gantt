@@ -18,12 +18,14 @@ import CodeIcon from '@mui/icons-material/Code';
 import CompressIcon from '@mui/icons-material/Compress';
 import JsonEditor from '@/components/JsonEditor';
 import ResizablePanels from '@/components/ResizablePanels';
+import { useTranslation } from 'react-i18next';
 
 type ViewMode = 'text' | 'tree';
 
 const STORAGE_KEY = 'json_parser_input';
 
 export default function JsonParserPage() {
+  const { t } = useTranslation();
   const [input, setInput] = useState('');
   const [parsedData, setParsedData] = useState<any>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('text');
@@ -59,9 +61,9 @@ export default function JsonParserPage() {
       setViewMode('tree');
       setIsMinified(false); // 重置简洁化状态
       setError('');
-      setSuccess('解析成功！現在可以編輯 JSON 資料');
+      setSuccess(t('jsonParser.messages.parseSuccess'));
     } catch (err) {
-      setError('JSON 格式錯誤：' + (err as Error).message);
+      setError(t('jsonParser.messages.parseError') + (err as Error).message);
       setParsedData(null);
       setSuccess('');
     }
@@ -78,7 +80,7 @@ export default function JsonParserPage() {
         textToCopy = JSON.stringify(parsedData, null, 2);
       }
       navigator.clipboard.writeText(textToCopy);
-      setSuccess('已複製到剪貼簿！');
+      setSuccess(t('jsonParser.messages.copySuccess'));
       setTimeout(() => setSuccess(''), 2000);
     }
   };
@@ -105,7 +107,7 @@ export default function JsonParserPage() {
       }
       setInput(formatted);
       saveToLocalStorage(formatted);
-      setSuccess('已更新到左側輸入框！');
+      setSuccess(t('jsonParser.messages.saveSuccess'));
       setTimeout(() => setSuccess(''), 2000);
     }
   };
@@ -119,10 +121,10 @@ export default function JsonParserPage() {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          📝 JSON 格式化工具
+          📝 {t('jsonParser.title')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          格式化、驗證和編輯 JSON 資料，支援可視化編輯、增刪節點等功能
+          {t('jsonParser.description')}
         </Typography>
       </Box>
 
@@ -135,8 +137,8 @@ export default function JsonParserPage() {
           leftPanel={
             <Box sx={{ minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 2, pr: 2, pt: 2, minHeight: '64px' }}>
-                <Typography variant="h6" sx={{ pt: 0.5 }}>輸入 JSON</Typography>
-                <Tooltip title="清空">
+                <Typography variant="h6" sx={{ pt: 0.5 }}>{t('jsonParser.inputTitle')}</Typography>
+                <Tooltip title={t('jsonParser.buttons.clear')}>
                   <IconButton onClick={handleClear} size="small">
                     <DeleteSweepIcon />
                   </IconButton>
@@ -148,7 +150,7 @@ export default function JsonParserPage() {
                   fullWidth
                   value={input}
                   onChange={(e) => handleInputChange(e.target.value)}
-                  placeholder='{"name": "John", "age": 30}'
+                  placeholder={t('jsonParser.placeholder')}
                   sx={{
                     flex: '1 1 auto',
                     minHeight: '450px',
@@ -177,7 +179,7 @@ export default function JsonParserPage() {
           rightPanel={
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', pl: 2, pr: 2, pt: 2, minHeight: '64px' }}>
-                <Typography variant="h6" sx={{ pt: 0.5 }}>可編輯結果</Typography>
+                <Typography variant="h6" sx={{ pt: 0.5 }}>{t('jsonParser.outputTitle')}</Typography>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                   <ToggleButtonGroup
                     value={viewMode}
@@ -191,18 +193,18 @@ export default function JsonParserPage() {
                     size="small"
                   >
                     <ToggleButton value="tree">
-                      <Tooltip title="樹狀編輯">
+                      <Tooltip title={t('jsonParser.buttons.treeEdit')}>
                         <EditIcon fontSize="small" />
                       </Tooltip>
                     </ToggleButton>
                     <ToggleButton value="text">
-                      <Tooltip title="文字檢視">
+                      <Tooltip title={t('jsonParser.buttons.textView')}>
                         <CodeIcon fontSize="small" />
                       </Tooltip>
                     </ToggleButton>
                   </ToggleButtonGroup>
                   {viewMode === 'text' && parsedData && (
-                    <Tooltip title={isMinified ? "格式化" : "簡潔化"}>
+                    <Tooltip title={isMinified ? t('jsonParser.buttons.format') : t('jsonParser.buttons.minify')}>
                       <IconButton 
                         onClick={() => setIsMinified(!isMinified)}
                         color={isMinified ? "primary" : "default"}
@@ -211,7 +213,7 @@ export default function JsonParserPage() {
                       </IconButton>
                     </Tooltip>
                   )}
-                  <Tooltip title="複製到剪貼簿">
+                  <Tooltip title={t('jsonParser.buttons.copy')}>
                     <IconButton onClick={handleCopy} disabled={!parsedData}>
                       <ContentCopyIcon />
                     </IconButton>
@@ -249,7 +251,7 @@ export default function JsonParserPage() {
                   )
                 ) : (
                   <Typography color="text.secondary" sx={{ textAlign: 'center', py: 10 }}>
-                    點擊中間分隔欄的向右箭頭開始編輯 JSON
+                    {t('jsonParser.messages.emptyState')}
                   </Typography>
                 )}
               </Box>
@@ -261,35 +263,35 @@ export default function JsonParserPage() {
       {/* Usage Tips */}
       <Paper sx={{ mt: 4, p: 3, backgroundColor: 'grey.50' }}>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-          💡 使用說明
+          💡 {t('jsonParser.tips.title')}
         </Typography>
         <Box component="ul" sx={{ pl: 2 }}>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            將 JSON 字串貼到左側輸入框
+            {t('jsonParser.tips.tip1')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            點擊「解析並編輯」按鈕解析 JSON 並進入可視化編輯模式
+            {t('jsonParser.tips.tip2')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            在樹狀編輯模式中，可以直接修改值、類型轉換、增刪節點
+            {t('jsonParser.tips.tip3')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            陣列和物件可以點擊「+」按鈕添加新項目/屬性
+            {t('jsonParser.tips.tip4')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            每個節點都可以透過下拉選單轉換類型（字串、數字、布林值等）
+            {t('jsonParser.tips.tip5')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            在文字檢視模式中，點擊「簡潔化」按鈕可壓縮 JSON（去除空格和換行）
+            {t('jsonParser.tips.tip6')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            拖曳中間分隔線可調整左右窗格大小
+            {t('jsonParser.tips.tip7')}
           </Typography>
           <Typography component="li" variant="body2" sx={{ mb: 1 }}>
-            編輯完成後點擊「儲存」按鈕將結果更新回左側輸入框
+            {t('jsonParser.tips.tip8')}
           </Typography>
           <Typography component="li" variant="body2">
-            所有處理都在瀏覽器本機完成，不會上傳你的資料
+            {t('jsonParser.tips.tip9')}
           </Typography>
         </Box>
       </Paper>

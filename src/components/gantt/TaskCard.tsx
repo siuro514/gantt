@@ -10,6 +10,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { Task } from '@/types/gantt.types';
 import { useGanttStore } from '@/store/ganttStore';
 import EditableText from '../common/EditableText';
+import { useTranslation } from 'react-i18next';
 
 // 與 Toolbar 相同的莫蘭迪色系（亮色 + 暗色）
 const TASK_COLORS = [
@@ -30,6 +31,7 @@ interface TaskCardProps {
 }
 
 export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [resizeDirection, setResizeDirection] = useState<'left' | 'right' | null>(null);
@@ -313,7 +315,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           value={task.title}
           onChange={handleTitleChange}
           variant="body2"
-          placeholder="任務名稱"
+          placeholder={t('gantt.task.namePlaceholder')}
           onEditingChange={setIsEditingTitle}
           sx={{
             fontFamily: "'Barlow Condensed', sans-serif",
@@ -329,7 +331,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
             {!isNarrow ? (
               // 寬卡片：顯示所有按鈕
               <>
-                <Tooltip title="選擇顏色">
+                <Tooltip title={t('gantt.task.selectColor')}>
                   <IconButton
                     size="small"
                     onClick={handleColorPickerOpen}
@@ -356,7 +358,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="複製工作卡">
+                <Tooltip title={t('gantt.task.duplicate')}>
                   <IconButton
                     size="small"
                     onClick={handleDuplicate}
@@ -383,7 +385,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title={task.url ? "Cmd+點擊開啟連結 / 點擊編輯" : "設定超連結"}>
+                <Tooltip title={task.url ? t('gantt.task.linkTooltip') : t('gantt.task.setLink')}>
                   <IconButton
                     size="small"
                     onClick={handleLinkClick}
@@ -412,7 +414,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
               </>
             ) : (
               // 窄卡片：顯示「更多」按鈕
-              <Tooltip title="更多操作">
+              <Tooltip title={t('gantt.task.moreActions')}>
                 <IconButton
                   size="small"
                   onClick={handleMoreMenuOpen}
@@ -586,7 +588,7 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
                 },
               }}
             >
-              清除顏色
+              {t('gantt.task.clearColor')}
             </Box>
           )}
         </Box>
@@ -612,19 +614,19 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           <ListItemIcon>
             <PaletteIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>選擇顏色</ListItemText>
+          <ListItemText>{t('gantt.task.selectColor')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleMoreMenuDuplicate}>
           <ListItemIcon>
             <ContentCopyIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>複製工作卡</ListItemText>
+          <ListItemText>{t('gantt.task.duplicate')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleMoreMenuLink}>
           <ListItemIcon>
             {task.url ? <OpenInNewIcon fontSize="small" /> : <LinkIcon fontSize="small" />}
           </ListItemIcon>
-          <ListItemText>{task.url ? '編輯連結' : '設定超連結'}</ListItemText>
+          <ListItemText>{task.url ? t('gantt.task.editLink') : t('gantt.task.setLink')}</ListItemText>
         </MenuItem>
       </Menu>
 
@@ -635,18 +637,18 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <DialogTitle>設定超連結</DialogTitle>
+        <DialogTitle>{t('gantt.task.linkDialog.title')}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            label="網址"
+            label={t('gantt.task.linkDialog.urlLabel')}
             type="url"
             fullWidth
             variant="outlined"
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
-            placeholder="https://example.com"
+            placeholder={t('gantt.task.linkDialog.urlPlaceholder')}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();
@@ -659,14 +661,14 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
         <DialogActions>
           {task.url && (
             <Button onClick={handleUrlClear} color="error">
-              清除連結
+              {t('gantt.task.linkDialog.clearLink')}
             </Button>
           )}
           <Button onClick={() => setUrlDialogOpen(false)}>
-            取消
+            {t('gantt.task.linkDialog.cancel')}
           </Button>
           <Button onClick={handleUrlSave} variant="contained">
-            確定
+            {t('gantt.task.linkDialog.confirm')}
           </Button>
         </DialogActions>
       </Dialog>
