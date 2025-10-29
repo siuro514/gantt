@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { Box } from '@mui/material';
 import GanttBoard from '@/components/gantt/GanttBoard';
@@ -8,6 +8,7 @@ import Navbar from '@/components/layout/Navbar';
 export default function GanttPage() {
   // 甘特圖使用自己的動態主題顏色
   const primaryColor = useGanttStore((state) => state.primaryColor);
+  const [navbarOffset, setNavbarOffset] = useState(0);
 
   // 為甘特圖創建獨立的主題
   const ganttTheme = useMemo(() => createTheme({
@@ -83,10 +84,17 @@ export default function GanttPage() {
 
   return (
     <>
-      <Navbar customColor={primaryColor} />
+      <Navbar customColor={primaryColor} onOffsetChange={setNavbarOffset} />
       <ThemeProvider theme={ganttTheme}>
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
-          <GanttBoard />
+        <Box sx={{ 
+          flex: 1, 
+          display: 'flex', 
+          flexDirection: 'column', 
+          minHeight: '100vh',
+          pt: `${64 - navbarOffset}px`, // 动态调整 padding，随 navbar 隐藏而减少
+          transition: 'padding-top 0s', // 不需要过渡，跟随 wheel 事件
+        }}>
+          <GanttBoard navbarOffset={navbarOffset} />
         </Box>
       </ThemeProvider>
     </>

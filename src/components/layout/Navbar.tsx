@@ -7,13 +7,15 @@ import LanguageSwitcher from '../LanguageSwitcher';
 
 interface NavbarProps {
   customColor?: string;
+  onOffsetChange?: (offset: number) => void;
 }
 
-export default function Navbar({ customColor }: NavbarProps = {}) {
+export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}) {
   const { t } = useTranslation();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const [scrolled, setScrolled] = useState(false);
+  const [navbarOffset, setNavbarOffset] = useState(0);
 
   useEffect(() => {
     if (!isHomePage) return;
@@ -27,13 +29,58 @@ export default function Navbar({ customColor }: NavbarProps = {}) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // 监听整个页面的滚动，控制 Navbar 偏移
+  useEffect(() => {
+    if (!customColor) return;
+
+    const NAVBAR_HEIGHT = 64;
+    let currentNavbarOffset = 0;
+
+    const handleWheel = (e: WheelEvent) => {
+      const ganttScrollContainer = document.getElementById('gantt-scroll-container');
+      if (!ganttScrollContainer) return;
+
+      const deltaY = e.deltaY;
+      const currentScroll = ganttScrollContainer.scrollTop;
+      
+      // 向下滚动
+      if (deltaY > 0) {
+        if (currentNavbarOffset < NAVBAR_HEIGHT) {
+          // Navbar 还没完全隐藏，先移动 navbar
+          e.preventDefault();
+          currentNavbarOffset = Math.min(currentNavbarOffset + deltaY, NAVBAR_HEIGHT);
+          setNavbarOffset(currentNavbarOffset);
+          onOffsetChange?.(currentNavbarOffset);
+        }
+        // 如果 navbar 已完全隐藏，允许容器正常滚动
+      }
+      // 向上滚动
+      else if (deltaY < 0) {
+        if (currentScroll <= 0 && currentNavbarOffset > 0) {
+          // 容器已滚动到顶部，且 navbar 还是隐藏的，先显示 navbar
+          e.preventDefault();
+          currentNavbarOffset = Math.max(currentNavbarOffset + deltaY, 0);
+          setNavbarOffset(currentNavbarOffset);
+          onOffsetChange?.(currentNavbarOffset);
+        }
+        // 如果容器还有内容可滚动，允许正常滚动
+      }
+    };
+
+    // 监听整个页面的 wheel 事件
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [customColor, onOffsetChange]);
+
   // Determine if we should use light text (on hero section) or dark text (scrolled on white bg)
   const useLightText = customColor ? true : (isHomePage && !scrolled);
   const useCustomColor = !!customColor;
 
   return (
     <AppBar 
-      position={isHomePage ? 'fixed' : 'sticky'}
+      position={(isHomePage || useCustomColor) ? 'fixed' : 'sticky'}
       elevation={0} 
       sx={{ 
         backgroundColor: useCustomColor
@@ -47,7 +94,8 @@ export default function Navbar({ customColor }: NavbarProps = {}) {
           : (useLightText 
             ? '1px solid rgba(212, 175, 55, 0.2)' 
             : '1px solid rgba(0, 0, 0, 0.08)'),
-        transition: 'all 0.3s ease',
+        transform: useCustomColor ? `translateY(-${navbarOffset + (navbarOffset > 0 ? 1 : 0)}px)` : 'none',
+        transition: 'background-color 0.3s ease, border-bottom 0.3s ease',
       }}
     >
       <Container maxWidth="lg">

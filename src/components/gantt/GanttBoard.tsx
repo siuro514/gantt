@@ -19,7 +19,11 @@ import StorageArea from './StorageArea';
 import TaskCard from './TaskCard';
 import { useGanttStore } from '@/store/ganttStore';
 
-export default function GanttBoard() {
+interface GanttBoardProps {
+  navbarOffset?: number;
+}
+
+export default function GanttBoard({ navbarOffset = 0 }: GanttBoardProps) {
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
   const [activeType, setActiveType] = useState<'task' | 'member' | null>(null);
   const lastValidOverRef = useRef<{ id: string } | null>(null);
@@ -182,10 +186,11 @@ export default function GanttBoard() {
         id="gantt-board"
         sx={{
           width: '100vw',
-          height: '100vh',
+          height: `calc(100vh - ${64 - navbarOffset}px)`, // 动态高度：随 navbar 隐藏而增加
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: 'background.default',
+          transition: 'height 0s', // 不需要过渡，跟随 wheel 事件
         }}
       >
         <Toolbar />
