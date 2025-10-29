@@ -19,14 +19,13 @@ import BlogPage from './pages/BlogPage';
 
 function App() {
   const loadData = useGanttStore((state) => state.loadData);
-  const primaryColor = useGanttStore((state) => state.primaryColor);
 
-  // 根據 primaryColor 動態創建主題
+  // 主網站使用固定的鐵灰色主題
   const theme = useMemo(() => createTheme({
     palette: {
       mode: 'light',
       primary: {
-        main: primaryColor,
+        main: '#3a3a3a', // 固定的鐵灰色，不受甘特圖影響
       },
       secondary: {
         main: '#625B71',
@@ -91,7 +90,7 @@ function App() {
         },
       },
     },
-  }), [primaryColor]);
+  }), []); // 不依賴任何動態值，主題保持固定
 
   // 從 localStorage 載入資料（不記錄到 undo 歷史）
   useEffect(() => {

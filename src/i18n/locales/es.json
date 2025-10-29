@@ -332,6 +332,7 @@
     "toolbar": {
       "back": "Volver",
       "projectTitle": "Título del proyecto",
+      "changeThemeColor": "Cambiar Color del Tema",
       "clearAll": "Borrar todos los datos",
       "undo": "Deshacer (Cmd+Z)",
       "redo": "Rehacer (Cmd+Shift+Z)",
@@ -348,6 +349,10 @@
       "importError": {
         "invalidFormat": "Formato de archivo inválido",
         "failed": "Error al importar el archivo"
+      },
+      "colorPicker": {
+        "title": "Seleccionar Color del Tema",
+        "description": "Esto cambiará el color principal del diagrama de Gantt"
       }
     },
     "defaults": {

@@ -332,6 +332,7 @@
     "toolbar": {
       "back": "이전 페이지로 돌아가기",
       "projectTitle": "프로젝트 제목",
+      "changeThemeColor": "테마 색상 변경",
       "clearAll": "모든 데이터 지우기",
       "undo": "실행 취소 (Cmd+Z)",
       "redo": "다시 실행 (Cmd+Shift+Z)",
@@ -348,6 +349,10 @@
       "importError": {
         "invalidFormat": "잘못된 파일 형식",
         "failed": "파일 가져오기 실패"
+      },
+      "colorPicker": {
+        "title": "테마 색상 선택",
+        "description": "간트 차트의 기본 색상이 변경됩니다"
       }
     },
     "defaults": {

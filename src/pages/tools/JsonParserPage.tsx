@@ -33,6 +33,11 @@ export default function JsonParserPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // 页面加载时滚动到顶部
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // 从 localStorage 加载数据
   useEffect(() => {
     try {
@@ -119,13 +124,30 @@ export default function JsonParserPage() {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          📝 {t('jsonParser.title')}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {t('jsonParser.description')}
-        </Typography>
+      <Box sx={{ mb: 4, display: 'flex', alignItems: 'flex-start', gap: 3 }}>
+        <Box
+          sx={{
+            width: 64,
+            height: 64,
+            borderRadius: 2,
+            backgroundColor: '#5B9BD520',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#5B9BD5',
+            flexShrink: 0,
+          }}
+        >
+          <CodeIcon sx={{ fontSize: '2rem' }} />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+            {t('jsonParser.title')}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t('jsonParser.description')}
+          </Typography>
+        </Box>
       </Box>
 
       <Box sx={{ minHeight: '600px', display: 'flex', flexDirection: 'column' }}>

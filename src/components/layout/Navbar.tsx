@@ -5,7 +5,11 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../LanguageSwitcher';
 
-export default function Navbar() {
+interface NavbarProps {
+  customColor?: string;
+}
+
+export default function Navbar({ customColor }: NavbarProps = {}) {
   const { t } = useTranslation();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -24,20 +28,25 @@ export default function Navbar() {
   }, [isHomePage]);
 
   // Determine if we should use light text (on hero section) or dark text (scrolled on white bg)
-  const useLightText = isHomePage && !scrolled;
+  const useLightText = customColor ? true : (isHomePage && !scrolled);
+  const useCustomColor = !!customColor;
 
   return (
     <AppBar 
       position={isHomePage ? 'fixed' : 'sticky'}
       elevation={0} 
       sx={{ 
-        backgroundColor: useLightText 
-          ? 'rgba(42, 42, 42, 0.6)' 
-          : 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: useCustomColor
+          ? 'rgba(58, 58, 58, 0.85)' // 铁灰色系毛玻璃背景
+          : (useLightText 
+            ? 'rgba(42, 42, 42, 0.6)' 
+            : 'rgba(255, 255, 255, 0.9)'),
         backdropFilter: 'blur(20px)',
-        borderBottom: useLightText 
-          ? '1px solid rgba(212, 175, 55, 0.2)' 
-          : '1px solid rgba(0, 0, 0, 0.08)',
+        borderBottom: useCustomColor
+          ? `1px solid ${customColor}40` // 使用主题色作为边框，40 为透明度
+          : (useLightText 
+            ? '1px solid rgba(212, 175, 55, 0.2)' 
+            : '1px solid rgba(0, 0, 0, 0.08)'),
         transition: 'all 0.3s ease',
       }}
     >
@@ -60,20 +69,26 @@ export default function Navbar() {
                 width: 28,
                 height: 28,
                 borderRadius: 2,
-                background: useLightText 
-                  ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 215, 0, 0.15) 100%)' 
-                  : 'linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%)',
+                background: useCustomColor
+                  ? `linear-gradient(135deg, ${customColor}30 0%, ${customColor}20 100%)`
+                  : (useLightText 
+                    ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 215, 0, 0.15) 100%)' 
+                    : 'linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%)'),
                 backdropFilter: 'blur(10px)',
-                boxShadow: useLightText 
-                  ? '0 4px 14px rgba(212, 175, 55, 0.2)' 
-                  : '0 4px 14px rgba(0, 0, 0, 0.3)',
-                border: useLightText 
-                  ? '1px solid rgba(212, 175, 55, 0.3)' 
-                  : '1px solid rgba(212, 175, 55, 0.5)',
+                boxShadow: useCustomColor
+                  ? `0 4px 14px ${customColor}40`
+                  : (useLightText 
+                    ? '0 4px 14px rgba(212, 175, 55, 0.2)' 
+                    : '0 4px 14px rgba(0, 0, 0, 0.3)'),
+                border: useCustomColor
+                  ? `1px solid ${customColor}60`
+                  : (useLightText 
+                    ? '1px solid rgba(212, 175, 55, 0.3)' 
+                    : '1px solid rgba(212, 175, 55, 0.5)'),
                 transition: 'all 0.3s ease',
               }}>
                 <BoltIcon sx={{ 
-                  color: useLightText ? '#d4af37' : '#d4af37', 
+                  color: useCustomColor ? customColor : '#d4af37', 
                   fontSize: '1rem' 
                 }} />
               </Box>
@@ -107,9 +122,11 @@ export default function Navbar() {
                 px: 2,
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  backgroundColor: useLightText 
-                    ? 'rgba(212, 175, 55, 0.15)' 
-                    : 'rgba(212, 175, 55, 0.08)',
+                  backgroundColor: useCustomColor
+                    ? `${customColor}20`
+                    : (useLightText 
+                      ? 'rgba(212, 175, 55, 0.15)' 
+                      : 'rgba(212, 175, 55, 0.08)'),
                 },
               }}
             >

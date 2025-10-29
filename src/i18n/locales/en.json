@@ -332,6 +332,7 @@
     "toolbar": {
       "back": "Back",
       "projectTitle": "Project Title",
+      "changeThemeColor": "Change Theme Color",
       "clearAll": "Clear All Data",
       "undo": "Undo (Cmd+Z)",
       "redo": "Redo (Cmd+Shift+Z)",
@@ -348,6 +349,10 @@
       "importError": {
         "invalidFormat": "Invalid file format",
         "failed": "Failed to import file"
+      },
+      "colorPicker": {
+        "title": "Select Theme Color",
+        "description": "This will change the Gantt chart's primary color"
       }
     },
     "defaults": {

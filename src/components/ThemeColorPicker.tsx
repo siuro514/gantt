@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, IconButton, Popover, Tooltip, Typography } from '@mui/material';
 import PaletteIcon from '@mui/icons-material/Palette';
 import { useGanttStore } from '@/store/ganttStore';
+import { useTranslation } from 'react-i18next';
 
 // 莫蘭迪色系主題色 - 6x7 布局，同色系放同一行
 const THEME_COLORS = [
@@ -23,24 +24,16 @@ const THEME_COLORS = [
 ];
 
 export default function ThemeColorPicker() {
+  const { t } = useTranslation();
   const { primaryColor, updatePrimaryColor } = useGanttStore();
   const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLElement | null>(null);
 
   return (
     <>
-      <Tooltip title="更改網站主題顏色">
+      <Tooltip title={t('gantt.toolbar.changeThemeColor')}>
         <IconButton
+          color="inherit"
           onClick={(e) => setColorPickerAnchor(e.currentTarget)}
-          sx={{
-            width: 56,
-            height: 56,
-            backgroundColor: primaryColor,
-            color: 'white',
-            '&:hover': {
-              backgroundColor: primaryColor,
-              opacity: 0.9,
-            },
-          }}
         >
           <PaletteIcon />
         </IconButton>
@@ -61,10 +54,10 @@ export default function ThemeColorPicker() {
       >
         <Box sx={{ p: 3 }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, textAlign: 'center' }}>
-            選擇主題顏色
+            {t('gantt.toolbar.colorPicker.title')}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2, textAlign: 'center' }}>
-            這會改變整個網站的主色調
+            {t('gantt.toolbar.colorPicker.description')}
           </Typography>
           <Box
             sx={{

@@ -11,6 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useGanttStore } from '@/store/ganttStore';
 import EditableText from '../common/EditableText';
+import ThemeColorPicker from '../ThemeColorPicker';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { nanoid } from 'nanoid';
@@ -420,6 +421,9 @@ export default function Toolbar() {
               <UploadIcon />
             </IconButton>
           </Tooltip>
+
+          {/* 主題顏色選擇器 - 僅影響甘特圖 */}
+          <ThemeColorPicker />
         </Box>
 
         {/* 清除確認對話框 */}

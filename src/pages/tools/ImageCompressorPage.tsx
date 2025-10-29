@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Container,
   Box,
@@ -13,6 +13,7 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ImageIcon from '@mui/icons-material/Image';
 import { useTranslation } from 'react-i18next';
 
 export default function ImageCompressorPage() {
@@ -25,6 +26,11 @@ export default function ImageCompressorPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 页面加载时滚动到顶部
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -122,13 +128,30 @@ export default function ImageCompressorPage() {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          🖼️ {t('imageCompressor.title')}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {t('imageCompressor.description')}
-        </Typography>
+      <Box sx={{ mb: 4, display: 'flex', alignItems: 'flex-start', gap: 3 }}>
+        <Box
+          sx={{
+            width: 64,
+            height: 64,
+            borderRadius: 2,
+            backgroundColor: '#E89C5C20',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#E89C5C',
+            flexShrink: 0,
+          }}
+        >
+          <ImageIcon sx={{ fontSize: '2rem' }} />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+            {t('imageCompressor.title')}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t('imageCompressor.description')}
+          </Typography>
+        </Box>
       </Box>
 
       {error && (

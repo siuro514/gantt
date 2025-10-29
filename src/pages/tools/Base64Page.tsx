@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Box,
@@ -15,6 +15,7 @@ import {
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import LockIcon from '@mui/icons-material/Lock';
 import { useTranslation } from 'react-i18next';
 
 export default function Base64Page() {
@@ -24,6 +25,11 @@ export default function Base64Page() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  // 页面加载时滚动到顶部
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleEncode = () => {
     try {
@@ -82,13 +88,30 @@ export default function Base64Page() {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          🔐 {t('base64.title')}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {t('base64.description')}
-        </Typography>
+      <Box sx={{ mb: 4, display: 'flex', alignItems: 'flex-start', gap: 3 }}>
+        <Box
+          sx={{
+            width: 64,
+            height: 64,
+            borderRadius: 2,
+            backgroundColor: '#70AD7F20',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#70AD7F',
+            flexShrink: 0,
+          }}
+        >
+          <LockIcon sx={{ fontSize: '2rem' }} />
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+            {t('base64.title')}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t('base64.description')}
+          </Typography>
+        </Box>
       </Box>
 
       <Box sx={{ mb: 3, display: 'flex', justifyContent: 'center' }}>

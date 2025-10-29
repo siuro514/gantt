@@ -332,6 +332,7 @@
     "toolbar": {
       "back": "返回上一页",
       "projectTitle": "项目标题",
+      "changeThemeColor": "更改主题颜色",
       "clearAll": "清除所有数据",
       "undo": "撤销 (Cmd+Z)",
       "redo": "重做 (Cmd+Shift+Z)",
@@ -348,6 +349,10 @@
       "importError": {
         "invalidFormat": "文件格式无效",
         "failed": "导入失败"
+      },
+      "colorPicker": {
+        "title": "选择主题颜色",
+        "description": "这会改变甘特图的主色调"
       }
     },
     "defaults": {

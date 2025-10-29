@@ -332,6 +332,7 @@
     "toolbar": {
       "back": "前のページに戻る",
       "projectTitle": "プロジェクトタイトル",
+      "changeThemeColor": "テーマカラーを変更",
       "clearAll": "すべてのデータをクリア",
       "undo": "元に戻す (Cmd+Z)",
       "redo": "やり直す (Cmd+Shift+Z)",
@@ -348,6 +349,10 @@
       "importError": {
         "invalidFormat": "無効なファイル形式",
         "failed": "ファイルのインポートに失敗しました"
+      },
+      "colorPicker": {
+        "title": "テーマカラーを選択",
+        "description": "ガントチャートのプライマリカラーが変更されます"
       }
     },
     "defaults": {

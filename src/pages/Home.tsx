@@ -1,7 +1,6 @@
 import { Container, Box, Typography, Grid } from '@mui/material';
 import { tools } from '@/data/tools';
 import ToolCard from '@/components/ToolCard';
-import ThemeColorPicker from '@/components/ThemeColorPicker';
 import BoltIcon from '@mui/icons-material/Bolt';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
@@ -343,18 +342,6 @@ export default function Home() {
           </Grid>
         </Box>
       </Container>
-
-      {/* 浮動主題顏色選擇器 */}
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          zIndex: 1000,
-        }}
-      >
-        <ThemeColorPicker />
-      </Box>
     </Box>
   );
 }
