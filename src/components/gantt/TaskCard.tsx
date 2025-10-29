@@ -318,10 +318,11 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
           placeholder={t('gantt.task.namePlaceholder')}
           onEditingChange={setIsEditingTitle}
           sx={{
-            fontFamily: "'Barlow Condensed', sans-serif",
+            fontFamily: '"Barlow Condensed", "Noto Sans TC", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", -apple-system, sans-serif',
             fontWeight: 400,
-            letterSpacing: '0.02em',
-            lineHeight: 1.2,
+            fontSize: '0.875rem',
+            letterSpacing: '0.01em',
+            lineHeight: 1.3,
           }}
         />
 
