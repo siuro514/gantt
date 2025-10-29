@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "Your Productivity Assistant · Free Online Tools Collection",
     "description": "Free online tools collection, offering Gantt charts, JSON formatter, Base64 encoder/decoder, image compressor, and more. Fast, Simple, Secure, Free."
   },
@@ -10,7 +10,7 @@
     "blog": "Blog"
   },
   "hero": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "Your Productivity Assistant · Free Online Tools Collection",
     "features": {
       "fast": "Fast",
@@ -41,7 +41,7 @@
     }
   },
   "features": {
-    "title": "Why Choose Easy & Good Things?",
+    "title": "Why Choose Ganttleman?",
     "fast": {
       "title": "Quick Start",
       "description": "No software installation needed, just open your browser and start"
@@ -68,15 +68,15 @@
       "terms": "Terms of Service",
       "contact": "Contact Us"
     },
-    "copyright": "© {{year}} Easy & Good Things. All rights reserved."
+    "copyright": "© {{year}} Ganttleman. All rights reserved."
   },
   "about": {
-    "title": "About Easy & Good Things",
+    "title": "About Ganttleman",
     "subtitle": "We are committed to creating the most practical free online tools collection",
     "mission": {
       "title": "Our Mission",
       "p1": "In this digital age, we need to handle various tasks every day: formatting code, encoding/decoding data, compressing images, managing project schedules, and more. Although there are many tools available for these tasks, they often require downloads, account registration, or paid subscriptions.",
-      "p2": "Easy & Good Things was created to solve this problem. We provide a completely free, no-registration-required, ready-to-use collection of online tools. All tools run locally in your browser, ensuring your data security and privacy."
+      "p2": "Ganttleman was created to solve this problem. We provide a completely free, no-registration-required, ready-to-use collection of online tools. All tools run locally in your browser, ensuring your data security and privacy."
     },
     "values": {
       "title": "Our Core Values",
@@ -98,7 +98,7 @@
       }
     },
     "why": {
-      "title": "Why Choose Easy & Good Things?",
+      "title": "Why Choose Ganttleman?",
       "reason1": "No software installation needed, just open your browser",
       "reason2": "No account registration or personal information required",
       "reason3": "Cross-platform support: Windows, Mac, Linux, and mobile devices",
@@ -136,7 +136,7 @@
     "lastUpdated": "Last Updated",
     "section1": {
       "title": "Data Collection",
-      "content": "Easy & Good Things is committed to protecting your privacy. All our tools run locally in your browser and do not upload your data to our servers."
+      "content": "Ganttleman is committed to protecting your privacy. All our tools run locally in your browser and do not upload your data to our servers."
     },
     "section2": {
       "title": "Local Storage",
@@ -175,7 +175,7 @@
     "lastUpdated": "Last Updated",
     "section1": {
       "title": "Service Description",
-      "content": "Easy & Good Things provides a collection of free online tools, including but not limited to Gantt charts, JSON formatting, Base64 encoding/decoding, image compression, and other features. All tools are free to use without registration."
+      "content": "Ganttleman provides a collection of free online tools, including but not limited to Gantt charts, JSON formatting, Base64 encoding/decoding, image compression, and other features. All tools are free to use without registration."
     },
     "section2": {
       "title": "License to Use",
@@ -195,7 +195,7 @@
     },
     "section5": {
       "title": "Limitation of Liability",
-      "content": "To the maximum extent permitted by law, Easy & Good Things and its developers shall not be liable for any direct, indirect, incidental, special, or consequential damages."
+      "content": "To the maximum extent permitted by law, Ganttleman and its developers shall not be liable for any direct, indirect, incidental, special, or consequential damages."
     },
     "section6": {
       "title": "Intellectual Property",

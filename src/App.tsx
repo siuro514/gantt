@@ -3,7 +3,8 @@ import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { zhTW } from 'date-fns/locale';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useGanttStore } from './store/ganttStore';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -16,6 +17,41 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
+
+// 组件用于设置页面标题
+function DocumentTitle() {
+  const { t, i18n } = useTranslation();
+  const location = useLocation();
+
+  useEffect(() => {
+    const baseTitle = t('site.title'); // Ganttleman
+    
+    // 首页只显示品牌名
+    if (location.pathname === '/') {
+      document.title = baseTitle;
+      return;
+    }
+
+    // 其他页面使用：[页面名] - Ganttleman
+    const pathTitleMap: Record<string, string> = {
+      '/tools/gantt': t('tools.gantt.name'),
+      '/tools/json-parser': t('tools.jsonParser.name'),
+      '/tools/base64': t('tools.base64.name'),
+      '/tools/image-compressor': t('tools.imageCompressor.name'),
+      '/about': t('nav.about'),
+      '/blog': t('nav.blog'),
+      '/privacy': t('footer.privacy'),
+      '/terms': t('footer.terms'),
+    };
+
+    const pageTitle = pathTitleMap[location.pathname];
+    document.title = pageTitle 
+      ? `${pageTitle} - ${baseTitle}`
+      : baseTitle;
+  }, [location.pathname, t, i18n.language]);
+
+  return null;
+}
 
 function App() {
   const loadData = useGanttStore((state) => state.loadData);
@@ -157,6 +193,7 @@ function App() {
       <CssBaseline />
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={zhTW}>
         <BrowserRouter>
+          <DocumentTitle />
           <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Routes>
               <Route path="/" element={<><Navbar /><Home /><Footer /></>} />

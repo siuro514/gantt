@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "Tu Asistente de Productividad · Colección de Herramientas Online Gratuitas",
     "description": "Colección de herramientas online gratuitas, ofreciendo diagramas de Gantt, formateador JSON, codificador/decodificador Base64, compresor de imágenes y más. Rápido, Simple, Seguro, Gratis."
   },
@@ -10,7 +10,7 @@
     "blog": "Blog"
   },
   "hero": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "Tu Asistente de Productividad · Colección de Herramientas Online Gratuitas",
     "features": {
       "fast": "Rápido",
@@ -41,7 +41,7 @@
     }
   },
   "features": {
-    "title": "¿Por qué elegir Easy & Good Things?",
+    "title": "¿Por qué elegir Ganttleman?",
     "fast": {
       "title": "Inicio Rápido",
       "description": "No se necesita instalación de software, solo abre tu navegador y comienza"
@@ -68,15 +68,15 @@
       "terms": "Términos de Servicio",
       "contact": "Contáctanos"
     },
-    "copyright": "© {{year}} Easy & Good Things. Todos los derechos reservados."
+    "copyright": "© {{year}} Ganttleman. Todos los derechos reservados."
   },
   "about": {
-    "title": "Acerca de Easy & Good Things",
+    "title": "Acerca de Ganttleman",
     "subtitle": "Estamos comprometidos a crear la colección de herramientas online gratuitas más práctica",
     "mission": {
       "title": "Nuestra Misión",
       "p1": "En esta era digital, necesitamos manejar diversas tareas todos los días: formatear código, codificar/decodificar datos, comprimir imágenes, gestionar horarios de proyectos y más. Aunque hay muchas herramientas disponibles para estas tareas, a menudo requieren descargas, registro de cuenta o suscripciones de pago.",
-      "p2": "Easy & Good Things fue creado para resolver este problema. Proporcionamos una colección de herramientas online completamente gratuita, sin registro requerido y lista para usar. Todas las herramientas se ejecutan localmente en tu navegador, garantizando la seguridad y privacidad de tus datos."
+      "p2": "Ganttleman fue creado para resolver este problema. Proporcionamos una colección de herramientas online completamente gratuita, sin registro requerido y lista para usar. Todas las herramientas se ejecutan localmente en tu navegador, garantizando la seguridad y privacidad de tus datos."
     },
     "values": {
       "title": "Nuestros Valores Fundamentales",
@@ -98,7 +98,7 @@
       }
     },
     "why": {
-      "title": "¿Por qué elegir Easy & Good Things?",
+      "title": "¿Por qué elegir Ganttleman?",
       "reason1": "No se necesita instalación de software, solo abre tu navegador",
       "reason2": "No se requiere registro de cuenta ni información personal",
       "reason3": "Soporte multiplataforma: Windows, Mac, Linux y dispositivos móviles",
@@ -136,7 +136,7 @@
     "lastUpdated": "Última actualización",
     "section1": {
       "title": "Recopilación de datos",
-      "content": "Easy & Good Things se compromete a proteger su privacidad. Todas nuestras herramientas se ejecutan localmente en su navegador y no cargan sus datos en nuestros servidores."
+      "content": "Ganttleman se compromete a proteger su privacidad. Todas nuestras herramientas se ejecutan localmente en su navegador y no cargan sus datos en nuestros servidores."
     },
     "section2": {
       "title": "Almacenamiento local",
@@ -175,7 +175,7 @@
     "lastUpdated": "Última actualización",
     "section1": {
       "title": "Descripción del servicio",
-      "content": "Easy & Good Things proporciona una colección de herramientas en línea gratuitas, que incluyen, entre otras, diagramas de Gantt, formato JSON, codificación/decodificación Base64, compresión de imágenes y otras funciones. Todas las herramientas son gratuitas y no requieren registro."
+      "content": "Ganttleman proporciona una colección de herramientas en línea gratuitas, que incluyen, entre otras, diagramas de Gantt, formato JSON, codificación/decodificación Base64, compresión de imágenes y otras funciones. Todas las herramientas son gratuitas y no requieren registro."
     },
     "section2": {
       "title": "Licencia de uso",
@@ -195,7 +195,7 @@
     },
     "section5": {
       "title": "Limitación de responsabilidad",
-      "content": "En la medida máxima permitida por la ley, Easy & Good Things y sus desarrolladores no serán responsables de ningún daño directo, indirecto, incidental, especial o consecuente."
+      "content": "En la medida máxima permitida por la ley, Ganttleman y sus desarrolladores no serán responsables de ningún daño directo, indirecto, incidental, especial o consecuente."
     },
     "section6": {
       "title": "Propiedad intelectual",

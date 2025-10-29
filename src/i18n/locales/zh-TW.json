@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "你的效率助手 · 免費線上工具集合",
     "description": "免費線上工具集合，提供甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等實用工具。快速、簡單、安全、免費。"
   },
@@ -10,7 +10,7 @@
     "blog": "文章"
   },
   "hero": {
-    "title": "Easy & Good Things",
+    "title": "Ganttleman",
     "subtitle": "你的效率助手 · 免費線上工具集合",
     "features": {
       "fast": "快速",
@@ -41,7 +41,7 @@
     }
   },
   "features": {
-    "title": "為什麼選擇 Easy & Good Things？",
+    "title": "為什麼選擇 Ganttleman？",
     "fast": {
       "title": "快速啟動",
       "description": "無需安裝任何軟體，打開瀏覽器即可使用"
@@ -68,15 +68,15 @@
       "terms": "使用條款",
       "contact": "聯絡我們"
     },
-    "copyright": "© {{year}} Easy & Good Things. All rights reserved."
+    "copyright": "© {{year}} Ganttleman. All rights reserved."
   },
   "about": {
-    "title": "關於 Easy & Good Things",
+    "title": "關於 Ganttleman",
     "subtitle": "我們致力於打造最實用的免費線上工具集合",
     "mission": {
       "title": "我們的使命",
       "p1": "在這個數位化的時代，我們每天都需要處理各種不同的任務：格式化程式碼、編碼解碼資料、壓縮圖片、管理專案進度等等。雖然市面上有許多工具可以完成這些任務，但它們往往需要下載安裝、註冊帳號，或是需要付費使用。",
-      "p2": "Easy & Good Things 的誕生，就是為了解決這個問題。我們提供完全免費、無需註冊、開箱即用的線上工具集合。所有工具都在瀏覽器本機運行，確保您的資料安全和隱私。"
+      "p2": "Ganttleman 的誕生，就是為了解決這個問題。我們提供完全免費、無需註冊、開箱即用的線上工具集合。所有工具都在瀏覽器本機運行，確保您的資料安全和隱私。"
     },
     "values": {
       "title": "我們的核心價值",
@@ -98,7 +98,7 @@
       }
     },
     "why": {
-      "title": "為什麼選擇 Easy & Good Things？",
+      "title": "為什麼選擇 Ganttleman？",
       "reason1": "無需安裝任何軟體，打開瀏覽器即可使用",
       "reason2": "不需要註冊帳號或提供個人資訊",
       "reason3": "跨平台支援：Windows、Mac、Linux、行動裝置都能使用",
@@ -136,7 +136,7 @@
     "lastUpdated": "最後更新",
     "section1": {
       "title": "資料收集",
-      "content": "Easy & Good Things 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本機運行，不會將您的資料上傳到我們的伺服器。"
+      "content": "Ganttleman 致力於保護您的隱私。我們的所有工具都在您的瀏覽器本機運行，不會將您的資料上傳到我們的伺服器。"
     },
     "section2": {
       "title": "本機儲存",
@@ -175,7 +175,7 @@
     "lastUpdated": "最後更新",
     "section1": {
       "title": "服務說明",
-      "content": "Easy & Good Things 提供免費的線上工具集合，包括但不限於甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等功能。所有工具均可免費使用，無需註冊。"
+      "content": "Ganttleman 提供免費的線上工具集合，包括但不限於甘特圖、JSON 格式化、Base64 編解碼、圖片壓縮等功能。所有工具均可免費使用，無需註冊。"
     },
     "section2": {
       "title": "使用授權",
@@ -195,7 +195,7 @@
     },
     "section5": {
       "title": "責任限制",
-      "content": "在法律允許的最大範圍內，Easy & Good Things 及其開發者不對任何直接、間接、偶然、特殊或後果性損害承擔責任。"
+      "content": "在法律允許的最大範圍內，Ganttleman 及其開發者不對任何直接、間接、偶然、特殊或後果性損害承擔責任。"
     },
     "section6": {
       "title": "知識產權",
