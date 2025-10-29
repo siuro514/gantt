@@ -73,6 +73,7 @@
   "about": {
     "title": "Ganttleman 소개",
     "subtitle": "가장 실용적인 무료 온라인 도구 모음을 만들기 위해 최선을 다하고 있습니다",
+    "description": "Ganttleman 소개 - 간트 차트, JSON 포맷터, Base64 인코더/디코더 등 무료 온라인 도구를 제공하는 플랫폼입니다.",
     "mission": {
       "title": "우리의 사명",
       "p1": "이 디지털 시대에 우리는 매일 다양한 작업을 처리해야 합니다: 코드 포맷팅, 데이터 인코딩/디코딩, 이미지 압축, 프로젝트 일정 관리 등. 이러한 작업을 완료할 수 있는 많은 도구가 있지만, 종종 다운로드, 계정 등록 또는 유료 구독이 필요합니다.",
@@ -133,6 +134,7 @@
   },
   "privacy": {
     "title": "개인정보 보호정책",
+    "metaDescription": "Ganttleman 개인정보 보호정책 - 개인 데이터와 프라이버시를 보호하는 방법을 확인하세요.",
     "lastUpdated": "마지막 업데이트",
     "section1": {
       "title": "데이터 수집",
@@ -172,6 +174,7 @@
   },
   "terms": {
     "title": "이용 약관",
+    "metaDescription": "Ganttleman 이용 약관 - 서비스 이용에 관한 약관과 조건을 확인하세요.",
     "lastUpdated": "마지막 업데이트",
     "section1": {
       "title": "서비스 설명",

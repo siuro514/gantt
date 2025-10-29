@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
+import { execSync } from 'child_process';
 
 // 自動生成 404.html 的插件（用於 GitHub Pages SPA 路由）
 function generate404Plugin() {
@@ -20,8 +21,23 @@ function generate404Plugin() {
   };
 }
 
+// 生成多語言 HTML 文件的插件
+function generateLangHtmlPlugin() {
+  return {
+    name: 'generate-lang-html',
+    closeBundle() {
+      console.log('\n🌍 生成多語言 HTML 文件...');
+      try {
+        execSync('node scripts/generate-lang-html.cjs', { stdio: 'inherit' });
+      } catch (error) {
+        console.error('❌ 生成多語言 HTML 失敗:', error);
+      }
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), generate404Plugin()],
+  plugins: [react(), generate404Plugin(), generateLangHtmlPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

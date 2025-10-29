@@ -3,9 +3,10 @@ import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { zhTW } from 'date-fns/locale';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGanttStore } from './store/ganttStore';
+import { LanguageRouter, RootRedirect } from './components/LanguageRouter';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -18,21 +19,19 @@ import TermsPage from './pages/TermsPage';
 import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
 
-// 组件用于设置页面标题
+// 组件用于设置页面标题和 SEO meta 标签
 function DocumentTitle() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
   useEffect(() => {
     const baseTitle = t('site.title'); // Ganttleman
+    const baseDescription = t('site.description');
     
-    // 首页只显示品牌名
-    if (location.pathname === '/') {
-      document.title = baseTitle;
-      return;
-    }
-
-    // 其他页面使用：[页面名] - Ganttleman
+    // 设置 html lang 属性
+    document.documentElement.lang = i18n.language;
+    
+    // 页面标题映射
     const pathTitleMap: Record<string, string> = {
       '/tools/gantt': t('tools.gantt.name'),
       '/tools/json-parser': t('tools.jsonParser.name'),
@@ -44,13 +43,131 @@ function DocumentTitle() {
       '/terms': t('footer.terms'),
     };
 
+    // 页面描述映射
+    const pathDescriptionMap: Record<string, string> = {
+      '/': baseDescription,
+      '/tools/gantt': t('tools.gantt.description'),
+      '/tools/json-parser': t('tools.jsonParser.description'),
+      '/tools/base64': t('tools.base64.description'),
+      '/tools/image-compressor': t('tools.imageCompressor.description'),
+      '/about': t('about.description'),
+      '/blog': t('site.description'),
+      '/privacy': t('privacy.metaDescription'),
+      '/terms': t('terms.metaDescription'),
+    };
+
+    // 设置页面标题
     const pageTitle = pathTitleMap[location.pathname];
-    document.title = pageTitle 
-      ? `${pageTitle} - ${baseTitle}`
-      : baseTitle;
+    document.title = location.pathname === '/' 
+      ? baseTitle 
+      : pageTitle 
+        ? `${pageTitle} - ${baseTitle}`
+        : baseTitle;
+
+    // 设置 meta description
+    const description = pathDescriptionMap[location.pathname] || baseDescription;
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', description);
+
+    // 设置 Open Graph 标签
+    const ogTitle = document.title;
+    const ogDescription = description;
+    const ogUrl = `https://ganttleman.com${location.pathname}`;
+
+    // OG Title
+    let ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (!ogTitleTag) {
+      ogTitleTag = document.createElement('meta');
+      ogTitleTag.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitleTag);
+    }
+    ogTitleTag.setAttribute('content', ogTitle);
+
+    // OG Description
+    let ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (!ogDescTag) {
+      ogDescTag = document.createElement('meta');
+      ogDescTag.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDescTag);
+    }
+    ogDescTag.setAttribute('content', ogDescription);
+
+    // OG URL
+    let ogUrlTag = document.querySelector('meta[property="og:url"]');
+    if (!ogUrlTag) {
+      ogUrlTag = document.createElement('meta');
+      ogUrlTag.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlTag);
+    }
+    ogUrlTag.setAttribute('content', ogUrl);
+
+    // OG Type
+    let ogTypeTag = document.querySelector('meta[property="og:type"]');
+    if (!ogTypeTag) {
+      ogTypeTag = document.createElement('meta');
+      ogTypeTag.setAttribute('property', 'og:type');
+      document.head.appendChild(ogTypeTag);
+    }
+    ogTypeTag.setAttribute('content', 'website');
+
+    // 添加 hreflang 标签（告诉搜索引擎多语言版本）
+    const langPathMap: Record<string, string> = {
+      'en': 'en',
+      'zh-TW': 'zh-tw',
+      'zh-CN': 'zh-cn',
+      'ja': 'ja',
+      'ko': 'ko',
+      'es': 'es',
+    };
+    
+    // 从当前路径中移除语言前缀，获取基础路径
+    const pathMatch = location.pathname.match(/^\/[^/]+(.*)$/);
+    const basePath = pathMatch ? pathMatch[1] || '/' : '/';
+    
+    // 移除旧的 hreflang 标签
+    document.querySelectorAll('link[rel="alternate"]').forEach(link => link.remove());
+    
+    // 为每种语言添加 hreflang 标签
+    Object.entries(langPathMap).forEach(([langCode, langPath]) => {
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'alternate');
+      link.setAttribute('hreflang', langCode);
+      link.setAttribute('href', `https://ganttleman.com/${langPath}${basePath}`);
+      document.head.appendChild(link);
+    });
+
+    // 添加 x-default（用于未匹配的语言，指向英文版）
+    const xDefaultLink = document.createElement('link');
+    xDefaultLink.setAttribute('rel', 'alternate');
+    xDefaultLink.setAttribute('hreflang', 'x-default');
+    xDefaultLink.setAttribute('href', `https://ganttleman.com/en${basePath}`);
+    document.head.appendChild(xDefaultLink);
+
   }, [location.pathname, t, i18n.language]);
 
   return null;
+}
+
+// 语言路由组件 - 包含所有页面的路由配置
+function LanguageRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+      <Route path="/tools/gantt" element={<GanttPage />} />
+      <Route path="/tools/json-parser" element={<><Navbar /><JsonParserPage /><Footer /></>} />
+      <Route path="/tools/base64" element={<><Navbar /><Base64Page /><Footer /></>} />
+      <Route path="/tools/image-compressor" element={<><Navbar /><ImageCompressorPage /><Footer /></>} />
+      <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
+      <Route path="/blog" element={<><Navbar /><BlogPage /><Footer /></>} />
+      <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
+      <Route path="/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
+    </Routes>
+  );
 }
 
 function App() {
@@ -196,15 +313,21 @@ function App() {
           <DocumentTitle />
           <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Routes>
-              <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
-              <Route path="/tools/gantt" element={<GanttPage />} />
-              <Route path="/tools/json-parser" element={<><Navbar /><JsonParserPage /><Footer /></>} />
-              <Route path="/tools/base64" element={<><Navbar /><Base64Page /><Footer /></>} />
-              <Route path="/tools/image-compressor" element={<><Navbar /><ImageCompressorPage /><Footer /></>} />
-              <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
-              <Route path="/blog" element={<><Navbar /><BlogPage /><Footer /></>} />
-              <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
-              <Route path="/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
+              {/* 根路径重定向到用户首选语言 */}
+              <Route path="/" element={<RootRedirect />} />
+              
+              {/* 所有语言版本的路由 */}
+              <Route path="/:lang/*" element={<LanguageRouter><LanguageRoutes /></LanguageRouter>} />
+              
+              {/* 旧路径重定向（兼容性） */}
+              <Route path="/tools/gantt" element={<Navigate to="/en/tools/gantt" replace />} />
+              <Route path="/tools/json-parser" element={<Navigate to="/en/tools/json-parser" replace />} />
+              <Route path="/tools/base64" element={<Navigate to="/en/tools/base64" replace />} />
+              <Route path="/tools/image-compressor" element={<Navigate to="/en/tools/image-compressor" replace />} />
+              <Route path="/about" element={<Navigate to="/en/about" replace />} />
+              <Route path="/blog" element={<Navigate to="/en/blog" replace />} />
+              <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />
+              <Route path="/terms" element={<Navigate to="/en/terms" replace />} />
             </Routes>
           </Box>
         </BrowserRouter>

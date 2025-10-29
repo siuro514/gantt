@@ -73,6 +73,7 @@
   "about": {
     "title": "About Ganttleman",
     "subtitle": "We are committed to creating the most practical free online tools collection",
+    "description": "Learn about Ganttleman - A platform providing free online tools including Gantt charts, JSON formatter, Base64 encoder/decoder and more.",
     "mission": {
       "title": "Our Mission",
       "p1": "In this digital age, we need to handle various tasks every day: formatting code, encoding/decoding data, compressing images, managing project schedules, and more. Although there are many tools available for these tasks, they often require downloads, account registration, or paid subscriptions.",
@@ -133,6 +134,7 @@
   },
   "privacy": {
     "title": "Privacy Policy",
+    "metaDescription": "Ganttleman Privacy Policy - Learn how we protect your personal data and privacy.",
     "lastUpdated": "Last Updated",
     "section1": {
       "title": "Data Collection",
@@ -172,6 +174,7 @@
   },
   "terms": {
     "title": "Terms of Service",
+    "metaDescription": "Ganttleman Terms of Service - Understand the terms and conditions for using our services.",
     "lastUpdated": "Last Updated",
     "section1": {
       "title": "Service Description",

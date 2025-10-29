@@ -73,6 +73,7 @@
   "about": {
     "title": "關於 Ganttleman",
     "subtitle": "我們致力於打造最實用的免費線上工具集合",
+    "description": "了解 Ganttleman - 提供免費線上工具的平台，包括甘特圖、JSON 格式化、Base64 編解碼等實用工具。",
     "mission": {
       "title": "我們的使命",
       "p1": "在這個數位化的時代，我們每天都需要處理各種不同的任務：格式化程式碼、編碼解碼資料、壓縮圖片、管理專案進度等等。雖然市面上有許多工具可以完成這些任務，但它們往往需要下載安裝、註冊帳號，或是需要付費使用。",
@@ -133,6 +134,7 @@
   },
   "privacy": {
     "title": "隱私政策",
+    "metaDescription": "Ganttleman 隱私政策 - 了解我們如何保護您的個人資料和隱私安全。",
     "lastUpdated": "最後更新",
     "section1": {
       "title": "資料收集",
@@ -172,6 +174,7 @@
   },
   "terms": {
     "title": "使用條款",
+    "metaDescription": "Ganttleman 使用條款 - 了解使用我們服務的條款和條件。",
     "lastUpdated": "最後更新",
     "section1": {
       "title": "服務說明",

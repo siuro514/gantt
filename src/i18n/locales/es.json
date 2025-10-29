@@ -73,6 +73,7 @@
   "about": {
     "title": "Acerca de Ganttleman",
     "subtitle": "Estamos comprometidos a crear la colección de herramientas online gratuitas más práctica",
+    "description": "Conoce Ganttleman - Una plataforma que proporciona herramientas en línea gratuitas que incluyen diagramas de Gantt, formateador JSON, codificador/decodificador Base64 y más.",
     "mission": {
       "title": "Nuestra Misión",
       "p1": "En esta era digital, necesitamos manejar diversas tareas todos los días: formatear código, codificar/decodificar datos, comprimir imágenes, gestionar horarios de proyectos y más. Aunque hay muchas herramientas disponibles para estas tareas, a menudo requieren descargas, registro de cuenta o suscripciones de pago.",
@@ -133,6 +134,7 @@
   },
   "privacy": {
     "title": "Política de Privacidad",
+    "metaDescription": "Política de Privacidad de Ganttleman - Conoce cómo protegemos tus datos personales y privacidad.",
     "lastUpdated": "Última actualización",
     "section1": {
       "title": "Recopilación de datos",
@@ -172,6 +174,7 @@
   },
   "terms": {
     "title": "Términos de Servicio",
+    "metaDescription": "Términos de Servicio de Ganttleman - Comprende los términos y condiciones para usar nuestros servicios.",
     "lastUpdated": "Última actualización",
     "section1": {
       "title": "Descripción del servicio",

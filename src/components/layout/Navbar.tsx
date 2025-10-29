@@ -1,9 +1,10 @@
 import { AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import BoltIcon from '@mui/icons-material/Bolt';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { LANG_CODE_TO_PATH } from '../LanguageRouter';
 
 interface NavbarProps {
   customColor?: string;
@@ -11,9 +12,17 @@ interface NavbarProps {
 }
 
 export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const { lang } = useParams<{ lang: string }>();
+  
+  // 获取当前语言路径前缀
+  const langPrefix = `/${lang || LANG_CODE_TO_PATH[i18n.language] || 'en'}`;
+  
+  // 检查是否在首页（移除语言前缀后判断）
+  const pathWithoutLang = location.pathname.replace(/^\/[^/]+/, '');
+  const isHomePage = pathWithoutLang === '' || pathWithoutLang === '/';
+  
   const [scrolled, setScrolled] = useState(false);
   const [navbarOffset, setNavbarOffset] = useState(0);
 
@@ -100,7 +109,7 @@ export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ minHeight: '70px', py: 1 }}>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+          <Link to={langPrefix + '/'} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
             <Box sx={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -161,9 +170,9 @@ export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}
             color: useLightText ? 'white' : 'text.primary',
             transition: 'all 0.3s ease',
           }}>
-            <Button 
-              component={Link} 
-              to="/about" 
+                 <Button 
+                   component={Link} 
+                   to={langPrefix + '/about'}
               sx={{ 
                 color: 'inherit',
                 fontWeight: 500,

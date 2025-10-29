@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Tool } from '@/data/tools';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
@@ -7,6 +7,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import LockIcon from '@mui/icons-material/Lock';
 import ImageIcon from '@mui/icons-material/Image';
 import { useTranslation } from 'react-i18next';
+import { LANG_CODE_TO_PATH } from './LanguageRouter';
 
 interface ToolCardProps {
   tool: Tool;
@@ -28,8 +29,12 @@ const toolI18nMap: Record<string, string> = {
 };
 
 export default function ToolCard({ tool }: ToolCardProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { lang } = useParams<{ lang: string }>();
+  
+  // 获取当前语言路径前缀
+  const langPrefix = `/${lang || LANG_CODE_TO_PATH[i18n.language] || 'en'}`;
 
   return (
     <Card
@@ -44,7 +49,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
           boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
         },
       }}
-      onClick={() => navigate(tool.path)}
+      onClick={() => navigate(langPrefix + tool.path)}
     >
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <Box
