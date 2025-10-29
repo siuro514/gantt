@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText, Box } from '@mui/material';
+import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
 
 const languages = [
-  { code: 'zh-TW', name: '繁體中文', flag: '🇹🇼' },
-  { code: 'zh-CN', name: '简体中文', flag: '🇨🇳' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어', flag: '🇰🇷' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English' },
+  { code: 'zh-TW', name: '繁體中文' },
+  { code: 'zh-CN', name: '简体中文' },
+  { code: 'ja', name: '日本語' },
+  { code: 'ko', name: '한국어' },
+  { code: 'es', name: 'Español' },
 ];
 
 export default function LanguageSwitcher() {
@@ -70,15 +70,12 @@ export default function LanguageSwitcher() {
             onClick={() => handleLanguageChange(language.code)}
             selected={i18n.language === language.code}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              <Box sx={{ fontSize: '1.5rem', mr: 1.5 }}>{language.flag}</Box>
-              <ListItemText primary={language.name} />
-              {i18n.language === language.code && (
-                <ListItemIcon sx={{ minWidth: 'auto' }}>
-                  <CheckIcon sx={{ color: '#d4af37' }} />
-                </ListItemIcon>
-              )}
-            </Box>
+            <ListItemText primary={language.name} />
+            {i18n.language === language.code && (
+              <ListItemIcon sx={{ minWidth: 'auto' }}>
+                <CheckIcon sx={{ color: '#d4af37' }} />
+              </ListItemIcon>
+            )}
           </MenuItem>
         ))}
       </Menu>

@@ -24,8 +24,8 @@ i18n
   .use(initReactI18next) // 绑定 React
   .init({
     resources,
-    fallbackLng: 'zh-TW', // 默认语言
-    lng: localStorage.getItem('i18nextLng') || 'zh-TW', // 从 localStorage 读取或使用默认值
+    fallbackLng: 'en', // 默认语言
+    lng: localStorage.getItem('i18nextLng') || 'en', // 从 localStorage 读取或使用默认值
     debug: false,
     interpolation: {
       escapeValue: false, // React 已经保护免受 XSS
