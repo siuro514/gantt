@@ -17,7 +17,6 @@ import ImageCompressorPage from './pages/tools/ImageCompressorPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import AboutPage from './pages/AboutPage';
-import BlogPage from './pages/BlogPage';
 
 // 组件用于设置页面标题和 SEO meta 标签
 function DocumentTitle() {
@@ -38,7 +37,6 @@ function DocumentTitle() {
       '/tools/base64': t('tools.base64.name'),
       '/tools/image-compressor': t('tools.imageCompressor.name'),
       '/about': t('nav.about'),
-      '/blog': t('nav.blog'),
       '/privacy': t('footer.privacy'),
       '/terms': t('footer.terms'),
     };
@@ -51,7 +49,6 @@ function DocumentTitle() {
       '/tools/base64': t('tools.base64.description'),
       '/tools/image-compressor': t('tools.imageCompressor.description'),
       '/about': t('about.description'),
-      '/blog': t('site.description'),
       '/privacy': t('privacy.metaDescription'),
       '/terms': t('terms.metaDescription'),
     };
@@ -163,7 +160,6 @@ function LanguageRoutes() {
       <Route path="/tools/base64" element={<><Navbar /><Base64Page /><Footer /></>} />
       <Route path="/tools/image-compressor" element={<><Navbar /><ImageCompressorPage /><Footer /></>} />
       <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
-      <Route path="/blog" element={<><Navbar /><BlogPage /><Footer /></>} />
       <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
       <Route path="/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
     </Routes>
@@ -325,7 +321,6 @@ function App() {
               <Route path="/tools/base64" element={<Navigate to="/en/tools/base64" replace />} />
               <Route path="/tools/image-compressor" element={<Navigate to="/en/tools/image-compressor" replace />} />
               <Route path="/about" element={<Navigate to="/en/about" replace />} />
-              <Route path="/blog" element={<Navigate to="/en/blog" replace />} />
               <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />
               <Route path="/terms" element={<Navigate to="/en/terms" replace />} />
             </Routes>
