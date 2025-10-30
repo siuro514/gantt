@@ -162,26 +162,26 @@ export default function Home() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1,
-                    px: 3,
-                    py: 1.5,
-                    borderRadius: 3,
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(212, 175, 55, 0.3)',
-                    transition: 'all 0.3s',
-                    '&:hover': {
-                      background: 'rgba(212, 175, 55, 0.15)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 24px rgba(212, 175, 55, 0.2)',
-                      borderColor: 'rgba(212, 175, 55, 0.5)',
-                    },
+                    px: 1.5,
+                    py: 0.5,
+                    cursor: 'default',
+                    pointerEvents: 'none',
+                    userSelect: 'none',
                   }}
                 >
-                  {feature.icon}
-                  <Typography variant="body1" sx={{ 
-                    fontWeight: 600,
+                  <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    color: 'rgba(212, 175, 55, 0.9)',
+                    fontSize: '1.2rem',
+                  }}>
+                    {feature.icon}
+                  </Box>
+                  <Typography variant="body2" sx={{ 
+                    fontWeight: 500,
                     fontFamily: '"Noto Sans TC", "Inter", -apple-system, sans-serif',
-                    letterSpacing: '0.03em',
+                    letterSpacing: '0.02em',
+                    color: 'rgba(255, 255, 255, 0.9)',
                   }}>
                     {t(`hero.features.${feature.key}`)}
                   </Typography>
