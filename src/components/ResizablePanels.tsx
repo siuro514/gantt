@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { useTranslation } from 'react-i18next';
 
@@ -29,6 +31,8 @@ export default function ResizablePanels({
   canSave = false,
 }: ResizablePanelsProps) {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md')); // md = 960px
   const [leftWidth, setLeftWidth] = useState(defaultLeftWidth);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -38,7 +42,15 @@ export default function ResizablePanels({
       if (!isDragging || !containerRef.current) return;
 
       const containerRect = containerRef.current.getBoundingClientRect();
-      const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+      let newLeftWidth: number;
+      
+      if (isMobile) {
+        // 垂直布局：计算高度百分比
+        newLeftWidth = ((e.clientY - containerRect.top) / containerRect.height) * 100;
+      } else {
+        // 水平布局：计算宽度百分比
+        newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+      }
 
       // Constrain width between min and max
       const constrainedWidth = Math.min(Math.max(newLeftWidth, minWidth), maxWidth);
@@ -54,7 +66,7 @@ export default function ResizablePanels({
       document.addEventListener('mouseup', handleMouseUp);
       // Prevent text selection while dragging
       document.body.style.userSelect = 'none';
-      document.body.style.cursor = 'col-resize';
+      document.body.style.cursor = isMobile ? 'row-resize' : 'col-resize';
     }
 
     return () => {
@@ -63,7 +75,7 @@ export default function ResizablePanels({
       document.body.style.userSelect = '';
       document.body.style.cursor = '';
     };
-  }, [isDragging, minWidth, maxWidth]);
+  }, [isDragging, minWidth, maxWidth, isMobile]);
 
   const handleMouseDown = () => {
     setIsDragging(true);
@@ -74,16 +86,17 @@ export default function ResizablePanels({
       ref={containerRef}
       sx={{
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         width: '100%',
         height: '100%',
         position: 'relative',
       }}
     >
-      {/* Left Panel */}
+      {/* Left/Top Panel */}
       <Box
         sx={{
-          width: `${leftWidth}%`,
-          height: '100%',
+          width: isMobile ? '100%' : `${leftWidth}%`,
+          height: isMobile ? `${leftWidth}%` : '100%',
           flexShrink: 0,
         }}
       >
@@ -94,96 +107,116 @@ export default function ResizablePanels({
       <Box
         onMouseDown={handleMouseDown}
         sx={{
-          width: '56px',
-          height: '100%',
-          cursor: 'col-resize',
+          width: isMobile ? '100%' : '56px',
+          height: isMobile ? '56px' : '100%',
+          cursor: isMobile ? 'row-resize' : 'col-resize',
           flexShrink: 0,
+          alignSelf: 'stretch',
           position: 'relative',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          pt: '84px',
-          px: 1,
+          justifyContent: 'center',
+          pt: isMobile ? 0 : '200px',
         }}
       >
-        {/* 解析按钮（向右箭头） */}
-        {onParse && (
-          <Tooltip title={t('jsonParser.parseButton')} placement="right">
-            <span>
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onParse();
-                }}
-                disabled={!canParse}
-                sx={{
-                  backgroundColor: 'primary.main',
-                  color: 'white',
-                  width: 32,
-                  height: 32,
-                  mb: 1.5,
-                  '&:hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  '&:disabled': {
-                    backgroundColor: 'grey.300',
-                    color: 'grey.500',
-                  },
-                }}
-              >
-                <ArrowForwardIcon sx={{ fontSize: 18 }} />
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-        
-        {/* 保存按钮（向左箭头） */}
-        {onSave && (
-          <Tooltip title={t('jsonParser.saveButton')} placement="left">
-            <span>
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSave();
-                }}
-                disabled={!canSave}
-                sx={{
-                  backgroundColor: 'success.main',
-                  color: 'white',
-                  width: 32,
-                  height: 32,
-                  mb: 2.5,
-                  '&:hover': {
-                    backgroundColor: 'success.dark',
-                  },
-                  '&:disabled': {
-                    backgroundColor: 'grey.300',
-                    color: 'grey.500',
-                  },
-                }}
-              >
-                <ArrowBackIcon sx={{ fontSize: 18 }} />
-              </IconButton>
-            </span>
-          </Tooltip>
-        )}
-        
-        {/* 拖拉图示 */}
-        <DragIndicatorIcon 
-          sx={{ 
-            color: 'text.secondary',
-            fontSize: 20,
-            opacity: 0.5,
-            pointerEvents: 'none',
-          }} 
-        />
+        {/* 按钮组容器 */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: isMobile ? 'row' : 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1.5,
+            px: 1,
+          }}
+        >
+          {/* 解析按钮（向右/向下箭头） */}
+          {onParse && (
+            <Tooltip title={t('jsonParser.parseButton')} placement={isMobile ? 'bottom' : 'right'}>
+              <span>
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onParse();
+                  }}
+                  disabled={!canParse}
+                  sx={{
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    width: 32,
+                    height: 32,
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                    },
+                    '&:disabled': {
+                      backgroundColor: 'grey.300',
+                      color: 'grey.500',
+                    },
+                  }}
+                >
+                  {isMobile ? (
+                    <ArrowDownwardIcon sx={{ fontSize: 18 }} />
+                  ) : (
+                    <ArrowForwardIcon sx={{ fontSize: 18 }} />
+                  )}
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+          
+          {/* 保存按钮（向左/向上箭头） */}
+          {onSave && (
+            <Tooltip title={t('jsonParser.saveButton')} placement={isMobile ? 'top' : 'left'}>
+              <span>
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSave();
+                  }}
+                  disabled={!canSave}
+                  sx={{
+                    backgroundColor: 'success.main',
+                    color: 'white',
+                    width: 32,
+                    height: 32,
+                    '&:hover': {
+                      backgroundColor: 'success.dark',
+                    },
+                    '&:disabled': {
+                      backgroundColor: 'grey.300',
+                      color: 'grey.500',
+                    },
+                  }}
+                >
+                  {isMobile ? (
+                    <ArrowUpwardIcon sx={{ fontSize: 18 }} />
+                  ) : (
+                    <ArrowBackIcon sx={{ fontSize: 18 }} />
+                  )}
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+          
+          {/* 拖拉图示 - 窄屏时隐藏 */}
+          {!isMobile && (
+            <DragIndicatorIcon 
+              sx={{ 
+                color: 'text.secondary',
+                fontSize: 20,
+                opacity: 0.5,
+                pointerEvents: 'none',
+              }} 
+            />
+          )}
+        </Box>
       </Box>
 
-      {/* Right Panel */}
+      {/* Right/Bottom Panel */}
       <Box
         sx={{
-          width: `${100 - leftWidth}%`,
-          height: '100%',
+          width: isMobile ? '100%' : `${100 - leftWidth}%`,
+          height: isMobile ? `${100 - leftWidth}%` : '100%',
           flexGrow: 1,
         }}
       >
