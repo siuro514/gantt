@@ -88,6 +88,7 @@ export default function ResizablePanels({
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
         width: '100%',
+        maxWidth: isMobile ? '100%' : '1200px',
         height: '100%',
         position: 'relative',
       }}
@@ -116,7 +117,7 @@ export default function ResizablePanels({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          pt: isMobile ? 0 : '200px',
+          pt: isMobile ? 0 : '100px',
         }}
       >
         {/* 按钮组容器 */}

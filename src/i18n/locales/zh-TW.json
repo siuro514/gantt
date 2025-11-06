@@ -32,12 +32,16 @@
       "description": "格式化、驗證和美化 JSON 資料，支援語法高亮和錯誤檢測"
     },
     "base64": {
-      "name": "Base64 編碼/解碼",
-      "description": "快速進行 Base64 編碼和解碼，支援文字和圖片格式"
+      "name": "編碼工具",
+      "description": "支援 Base64、Hex、URL 編碼及 MD5、SHA 雜湊演算法"
     },
     "imageCompressor": {
       "name": "圖片壓縮工具",
       "description": "線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式"
+    },
+    "crypto": {
+      "name": "加密/解密工具",
+      "description": "使用 AES、DES、3DES、RC4 和 Rabbit 演算法進行安全的文字加密和解密"
     }
   },
   "features": {
@@ -258,23 +262,28 @@
     }
   },
   "base64": {
-    "title": "Base64 編碼/解碼",
-    "description": "快速進行 Base64 編碼和解碼，支援中文和特殊字元",
+    "title": "多格式編碼/解碼工具",
+    "description": "支援 Base64、Hex、URL 編碼及多種雜湊演算法",
+    "encodingType": "編碼類型",
     "mode": {
       "encode": "編碼 (Encode)",
       "decode": "解碼 (Decode)"
     },
     "inputTitle": {
       "encode": "原始文字",
-      "decode": "Base64 字串"
+      "decode": "Base64 字串",
+      "original": "原始文字"
     },
     "outputTitle": {
       "encode": "Base64 結果",
-      "decode": "解碼結果"
+      "decode": "解碼結果",
+      "encoded": "編碼結果"
     },
     "placeholder": {
       "encode": "輸入要編碼的文字...",
-      "decode": "輸入要解碼的 Base64 字串..."
+      "decode": "輸入要解碼的 Base64 字串...",
+      "input": "輸入文字...",
+      "output": "編碼結果將顯示在這裡..."
     },
     "buttons": {
       "encode": "編碼",
@@ -287,17 +296,31 @@
       "encodeSuccess": "編碼成功！",
       "decodeSuccess": "解碼成功！",
       "encodeFailed": "編碼失敗：",
-      "decodeFailed": "解碼失敗：請確認輸入的是有效的 Base64 字串",
-      "copySuccess": "已複製到剪貼簿！"
+      "decodeFailed": "解碼失敗：請確認輸入的內容有效",
+      "copySuccess": "已複製到剪貼簿！",
+      "emptyInput": "請輸入內容",
+      "irreversible": "雜湊演算法不可逆，只能編碼"
+    },
+    "options": {
+      "lineBreak": "斷行",
+      "noLineBreak": "不斷行",
+      "lineBreak64": "每 64 個字元",
+      "lineBreak76": "每 76 個字元 (MIME)",
+      "urlSafe": "URL-Safe 模式（使用 - 和 _ 代替 + 和 /）"
     },
     "info": {
-      "whatIsBase64": "什麼是 Base64？",
-      "description": "Base64 是一種用 64 個可列印字元來表示二進位資料的編碼方式。常用於在文字環境中傳輸二進位資料，如電子郵件附件、資料 URL 等。",
+      "whatIsBase64": "什麼是編碼？",
+      "description": "編碼是將資料從一種格式轉換為另一種格式的過程。不同的編碼方式適用於不同的場景，如資料傳輸、儲存、加密等。",
+      "encodingTypes": "編碼類型說明",
+      "base64Desc": "使用 64 個可列印字元來表示二進位資料，常用於電子郵件附件和資料 URL",
+      "hexDesc": "使用 0-9 和 A-F 字元來表示二進位資料，常用於檔案雜湊和顏色代碼",
+      "urlDesc": "將特殊字元轉換為百分比編碼格式，用於在 URL 中安全傳輸",
+      "hashDesc": "單向雜湊演算法（不可逆），用於密碼儲存和資料完整性驗證",
       "useCases": "使用場景",
-      "useCase1": "將圖片嵌入 HTML/CSS 中（Data URL）",
-      "useCase2": "HTTP Basic Authentication",
-      "useCase3": "在 URL 中傳遞複雜參數",
-      "useCase4": "資料加密前的編碼（注意：Base64 不是加密！）"
+      "useCase1": "Base64：將圖片嵌入 HTML/CSS、HTTP Basic Authentication",
+      "useCase2": "Hex：檔案完整性驗證（MD5/SHA 校驗碼）、顏色代碼（#FF0000）",
+      "useCase3": "URL Encode：在 URL 中傳遞複雜參數、表單資料傳輸",
+      "useCase4": "Hash：密碼儲存、區塊鏈、數位簽章"
     }
   },
   "imageCompressor": {
@@ -329,6 +352,72 @@
       "tip2": "建議品質設定在 70-85% 之間，可以在檔案大小和畫質間取得良好平衡",
       "tip3": "壓縮後的圖片格式為 JPEG，適合照片類圖片",
       "tip4": "所有處理都在瀏覽器本機完成，不會上傳你的圖片"
+    }
+  },
+  "crypto": {
+    "title": "加密/解密工具",
+    "description": "使用多種演算法進行安全的文字加密和解密",
+    "symmetric": "對稱加密",
+    "asymmetric": "非對稱加密 (RSA)",
+    "algorithm": "加密演算法",
+    "mode": "加密模式",
+    "outputFormat": "輸出格式",
+    "key": "密鑰 (十六進位)",
+    "iv": "初始化向量 IV (十六進位)",
+    "keySize": "密鑰長度",
+    "publicKey": "公鑰 (PEM)",
+    "privateKey": "私鑰 (PEM)",
+    "generateKey": "生成隨機密鑰",
+    "generateIV": "生成隨機 IV",
+    "generateRSAKeys": "生成 RSA 密鑰對",
+    "generating": "生成中...",
+    "inputTitle": "原始文字",
+    "outputTitle": "加密文字",
+    "placeholder": {
+      "input": "輸入要加密的文字...",
+      "output": "加密結果將顯示在這裡...",
+      "key": "輸入十六進位密鑰或點擊生成",
+      "iv": "輸入十六進位 IV 或點擊生成",
+      "publicKey": "貼上公鑰或點擊生成以建立密鑰對",
+      "privateKey": "貼上私鑰或點擊生成以建立密鑰對"
+    },
+    "messages": {
+      "encryptSuccess": "加密成功！",
+      "decryptSuccess": "解密成功！",
+      "encryptFailed": "加密失敗：",
+      "decryptFailed": "解密失敗：請檢查你的密鑰、IV 和加密文字",
+      "emptyInput": "請輸入內容",
+      "emptyKey": "請輸入密鑰",
+      "emptyPublicKey": "請輸入或生成公鑰",
+      "emptyPrivateKey": "請輸入或生成私鑰",
+      "keyGenerated": "密鑰對生成成功！",
+      "keyGenFailed": "密鑰對生成失敗：",
+      "gcmWarning": "注意：此實作使用 CTR 模式模擬 GCM。生產環境建議直接使用 Web Crypto API。"
+    },
+    "warning": "重要提示：請妥善保存你的密鑰和 IV！沒有它們你將無法解密資料。所有加密操作都在瀏覽器本機執行。",
+    "rsaWarning": "重要提示：請妥善保存你的私鑰！任何擁有私鑰的人都能解密使用公鑰加密的訊息。公鑰可以安全分享。所有操作都在瀏覽器本機執行。",
+    "gcmInfo": "GCM (Galois/Counter Mode) 是目前推薦的 AES 模式。它提供認證加密 (AEAD)，同時確保機密性和完整性。",
+    "info": {
+      "title": "什麼是加密？",
+      "description": "加密是使用密鑰將可讀文字轉換為不可讀密文的過程。只有擁有正確密鑰的人才能解密並讀取原始文字。",
+      "algorithms": "支援的演算法",
+      "aesDesc": "進階加密標準，最廣泛使用且最安全的對稱加密演算法（256 位元密鑰）",
+      "desDesc": "資料加密標準，較舊的演算法，現已被認為安全性較低。3DES 提供更好的安全性",
+      "rc4Desc": "串流加密，速度快但有已知的漏洞。不建議用於敏感資料",
+      "rabbitDesc": "高速串流加密，提供良好的安全性和效能",
+      "modes": "加密模式",
+      "gcmDesc": "Galois/Counter 模式 - 推薦！提供認證加密 (AEAD)，同時確保機密性和完整性",
+      "cbcDesc": "密碼區塊鏈結 - 廣泛使用，需要 IV，提供良好的安全性",
+      "ecbDesc": "電子密碼本 - 簡單但安全性最低，不建議用於生產環境",
+      "otherModes": "CFB、OFB、CTR：提供不同安全性和效能特性的各種模式",
+      "rsaDescription": "RSA 是非對稱加密演算法，使用一對密鑰（公鑰和私鑰）。使用公鑰加密的訊息只能用對應的私鑰解密。",
+      "rsaFeatures": "RSA 密鑰特性",
+      "rsaFeature1Title": "密鑰對",
+      "rsaFeature1Desc": "生成公鑰（用於加密）和私鑰（用於解密）配對",
+      "rsaFeature2Title": "公鑰分享",
+      "rsaFeature2Desc": "你可以安全地分享公鑰 - 別人用它加密的訊息只有你能解密",
+      "rsaFeature3Title": "高強度安全",
+      "rsaFeature3Desc": "2048 位元提供良好安全性，4096 位元提供更強保護但速度較慢"
     }
   },
   "gantt": {

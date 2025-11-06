@@ -14,6 +14,7 @@ import {
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import EditIcon from '@mui/icons-material/Edit';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 import CodeIcon from '@mui/icons-material/Code';
 import CompressIcon from '@mui/icons-material/Compress';
 import JsonEditor from '@/components/JsonEditor';
@@ -138,7 +139,7 @@ export default function JsonParserPage() {
             flexShrink: 0,
           }}
         >
-          <CodeIcon sx={{ fontSize: '2rem' }} />
+          <DataObjectIcon sx={{ fontSize: '2rem' }} />
         </Box>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>

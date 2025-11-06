@@ -32,12 +32,16 @@
       "description": "Format, validate, and beautify JSON data with syntax highlighting and error detection"
     },
     "base64": {
-      "name": "Base64 Encoder/Decoder",
-      "description": "Quickly encode and decode Base64, supporting both text and image formats"
+      "name": "Encoding Tool",
+      "description": "Support Base64, Hex, URL encoding and MD5, SHA hash algorithms"
     },
     "imageCompressor": {
       "name": "Image Compressor",
       "description": "Compress images online while maintaining quality, supporting JPG, PNG, WebP formats"
+    },
+    "crypto": {
+      "name": "Encryption/Decryption",
+      "description": "Secure text encryption and decryption with AES, DES, 3DES, RC4, and Rabbit algorithms"
     }
   },
   "features": {
@@ -258,23 +262,28 @@
     }
   },
   "base64": {
-    "title": "Base64 Encoder/Decoder",
-    "description": "Quickly encode and decode Base64, supports Chinese and special characters",
+    "title": "Multi-Format Encoder/Decoder",
+    "description": "Supports Base64, Hex, URL encoding and various hash algorithms",
+    "encodingType": "Encoding Type",
     "mode": {
       "encode": "Encode",
       "decode": "Decode"
     },
     "inputTitle": {
       "encode": "Original Text",
-      "decode": "Base64 String"
+      "decode": "Base64 String",
+      "original": "Original Text"
     },
     "outputTitle": {
       "encode": "Base64 Result",
-      "decode": "Decoded Result"
+      "decode": "Decoded Result",
+      "encoded": "Encoded Result"
     },
     "placeholder": {
       "encode": "Enter text to encode...",
-      "decode": "Enter Base64 string to decode..."
+      "decode": "Enter Base64 string to decode...",
+      "input": "Enter text...",
+      "output": "Encoded result will be displayed here..."
     },
     "buttons": {
       "encode": "Encode",
@@ -287,17 +296,31 @@
       "encodeSuccess": "Encoded successfully!",
       "decodeSuccess": "Decoded successfully!",
       "encodeFailed": "Encoding failed: ",
-      "decodeFailed": "Decoding failed: Please ensure the input is a valid Base64 string",
-      "copySuccess": "Copied to clipboard!"
+      "decodeFailed": "Decoding failed: Please ensure the input is valid",
+      "copySuccess": "Copied to clipboard!",
+      "emptyInput": "Please enter content",
+      "irreversible": "Hash algorithms are irreversible and can only be encoded"
+    },
+    "options": {
+      "lineBreak": "Line Break",
+      "noLineBreak": "No line break",
+      "lineBreak64": "Every 64 characters",
+      "lineBreak76": "Every 76 characters (MIME)",
+      "urlSafe": "URL-Safe Mode (use - and _ instead of + and /)"
     },
     "info": {
-      "whatIsBase64": "What is Base64?",
-      "description": "Base64 is an encoding scheme that uses 64 printable characters to represent binary data. It is commonly used to transmit binary data in text environments, such as email attachments, data URLs, etc.",
+      "whatIsBase64": "What is Encoding?",
+      "description": "Encoding is the process of converting data from one format to another. Different encoding methods are suitable for different scenarios, such as data transmission, storage, encryption, etc.",
+      "encodingTypes": "Encoding Types",
+      "base64Desc": "Uses 64 printable characters to represent binary data, commonly used in email attachments and data URLs",
+      "hexDesc": "Uses 0-9 and A-F characters to represent binary data, commonly used in file hashes and color codes",
+      "urlDesc": "Converts special characters to percent-encoded format for safe transmission in URLs",
+      "hashDesc": "One-way hash algorithms (irreversible) for password storage and data integrity verification",
       "useCases": "Use Cases",
-      "useCase1": "Embedding images in HTML/CSS (Data URL)",
-      "useCase2": "HTTP Basic Authentication",
-      "useCase3": "Passing complex parameters in URLs",
-      "useCase4": "Encoding before data encryption (Note: Base64 is not encryption!)"
+      "useCase1": "Base64: Embedding images in HTML/CSS, HTTP Basic Authentication",
+      "useCase2": "Hex: File integrity verification (MD5/SHA checksums), color codes (#FF0000)",
+      "useCase3": "URL Encode: Passing complex parameters in URLs, form data transmission",
+      "useCase4": "Hash: Password storage, blockchain, digital signatures"
     }
   },
   "imageCompressor": {
@@ -329,6 +352,72 @@
       "tip2": "Recommended quality setting is between 70-85% for a good balance between file size and quality",
       "tip3": "Compressed image format is JPEG, suitable for photos",
       "tip4": "All processing is completed locally in your browser and will not upload your images"
+    }
+  },
+  "crypto": {
+    "title": "Encryption/Decryption Tool",
+    "description": "Secure text encryption and decryption with multiple algorithms",
+    "symmetric": "Symmetric Encryption",
+    "asymmetric": "Asymmetric Encryption (RSA)",
+    "algorithm": "Algorithm",
+    "mode": "Encryption Mode",
+    "outputFormat": "Output Format",
+    "key": "Key (Hex)",
+    "iv": "IV - Initialization Vector (Hex)",
+    "keySize": "Key Size",
+    "publicKey": "Public Key (PEM)",
+    "privateKey": "Private Key (PEM)",
+    "generateKey": "Generate Random Key",
+    "generateIV": "Generate Random IV",
+    "generateRSAKeys": "Generate RSA Key Pair",
+    "generating": "Generating...",
+    "inputTitle": "Original Text",
+    "outputTitle": "Encrypted Text",
+    "placeholder": {
+      "input": "Enter text to encrypt...",
+      "output": "Encrypted result will be displayed here...",
+      "key": "Enter hex key or click generate",
+      "iv": "Enter hex IV or click generate",
+      "publicKey": "Paste public key or click generate to create a key pair",
+      "privateKey": "Paste private key or click generate to create a key pair"
+    },
+    "messages": {
+      "encryptSuccess": "Encrypted successfully!",
+      "decryptSuccess": "Decrypted successfully!",
+      "encryptFailed": "Encryption failed: ",
+      "decryptFailed": "Decryption failed: Please check your key, IV, and encrypted text",
+      "emptyInput": "Please enter content",
+      "emptyKey": "Please enter a key",
+      "emptyPublicKey": "Please enter or generate a public key",
+      "emptyPrivateKey": "Please enter or generate a private key",
+      "keyGenerated": "Key pair generated successfully!",
+      "keyGenFailed": "Failed to generate key pair: ",
+      "gcmWarning": "Note: GCM mode is simulated using CTR mode in this implementation. For production use, consider using Web Crypto API directly."
+    },
+    "warning": "IMPORTANT: Save your key and IV securely! Without them, you cannot decrypt your data. All encryption is performed locally in your browser.",
+    "rsaWarning": "IMPORTANT: Save your private key securely! Anyone with your private key can decrypt messages encrypted with your public key. You can safely share your public key. All operations are performed locally in your browser.",
+    "gcmInfo": "GCM (Galois/Counter Mode) is the recommended mode for AES. It provides authenticated encryption with associated data (AEAD), ensuring both confidentiality and integrity.",
+    "info": {
+      "title": "What is Encryption?",
+      "description": "Encryption is the process of converting readable text into unreadable ciphertext using a secret key. Only those with the correct key can decrypt and read the original text.",
+      "algorithms": "Supported Algorithms",
+      "aesDesc": "Advanced Encryption Standard, the most widely used and secure symmetric encryption algorithm (256-bit key)",
+      "desDesc": "Data Encryption Standard, an older algorithm now considered less secure. 3DES offers improved security",
+      "rc4Desc": "Stream cipher, fast but has known vulnerabilities. Not recommended for sensitive data",
+      "rabbitDesc": "High-speed stream cipher, offering good security and performance",
+      "modes": "Encryption Modes",
+      "gcmDesc": "Galois/Counter Mode - Recommended! Provides authenticated encryption (AEAD), ensuring both confidentiality and integrity",
+      "cbcDesc": "Cipher Block Chaining - Widely used, requires IV, provides good security",
+      "ecbDesc": "Electronic Codebook - Simple but least secure, not recommended for production use",
+      "otherModes": "CFB, OFB, CTR: Various modes offering different security and performance characteristics",
+      "rsaDescription": "RSA is an asymmetric encryption algorithm that uses a pair of keys (public and private). Messages encrypted with the public key can only be decrypted with the corresponding private key.",
+      "rsaFeatures": "RSA Key Features",
+      "rsaFeature1Title": "Key Pair",
+      "rsaFeature1Desc": "Generate a public key (for encryption) and private key (for decryption) pair",
+      "rsaFeature2Title": "Public Key Sharing",
+      "rsaFeature2Desc": "You can safely share your public key - others use it to encrypt messages only you can decrypt",
+      "rsaFeature3Title": "Strong Security",
+      "rsaFeature3Desc": "2048-bit provides good security, 4096-bit provides even stronger protection but is slower"
     }
   },
   "gantt": {

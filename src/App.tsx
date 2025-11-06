@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import GanttPage from './pages/tools/GanttPage';
 import JsonParserPage from './pages/tools/JsonParserPage';
 import Base64Page from './pages/tools/Base64Page';
+import CryptoPage from './pages/tools/CryptoPage';
 import ImageCompressorPage from './pages/tools/ImageCompressorPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
@@ -35,6 +36,7 @@ function DocumentTitle() {
       '/tools/gantt': t('tools.gantt.name'),
       '/tools/json-parser': t('tools.jsonParser.name'),
       '/tools/base64': t('tools.base64.name'),
+      '/tools/crypto': t('tools.crypto.name'),
       '/tools/image-compressor': t('tools.imageCompressor.name'),
       '/about': t('nav.about'),
       '/privacy': t('footer.privacy'),
@@ -47,6 +49,7 @@ function DocumentTitle() {
       '/tools/gantt': t('tools.gantt.description'),
       '/tools/json-parser': t('tools.jsonParser.description'),
       '/tools/base64': t('tools.base64.description'),
+      '/tools/crypto': t('tools.crypto.description'),
       '/tools/image-compressor': t('tools.imageCompressor.description'),
       '/about': t('about.description'),
       '/privacy': t('privacy.metaDescription'),
@@ -158,6 +161,7 @@ function LanguageRoutes() {
       <Route path="/tools/gantt" element={<GanttPage />} />
       <Route path="/tools/json-parser" element={<><Navbar /><JsonParserPage /><Footer /></>} />
       <Route path="/tools/base64" element={<><Navbar /><Base64Page /><Footer /></>} />
+      <Route path="/tools/crypto" element={<><Navbar /><CryptoPage /><Footer /></>} />
       <Route path="/tools/image-compressor" element={<><Navbar /><ImageCompressorPage /><Footer /></>} />
       <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
       <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
@@ -319,6 +323,7 @@ function App() {
               <Route path="/tools/gantt" element={<Navigate to="/en/tools/gantt" replace />} />
               <Route path="/tools/json-parser" element={<Navigate to="/en/tools/json-parser" replace />} />
               <Route path="/tools/base64" element={<Navigate to="/en/tools/base64" replace />} />
+              <Route path="/tools/crypto" element={<Navigate to="/en/tools/crypto" replace />} />
               <Route path="/tools/image-compressor" element={<Navigate to="/en/tools/image-compressor" replace />} />
               <Route path="/about" element={<Navigate to="/en/about" replace />} />
               <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />

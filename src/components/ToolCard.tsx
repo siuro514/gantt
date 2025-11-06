@@ -4,8 +4,10 @@ import { Tool } from '@/data/tools';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 import CodeIcon from '@mui/icons-material/Code';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 import LockIcon from '@mui/icons-material/Lock';
 import ImageIcon from '@mui/icons-material/Image';
+import SecurityIcon from '@mui/icons-material/Security';
 import { useTranslation } from 'react-i18next';
 import { LANG_CODE_TO_PATH } from './LanguageRouter';
 
@@ -16,8 +18,10 @@ interface ToolCardProps {
 const iconMap: Record<string, React.ReactElement> = {
   ViewTimeline: <ViewTimelineIcon />,
   Code: <CodeIcon />,
+  DataObject: <DataObjectIcon />,
   Lock: <LockIcon />,
   Image: <ImageIcon />,
+  Security: <SecurityIcon />,
 };
 
 // Map tool IDs to translation keys
@@ -26,6 +30,7 @@ const toolI18nMap: Record<string, string> = {
   'json-parser': 'jsonParser',
   'base64': 'base64',
   'image-compressor': 'imageCompressor',
+  'crypto': 'crypto',
 };
 
 export default function ToolCard({ tool }: ToolCardProps) {

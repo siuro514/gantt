@@ -32,12 +32,16 @@
       "description": "Formatear, validar y embellecer datos JSON con resaltado de sintaxis y detección de errores"
     },
     "base64": {
-      "name": "Codificador/Decodificador Base64",
-      "description": "Codificar y decodificar Base64 rápidamente, soportando formatos de texto e imagen"
+      "name": "Herramienta de Codificación",
+      "description": "Soporta codificación Base64, Hex, URL y algoritmos hash MD5, SHA"
     },
     "imageCompressor": {
       "name": "Compresor de Imágenes",
       "description": "Comprimir imágenes online manteniendo la calidad, soportando formatos JPG, PNG, WebP"
+    },
+    "crypto": {
+      "name": "Encriptación/Desencriptación",
+      "description": "Encriptación y desencriptación segura de texto con algoritmos AES, DES, 3DES, RC4 y Rabbit"
     }
   },
   "features": {
@@ -258,23 +262,28 @@
     }
   },
   "base64": {
-    "title": "Codificador/Decodificador Base64",
-    "description": "Codifica y decodifica Base64 rápidamente, compatible con chino y caracteres especiales",
+    "title": "Codificador/Decodificador Multi-Formato",
+    "description": "Compatible con Base64, Hex, codificación URL y varios algoritmos hash",
+    "encodingType": "Tipo de Codificación",
     "mode": {
       "encode": "Codificar",
       "decode": "Decodificar"
     },
     "inputTitle": {
       "encode": "Texto original",
-      "decode": "Cadena Base64"
+      "decode": "Cadena Base64",
+      "original": "Texto Original"
     },
     "outputTitle": {
       "encode": "Resultado Base64",
-      "decode": "Resultado decodificado"
+      "decode": "Resultado decodificado",
+      "encoded": "Resultado Codificado"
     },
     "placeholder": {
       "encode": "Ingresa el texto a codificar...",
-      "decode": "Ingresa la cadena Base64 a decodificar..."
+      "decode": "Ingresa la cadena Base64 a decodificar...",
+      "input": "Ingresa texto...",
+      "output": "El resultado codificado se mostrará aquí..."
     },
     "buttons": {
       "encode": "Codificar",
@@ -287,17 +296,31 @@
       "encodeSuccess": "¡Codificación exitosa!",
       "decodeSuccess": "¡Decodificación exitosa!",
       "encodeFailed": "Codificación fallida: ",
-      "decodeFailed": "Decodificación fallida: Asegúrate de que la entrada es una cadena Base64 válida",
-      "copySuccess": "¡Copiado al portapapeles!"
+      "decodeFailed": "Decodificación fallida: Asegúrate de que la entrada es válida",
+      "copySuccess": "¡Copiado al portapapeles!",
+      "emptyInput": "Por favor ingresa contenido",
+      "irreversible": "Los algoritmos hash son irreversibles y solo permiten codificación"
+    },
+    "options": {
+      "lineBreak": "Salto de línea",
+      "noLineBreak": "Sin salto de línea",
+      "lineBreak64": "Cada 64 caracteres",
+      "lineBreak76": "Cada 76 caracteres (MIME)",
+      "urlSafe": "Modo URL-Safe (usar - y _ en lugar de + y /)"
     },
     "info": {
-      "whatIsBase64": "¿Qué es Base64?",
-      "description": "Base64 es un esquema de codificación que utiliza 64 caracteres imprimibles para representar datos binarios. Se usa comúnmente para transmitir datos binarios en entornos de texto, como archivos adjuntos de correo electrónico, URLs de datos, etc.",
-      "useCases": "Casos de uso",
-      "useCase1": "Incrustar imágenes en HTML/CSS (Data URL)",
-      "useCase2": "Autenticación básica HTTP",
-      "useCase3": "Pasar parámetros complejos en URLs",
-      "useCase4": "Codificación antes del cifrado de datos (Nota: ¡Base64 no es cifrado!)"
+      "whatIsBase64": "¿Qué es la Codificación?",
+      "description": "La codificación es el proceso de convertir datos de un formato a otro. Diferentes métodos de codificación son adecuados para diferentes escenarios, como transmisión de datos, almacenamiento, cifrado, etc.",
+      "encodingTypes": "Descripción de Tipos de Codificación",
+      "base64Desc": "Utiliza 64 caracteres imprimibles para representar datos binarios, comúnmente usado en archivos adjuntos de correo electrónico y URLs de datos",
+      "hexDesc": "Utiliza caracteres 0-9 y A-F para representar datos binarios, comúnmente usado en hashes de archivos y códigos de color",
+      "urlDesc": "Convierte caracteres especiales a formato de codificación porcentual para transmisión segura en URLs",
+      "hashDesc": "Algoritmos hash unidireccionales (irreversibles) para almacenamiento de contraseñas y verificación de integridad de datos",
+      "useCases": "Casos de Uso",
+      "useCase1": "Base64: Incrustar imágenes en HTML/CSS, Autenticación Básica HTTP",
+      "useCase2": "Hex: Verificación de integridad de archivos (checksums MD5/SHA), códigos de color (#FF0000)",
+      "useCase3": "URL Encode: Pasar parámetros complejos en URLs, transmisión de datos de formularios",
+      "useCase4": "Hash: Almacenamiento de contraseñas, blockchain, firmas digitales"
     }
   },
   "imageCompressor": {
@@ -403,5 +426,71 @@
       }
     },
     "add": "Agregar"
+  },
+  "crypto": {
+    "title": "Herramienta de Encriptación/Desencriptación",
+    "description": "Encriptación y desencriptación segura de texto con múltiples algoritmos",
+    "symmetric": "Encriptación Simétrica",
+    "asymmetric": "Encriptación Asimétrica (RSA)",
+    "algorithm": "Algoritmo",
+    "mode": "Modo de Encriptación",
+    "outputFormat": "Formato de Salida",
+    "key": "Clave (Hex)",
+    "iv": "IV - Vector de Inicialización (Hex)",
+    "keySize": "Tamaño de Clave",
+    "publicKey": "Clave Pública (PEM)",
+    "privateKey": "Clave Privada (PEM)",
+    "generateKey": "Generar Clave Aleatoria",
+    "generateIV": "Generar IV Aleatorio",
+    "generateRSAKeys": "Generar Par de Claves RSA",
+    "generating": "Generando...",
+    "inputTitle": "Texto Original",
+    "outputTitle": "Texto Encriptado",
+    "placeholder": {
+      "input": "Ingresa el texto a encriptar...",
+      "output": "El resultado encriptado se mostrará aquí...",
+      "key": "Ingresa clave hex o haz clic en generar",
+      "iv": "Ingresa IV hex o haz clic en generar",
+      "publicKey": "Pega la clave pública o haz clic en generar para crear un par de claves",
+      "privateKey": "Pega la clave privada o haz clic en generar para crear un par de claves"
+    },
+    "messages": {
+      "encryptSuccess": "¡Encriptación exitosa!",
+      "decryptSuccess": "¡Desencriptación exitosa!",
+      "encryptFailed": "Encriptación fallida: ",
+      "decryptFailed": "Desencriptación fallida: Por favor verifica tu clave, IV y texto encriptado",
+      "emptyInput": "Por favor ingresa contenido",
+      "emptyKey": "Por favor ingresa una clave",
+      "emptyPublicKey": "Por favor ingresa o genera una clave pública",
+      "emptyPrivateKey": "Por favor ingresa o genera una clave privada",
+      "keyGenerated": "¡Par de claves generado exitosamente!",
+      "keyGenFailed": "Falló la generación del par de claves: ",
+      "gcmWarning": "Nota: El modo GCM se simula usando el modo CTR en esta implementación. Para uso en producción, considera usar Web Crypto API directamente."
+    },
+    "warning": "IMPORTANTE: ¡Guarda tu clave y IV de forma segura! Sin ellos, no podrás desencriptar tus datos. Toda la encriptación se realiza localmente en tu navegador.",
+    "rsaWarning": "IMPORTANTE: ¡Guarda tu clave privada de forma segura! Cualquiera con tu clave privada puede desencriptar mensajes encriptados con tu clave pública. Puedes compartir tu clave pública de forma segura. Todas las operaciones se realizan localmente en tu navegador.",
+    "gcmInfo": "GCM (Modo Galois/Counter) es el modo recomendado para AES. Proporciona encriptación autenticada con datos asociados (AEAD), asegurando tanto confidencialidad como integridad.",
+    "info": {
+      "title": "¿Qué es la Encriptación?",
+      "description": "La encriptación es el proceso de convertir texto legible en texto cifrado ilegible usando una clave secreta. Solo aquellos con la clave correcta pueden desencriptar y leer el texto original.",
+      "algorithms": "Algoritmos Soportados",
+      "aesDesc": "Estándar de Encriptación Avanzada, el algoritmo de encriptación simétrica más utilizado y seguro (clave de 256 bits)",
+      "desDesc": "Estándar de Encriptación de Datos, un algoritmo antiguo ahora considerado menos seguro. 3DES ofrece seguridad mejorada",
+      "rc4Desc": "Cifrado de flujo, rápido pero tiene vulnerabilidades conocidas. No recomendado para datos sensibles",
+      "rabbitDesc": "Cifrado de flujo de alta velocidad, ofrece buena seguridad y rendimiento",
+      "modes": "Modos de Encriptación",
+      "gcmDesc": "Modo Galois/Counter - ¡Recomendado! Proporciona encriptación autenticada (AEAD), asegurando tanto confidencialidad como integridad",
+      "cbcDesc": "Encadenamiento de Bloques de Cifrado - Ampliamente usado, requiere IV, proporciona buena seguridad",
+      "ecbDesc": "Libro de Códigos Electrónico - Simple pero menos seguro, no recomendado para uso en producción",
+      "otherModes": "CFB, OFB, CTR: Varios modos que ofrecen diferentes características de seguridad y rendimiento",
+      "rsaDescription": "RSA es un algoritmo de encriptación asimétrica que usa un par de claves (pública y privada). Los mensajes encriptados con la clave pública solo pueden ser desencriptados con la clave privada correspondiente.",
+      "rsaFeatures": "Características de las Claves RSA",
+      "rsaFeature1Title": "Par de Claves",
+      "rsaFeature1Desc": "Genera un par de clave pública (para encriptar) y clave privada (para desencriptar)",
+      "rsaFeature2Title": "Compartir Clave Pública",
+      "rsaFeature2Desc": "Puedes compartir tu clave pública de forma segura - otros la usan para encriptar mensajes que solo tú puedes desencriptar",
+      "rsaFeature3Title": "Seguridad Fuerte",
+      "rsaFeature3Desc": "2048 bits proporciona buena seguridad, 4096 bits proporciona protección aún más fuerte pero es más lento"
+    }
   }
 }

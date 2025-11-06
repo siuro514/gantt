@@ -98,11 +98,9 @@ export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}
             ? 'rgba(42, 42, 42, 0.6)' 
             : 'rgba(255, 255, 255, 0.9)'),
         backdropFilter: 'blur(20px)',
-        borderBottom: useCustomColor
-          ? `1px solid ${customColor}40` // 使用主题色作为边框，40 为透明度
-          : (useLightText 
-            ? '1px solid rgba(212, 175, 55, 0.2)' 
-            : '1px solid rgba(0, 0, 0, 0.08)'),
+        borderBottom: useLightText 
+          ? '1px solid rgba(212, 175, 55, 0.2)' 
+          : '1px solid rgba(0, 0, 0, 0.08)',
         transform: useCustomColor ? `translateY(-${navbarOffset + (navbarOffset > 0 ? 1 : 0)}px)` : 'none',
         transition: 'background-color 0.3s ease, border-bottom 0.3s ease',
       }}
@@ -126,26 +124,20 @@ export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}
                 width: 28,
                 height: 28,
                 borderRadius: 2,
-                background: useCustomColor
-                  ? `linear-gradient(135deg, ${customColor}30 0%, ${customColor}20 100%)`
-                  : (useLightText 
-                    ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 215, 0, 0.15) 100%)' 
-                    : 'linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%)'),
+                background: useLightText 
+                  ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 215, 0, 0.15) 100%)' 
+                  : 'linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%)',
                 backdropFilter: 'blur(10px)',
-                boxShadow: useCustomColor
-                  ? `0 4px 14px ${customColor}40`
-                  : (useLightText 
-                    ? '0 4px 14px rgba(212, 175, 55, 0.2)' 
-                    : '0 4px 14px rgba(0, 0, 0, 0.3)'),
-                border: useCustomColor
-                  ? `1px solid ${customColor}60`
-                  : (useLightText 
-                    ? '1px solid rgba(212, 175, 55, 0.3)' 
-                    : '1px solid rgba(212, 175, 55, 0.5)'),
+                boxShadow: useLightText 
+                  ? '0 4px 14px rgba(212, 175, 55, 0.2)' 
+                  : '0 4px 14px rgba(0, 0, 0, 0.3)',
+                border: useLightText 
+                  ? '1px solid rgba(212, 175, 55, 0.3)' 
+                  : '1px solid rgba(212, 175, 55, 0.5)',
                 transition: 'all 0.3s ease',
               }}>
                 <BoltIcon sx={{ 
-                  color: useCustomColor ? customColor : '#d4af37', 
+                  color: '#d4af37', // 始終使用品牌金色
                   fontSize: '1rem' 
                 }} />
               </Box>
@@ -179,11 +171,9 @@ export default function Navbar({ customColor, onOffsetChange }: NavbarProps = {}
                 px: 2,
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  backgroundColor: useCustomColor
-                    ? `${customColor}20`
-                    : (useLightText 
-                      ? 'rgba(212, 175, 55, 0.15)' 
-                      : 'rgba(212, 175, 55, 0.08)'),
+                  backgroundColor: useLightText 
+                    ? 'rgba(212, 175, 55, 0.15)' 
+                    : 'rgba(212, 175, 55, 0.08)',
                 },
               }}
             >

@@ -32,12 +32,16 @@
       "description": "JSONデータのフォーマット、検証、整形。シンタックスハイライトとエラー検出をサポート"
     },
     "base64": {
-      "name": "Base64エンコーダー/デコーダー",
-      "description": "Base64の高速エンコード・デコード。テキストと画像形式に対応"
+      "name": "エンコードツール",
+      "description": "Base64、Hex、URLエンコード、MD5、SHAハッシュアルゴリズムに対応"
     },
     "imageCompressor": {
       "name": "画像圧縮ツール",
       "description": "画質を保ちながらオンラインで画像を圧縮。JPG、PNG、WebP形式に対応"
+    },
+    "crypto": {
+      "name": "暗号化/復号化ツール",
+      "description": "AES、DES、3DES、RC4、Rabbitアルゴリズムによる安全なテキストの暗号化と復号化"
     }
   },
   "features": {
@@ -258,23 +262,28 @@
     }
   },
   "base64": {
-    "title": "Base64 エンコード/デコード",
-    "description": "Base64のエンコードとデコードを素早く実行、中国語と特殊文字に対応",
+    "title": "マルチフォーマットエンコーダー/デコーダー",
+    "description": "Base64、Hex、URLエンコード、各種ハッシュアルゴリズムに対応",
+    "encodingType": "エンコードタイプ",
     "mode": {
       "encode": "エンコード",
       "decode": "デコード"
     },
     "inputTitle": {
       "encode": "元のテキスト",
-      "decode": "Base64 文字列"
+      "decode": "Base64 文字列",
+      "original": "元のテキスト"
     },
     "outputTitle": {
       "encode": "Base64 結果",
-      "decode": "デコード結果"
+      "decode": "デコード結果",
+      "encoded": "エンコード結果"
     },
     "placeholder": {
       "encode": "エンコードするテキストを入力...",
-      "decode": "デコードする Base64 文字列を入力..."
+      "decode": "デコードする Base64 文字列を入力...",
+      "input": "テキストを入力...",
+      "output": "エンコード結果がここに表示されます..."
     },
     "buttons": {
       "encode": "エンコード",
@@ -287,17 +296,31 @@
       "encodeSuccess": "エンコードに成功しました！",
       "decodeSuccess": "デコードに成功しました！",
       "encodeFailed": "エンコードに失敗しました：",
-      "decodeFailed": "デコードに失敗しました：有効な Base64 文字列であることを確認してください",
-      "copySuccess": "クリップボードにコピーしました！"
+      "decodeFailed": "デコードに失敗しました：入力内容が有効であることを確認してください",
+      "copySuccess": "クリップボードにコピーしました！",
+      "emptyInput": "内容を入力してください",
+      "irreversible": "ハッシュアルゴリズムは不可逆で、エンコードのみ可能です"
+    },
+    "options": {
+      "lineBreak": "改行",
+      "noLineBreak": "改行なし",
+      "lineBreak64": "64文字ごと",
+      "lineBreak76": "76文字ごと (MIME)",
+      "urlSafe": "URL-Safeモード（+ と / の代わりに - と _ を使用）"
     },
     "info": {
-      "whatIsBase64": "Base64とは？",
-      "description": "Base64は、64個の印刷可能な文字を使用してバイナリデータを表現するエンコード方式です。メール添付ファイルやデータURLなど、テキスト環境でバイナリデータを伝送する際によく使用されます。",
+      "whatIsBase64": "エンコードとは？",
+      "description": "エンコードは、データを別の形式に変換するプロセスです。異なるエンコード方式は、データ転送、保存、暗号化など、異なるシナリオに適しています。",
+      "encodingTypes": "エンコードタイプの説明",
+      "base64Desc": "64個の印刷可能な文字を使用してバイナリデータを表現、メール添付ファイルやデータURLによく使用されます",
+      "hexDesc": "0-9とA-Fの文字を使用してバイナリデータを表現、ファイルハッシュやカラーコードによく使用されます",
+      "urlDesc": "特殊文字をパーセントエンコード形式に変換、URLでの安全な送信に使用されます",
+      "hashDesc": "一方向ハッシュアルゴリズム（不可逆）、パスワード保存やデータ整合性検証に使用されます",
       "useCases": "使用シーン",
-      "useCase1": "HTML/CSSに画像を埋め込む（Data URL）",
-      "useCase2": "HTTP Basic Authentication",
-      "useCase3": "URLで複雑なパラメータを渡す",
-      "useCase4": "データ暗号化前のエンコード（注意：Base64は暗号化ではありません！）"
+      "useCase1": "Base64：HTML/CSSに画像を埋め込む、HTTP Basic Authentication",
+      "useCase2": "Hex：ファイル整合性検証（MD5/SHAチェックサム）、カラーコード（#FF0000）",
+      "useCase3": "URL Encode：URLで複雑なパラメータを渡す、フォームデータ転送",
+      "useCase4": "Hash：パスワード保存、ブロックチェーン、デジタル署名"
     }
   },
   "imageCompressor": {
@@ -404,5 +427,71 @@
         "copySuffix": "(コピー)"
       },
     "add": "追加"
+  },
+  "crypto": {
+    "title": "暗号化/復号化ツール",
+    "description": "複数のアルゴリズムによる安全なテキストの暗号化と復号化",
+    "symmetric": "対称暗号化",
+    "asymmetric": "非対称暗号化 (RSA)",
+    "algorithm": "アルゴリズム",
+    "mode": "暗号化モード",
+    "outputFormat": "出力形式",
+    "key": "キー (16進数)",
+    "iv": "IV - 初期化ベクトル (16進数)",
+    "keySize": "キーサイズ",
+    "publicKey": "公開鍵 (PEM)",
+    "privateKey": "秘密鍵 (PEM)",
+    "generateKey": "ランダムキーを生成",
+    "generateIV": "ランダムIVを生成",
+    "generateRSAKeys": "RSAキーペアを生成",
+    "generating": "生成中...",
+    "inputTitle": "元のテキスト",
+    "outputTitle": "暗号化されたテキスト",
+    "placeholder": {
+      "input": "暗号化するテキストを入力...",
+      "output": "暗号化結果がここに表示されます...",
+      "key": "16進数キーを入力するか、生成をクリック",
+      "iv": "16進数IVを入力するか、生成をクリック",
+      "publicKey": "公開鍵を貼り付けるか、生成をクリックしてキーペアを作成",
+      "privateKey": "秘密鍵を貼り付けるか、生成をクリックしてキーペアを作成"
+    },
+    "messages": {
+      "encryptSuccess": "暗号化に成功しました！",
+      "decryptSuccess": "復号化に成功しました！",
+      "encryptFailed": "暗号化に失敗しました：",
+      "decryptFailed": "復号化に失敗しました：キー、IV、暗号化されたテキストを確認してください",
+      "emptyInput": "内容を入力してください",
+      "emptyKey": "キーを入力してください",
+      "emptyPublicKey": "公開鍵を入力または生成してください",
+      "emptyPrivateKey": "秘密鍵を入力または生成してください",
+      "keyGenerated": "キーペアの生成に成功しました！",
+      "keyGenFailed": "キーペアの生成に失敗しました：",
+      "gcmWarning": "注意：この実装ではGCMモードをCTRモードでシミュレートしています。本番環境では、Web Crypto APIを直接使用することを検討してください。"
+    },
+    "warning": "重要：キーとIVを安全に保存してください！これらがないとデータを復号化できません。すべての暗号化はブラウザ内でローカルに実行されます。",
+    "rsaWarning": "重要：秘密鍵を安全に保存してください！秘密鍵を持っている人は、公開鍵で暗号化されたメッセージを復号化できます。公開鍵は安全に共有できます。すべての操作はブラウザ内でローカルに実行されます。",
+    "gcmInfo": "GCM (Galois/Counterモード) はAESに推奨されるモードです。認証付き暗号化 (AEAD) を提供し、機密性と完全性の両方を確保します。",
+    "info": {
+      "title": "暗号化とは？",
+      "description": "暗号化は、秘密鍵を使用して読み取り可能なテキストを読み取り不可能な暗号文に変換するプロセスです。正しい鍵を持つ人だけが復号化して元のテキストを読むことができます。",
+      "algorithms": "サポートされているアルゴリズム",
+      "aesDesc": "高度暗号化標準、最も広く使用され安全な対称暗号化アルゴリズム (256ビット鍵)",
+      "desDesc": "データ暗号化標準、現在はセキュリティが低いと考えられている古いアルゴリズム。3DESは改善されたセキュリティを提供",
+      "rc4Desc": "ストリーム暗号、高速だが既知の脆弱性がある。機密データには推奨されない",
+      "rabbitDesc": "高速ストリーム暗号、優れたセキュリティとパフォーマンスを提供",
+      "modes": "暗号化モード",
+      "gcmDesc": "Galois/Counterモード - 推奨！認証付き暗号化 (AEAD) を提供し、機密性と完全性の両方を確保",
+      "cbcDesc": "暗号ブロック連鎖 - 広く使用され、IVが必要、優れたセキュリティを提供",
+      "ecbDesc": "電子コードブック - シンプルだがセキュリティが最も低い、本番環境での使用は推奨されない",
+      "otherModes": "CFB、OFB、CTR：異なるセキュリティとパフォーマンス特性を提供する各種モード",
+      "rsaDescription": "RSAは、鍵のペア（公開鍵と秘密鍵）を使用する非対称暗号化アルゴリズムです。公開鍵で暗号化されたメッセージは、対応する秘密鍵でのみ復号化できます。",
+      "rsaFeatures": "RSA鍵の特徴",
+      "rsaFeature1Title": "鍵ペア",
+      "rsaFeature1Desc": "公開鍵（暗号化用）と秘密鍵（復号化用）のペアを生成",
+      "rsaFeature2Title": "公開鍵の共有",
+      "rsaFeature2Desc": "公開鍵は安全に共有できます - 他の人がそれを使用して暗号化したメッセージはあなただけが復号化できます",
+      "rsaFeature3Title": "強力なセキュリティ",
+      "rsaFeature3Desc": "2048ビットは優れたセキュリティを提供、4096ビットはさらに強力な保護を提供しますが、より遅くなります"
+    }
   }
 }

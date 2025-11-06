@@ -32,12 +32,16 @@
       "description": "JSON 데이터 포맷, 검증 및 정리. 구문 강조 및 오류 감지 지원"
     },
     "base64": {
-      "name": "Base64 인코더/디코더",
-      "description": "Base64 빠른 인코딩 및 디코딩. 텍스트 및 이미지 형식 지원"
+      "name": "인코딩 도구",
+      "description": "Base64, Hex, URL 인코딩 및 MD5, SHA 해시 알고리즘 지원"
     },
     "imageCompressor": {
       "name": "이미지 압축기",
       "description": "화질을 유지하면서 온라인으로 이미지 압축. JPG, PNG, WebP 형식 지원"
+    },
+    "crypto": {
+      "name": "암호화/복호화 도구",
+      "description": "AES, DES, 3DES, RC4, Rabbit 알고리즘을 사용한 안전한 텍스트 암호화 및 복호화"
     }
   },
   "features": {
@@ -258,23 +262,28 @@
     }
   },
   "base64": {
-    "title": "Base64 인코딩/디코딩",
-    "description": "Base64를 빠르게 인코딩 및 디코딩하고 중국어 및 특수 문자를 지원합니다",
+    "title": "다중 형식 인코더/디코더",
+    "description": "Base64, Hex, URL 인코딩 및 다양한 해시 알고리즘 지원",
+    "encodingType": "인코딩 유형",
     "mode": {
       "encode": "인코딩",
       "decode": "디코딩"
     },
     "inputTitle": {
       "encode": "원본 텍스트",
-      "decode": "Base64 문자열"
+      "decode": "Base64 문자열",
+      "original": "원본 텍스트"
     },
     "outputTitle": {
       "encode": "Base64 결과",
-      "decode": "디코딩 결과"
+      "decode": "디코딩 결과",
+      "encoded": "인코딩 결과"
     },
     "placeholder": {
       "encode": "인코딩할 텍스트 입력...",
-      "decode": "디코딩할 Base64 문자열 입력..."
+      "decode": "디코딩할 Base64 문자열 입력...",
+      "input": "텍스트 입력...",
+      "output": "인코딩 결과가 여기에 표시됩니다..."
     },
     "buttons": {
       "encode": "인코딩",
@@ -287,17 +296,31 @@
       "encodeSuccess": "인코딩 성공!",
       "decodeSuccess": "디코딩 성공!",
       "encodeFailed": "인코딩 실패: ",
-      "decodeFailed": "디코딩 실패: 입력이 유효한 Base64 문자열인지 확인하세요",
-      "copySuccess": "클립보드에 복사되었습니다!"
+      "decodeFailed": "디코딩 실패: 입력 내용이 유효한지 확인하세요",
+      "copySuccess": "클립보드에 복사되었습니다!",
+      "emptyInput": "내용을 입력하세요",
+      "irreversible": "해시 알고리즘은 비가역적이며 인코딩만 가능합니다"
+    },
+    "options": {
+      "lineBreak": "줄바꿈",
+      "noLineBreak": "줄바꿈 없음",
+      "lineBreak64": "64자마다",
+      "lineBreak76": "76자마다 (MIME)",
+      "urlSafe": "URL-Safe 모드 (+ 및 / 대신 - 및 _ 사용)"
     },
     "info": {
-      "whatIsBase64": "Base64란 무엇인가요?",
-      "description": "Base64는 64개의 인쇄 가능한 문자를 사용하여 이진 데이터를 표현하는 인코딩 방식입니다. 이메일 첨부 파일, 데이터 URL 등 텍스트 환경에서 이진 데이터를 전송하는 데 일반적으로 사용됩니다.",
+      "whatIsBase64": "인코딩이란 무엇인가요?",
+      "description": "인코딩은 데이터를 한 형식에서 다른 형식으로 변환하는 프로세스입니다. 다양한 인코딩 방식은 데이터 전송, 저장, 암호화 등 다양한 시나리오에 적합합니다.",
+      "encodingTypes": "인코딩 유형 설명",
+      "base64Desc": "64개의 인쇄 가능한 문자를 사용하여 이진 데이터를 표현, 이메일 첨부 파일 및 데이터 URL에 일반적으로 사용됩니다",
+      "hexDesc": "0-9와 A-F 문자를 사용하여 이진 데이터를 표현, 파일 해시 및 색상 코드에 일반적으로 사용됩니다",
+      "urlDesc": "특수 문자를 퍼센트 인코딩 형식으로 변환, URL에서 안전한 전송에 사용됩니다",
+      "hashDesc": "단방향 해시 알고리즘(비가역적), 비밀번호 저장 및 데이터 무결성 검증에 사용됩니다",
       "useCases": "사용 사례",
-      "useCase1": "HTML/CSS에 이미지 포함(Data URL)",
-      "useCase2": "HTTP 기본 인증",
-      "useCase3": "URL에서 복잡한 매개변수 전달",
-      "useCase4": "데이터 암호화 전 인코딩(참고: Base64는 암호화가 아닙니다!)"
+      "useCase1": "Base64: HTML/CSS에 이미지 포함, HTTP 기본 인증",
+      "useCase2": "Hex: 파일 무결성 검증(MD5/SHA 체크섬), 색상 코드(#FF0000)",
+      "useCase3": "URL Encode: URL에서 복잡한 매개변수 전달, 폼 데이터 전송",
+      "useCase4": "Hash: 비밀번호 저장, 블록체인, 디지털 서명"
     }
   },
   "imageCompressor": {
@@ -404,5 +427,71 @@
         "copySuffix": "(복사)"
       },
     "add": "추가"
+  },
+  "crypto": {
+    "title": "암호화/복호화 도구",
+    "description": "다양한 알고리즘을 사용한 안전한 텍스트 암호화 및 복호화",
+    "symmetric": "대칭 암호화",
+    "asymmetric": "비대칭 암호화 (RSA)",
+    "algorithm": "알고리즘",
+    "mode": "암호화 모드",
+    "outputFormat": "출력 형식",
+    "key": "키 (16진수)",
+    "iv": "IV - 초기화 벡터 (16진수)",
+    "keySize": "키 크기",
+    "publicKey": "공개 키 (PEM)",
+    "privateKey": "개인 키 (PEM)",
+    "generateKey": "랜덤 키 생성",
+    "generateIV": "랜덤 IV 생성",
+    "generateRSAKeys": "RSA 키 쌍 생성",
+    "generating": "생성 중...",
+    "inputTitle": "원본 텍스트",
+    "outputTitle": "암호화된 텍스트",
+    "placeholder": {
+      "input": "암호화할 텍스트를 입력하세요...",
+      "output": "암호화 결과가 여기에 표시됩니다...",
+      "key": "16진수 키를 입력하거나 생성을 클릭하세요",
+      "iv": "16진수 IV를 입력하거나 생성을 클릭하세요",
+      "publicKey": "공개 키를 붙여넣거나 생성을 클릭하여 키 쌍을 만드세요",
+      "privateKey": "개인 키를 붙여넣거나 생성을 클릭하여 키 쌍을 만드세요"
+    },
+    "messages": {
+      "encryptSuccess": "암호화 성공!",
+      "decryptSuccess": "복호화 성공!",
+      "encryptFailed": "암호화 실패: ",
+      "decryptFailed": "복호화 실패: 키, IV 및 암호화된 텍스트를 확인하세요",
+      "emptyInput": "내용을 입력하세요",
+      "emptyKey": "키를 입력하세요",
+      "emptyPublicKey": "공개 키를 입력하거나 생성하세요",
+      "emptyPrivateKey": "개인 키를 입력하거나 생성하세요",
+      "keyGenerated": "키 쌍이 성공적으로 생성되었습니다!",
+      "keyGenFailed": "키 쌍 생성 실패: ",
+      "gcmWarning": "참고: 이 구현에서는 GCM 모드를 CTR 모드로 시뮬레이션합니다. 프로덕션 환경에서는 Web Crypto API를 직접 사용하는 것을 고려하세요."
+    },
+    "warning": "중요: 키와 IV를 안전하게 저장하세요! 이것들 없이는 데이터를 복호화할 수 없습니다. 모든 암호화는 브라우저에서 로컬로 수행됩니다.",
+    "rsaWarning": "중요: 개인 키를 안전하게 저장하세요! 개인 키를 가진 사람은 공개 키로 암호화된 메시지를 복호화할 수 있습니다. 공개 키는 안전하게 공유할 수 있습니다. 모든 작업은 브라우저에서 로컬로 수행됩니다.",
+    "gcmInfo": "GCM (Galois/Counter 모드)는 AES에 권장되는 모드입니다. 인증된 암호화 (AEAD)를 제공하여 기밀성과 무결성을 모두 보장합니다.",
+    "info": {
+      "title": "암호화란 무엇인가요?",
+      "description": "암호화는 비밀 키를 사용하여 읽을 수 있는 텍스트를 읽을 수 없는 암호문으로 변환하는 프로세스입니다. 올바른 키를 가진 사람만 복호화하고 원본 텍스트를 읽을 수 있습니다.",
+      "algorithms": "지원되는 알고리즘",
+      "aesDesc": "고급 암호화 표준, 가장 널리 사용되고 안전한 대칭 암호화 알고리즘 (256비트 키)",
+      "desDesc": "데이터 암호화 표준, 현재는 보안이 낮다고 간주되는 오래된 알고리즘. 3DES는 향상된 보안을 제공",
+      "rc4Desc": "스트림 암호, 빠르지만 알려진 취약점이 있음. 민감한 데이터에는 권장되지 않음",
+      "rabbitDesc": "고속 스트림 암호, 우수한 보안 및 성능 제공",
+      "modes": "암호화 모드",
+      "gcmDesc": "Galois/Counter 모드 - 권장! 인증된 암호화 (AEAD)를 제공하여 기밀성과 무결성을 모두 보장",
+      "cbcDesc": "암호 블록 체인 - 널리 사용됨, IV 필요, 우수한 보안 제공",
+      "ecbDesc": "전자 코드북 - 간단하지만 가장 안전하지 않음, 프로덕션 환경에서는 권장되지 않음",
+      "otherModes": "CFB, OFB, CTR: 다양한 보안 및 성능 특성을 제공하는 다양한 모드",
+      "rsaDescription": "RSA는 키 쌍(공개 키와 개인 키)을 사용하는 비대칭 암호화 알고리즘입니다. 공개 키로 암호화된 메시지는 해당 개인 키로만 복호화할 수 있습니다.",
+      "rsaFeatures": "RSA 키 특징",
+      "rsaFeature1Title": "키 쌍",
+      "rsaFeature1Desc": "공개 키(암호화용)와 개인 키(복호화용) 쌍 생성",
+      "rsaFeature2Title": "공개 키 공유",
+      "rsaFeature2Desc": "공개 키는 안전하게 공유할 수 있습니다 - 다른 사람들이 그것을 사용하여 암호화한 메시지는 당신만 복호화할 수 있습니다",
+      "rsaFeature3Title": "강력한 보안",
+      "rsaFeature3Desc": "2048비트는 우수한 보안을 제공하고, 4096비트는 더 강력한 보호를 제공하지만 더 느립니다"
+    }
   }
 }
