@@ -18,6 +18,8 @@ import ImageCompressorPage from './pages/tools/ImageCompressorPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import AboutPage from './pages/AboutPage';
+import GanttGuidePage from './pages/GanttGuidePage';
+import FAQPage from './pages/FAQPage';
 
 // 组件用于设置页面标题和 SEO meta 标签
 function DocumentTitle() {
@@ -41,6 +43,8 @@ function DocumentTitle() {
       '/about': t('nav.about'),
       '/privacy': t('footer.privacy'),
       '/terms': t('footer.terms'),
+      '/gantt-guide': t('ganttGuide.title'),
+      '/faq': t('faq.title'),
     };
 
     // 页面描述映射
@@ -54,6 +58,8 @@ function DocumentTitle() {
       '/about': t('about.description'),
       '/privacy': t('privacy.metaDescription'),
       '/terms': t('terms.metaDescription'),
+      '/gantt-guide': t('ganttGuide.description'),
+      '/faq': t('faq.subtitle'),
     };
 
     // 设置页面标题
@@ -166,6 +172,8 @@ function LanguageRoutes() {
       <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
       <Route path="/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
       <Route path="/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
+      <Route path="/gantt-guide" element={<><Navbar /><GanttGuidePage /><Footer /></>} />
+      <Route path="/faq" element={<><Navbar /><FAQPage /><Footer /></>} />
     </Routes>
   );
 }

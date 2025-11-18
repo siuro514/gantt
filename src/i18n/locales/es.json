@@ -492,5 +492,86 @@
       "rsaFeature3Title": "Seguridad Fuerte",
       "rsaFeature3Desc": "2048 bits proporciona buena seguridad, 4096 bits proporciona protección aún más fuerte pero es más lento"
     }
+  },
+  "ganttGuide": {
+    "title": "Guía de Uso del Diagrama de Gantt",
+    "subtitle": "Guía completa de funciones y consejos de uso",
+    "description": "Aprende a usar la herramienta de Diagrama de Gantt de Recursos de Ganttleman para la gestión de tareas de equipo y planificación de horarios.",
+    "whatIs": {
+      "title": "¿Qué es un Diagrama de Gantt?",
+      "p1": "Un diagrama de Gantt es una herramienta de gestión de proyectos que muestra los horarios del proyecto en formato de gráfico de barras. Fue inventado por Henry Gantt en la década de 1910 y sigue siendo una de las herramientas de visualización de gestión de proyectos más populares en la actualidad.",
+      "p2": "En el Diagrama de Gantt de Recursos de Ganttleman, aplicamos el concepto tradicional del diagrama de Gantt a la asignación de recursos del equipo. Cada Miembro corresponde a una fila, diferentes períodos de tiempo (Sprints) corresponden a columnas, y las tarjetas de Tareas se colocan en la intersección de miembros y sprints.",
+      "p3": "Esta visualización te permite ver de un vistazo: qué miembros son responsables de qué tareas durante qué período de tiempo, si la carga de trabajo del equipo está equilibrada y si hay conflictos de recursos."
+    },
+    "features": {
+      "title": "Funciones Principales",
+      "drag": {"title": "Arrastrar y Soltar", "description": "Arrastra directamente las tarjetas de tareas a diferentes miembros o períodos, intuitivo y simple"},
+      "sprint": {"title": "Gestión de Sprint", "description": "Crea múltiples períodos de Sprint, establece fechas de inicio y fin"},
+      "member": {"title": "Gestión de Miembros", "description": "Agrega miembros del equipo, ajusta el orden, rastrea claramente las tareas de cada persona"},
+      "color": {"title": "Codificación de Color", "description": "Establece colores para las tareas para distinguir rápidamente diferentes tipos o prioridades"},
+      "export": {"title": "Funciones de Exportación", "description": "Exporta como PNG, PDF o JSON para compartir y respaldar fácilmente"},
+      "storage": {"title": "Almacenamiento Local", "description": "Se guarda automáticamente en el navegador, se carga automáticamente en la próxima visita"}
+    },
+    "quickStart": {
+      "title": "Inicio Rápido",
+      "step1": {"title": "1. Crear Sprints", "description": "Haz clic en el botón '+ Agregar' en la parte superior para crear Sprints (períodos). Cada Sprint puede tener un nombre, fecha de inicio y fecha de fin. Puedes crear múltiples Sprints para planificar diferentes fases de trabajo, como 'Semana 1', 'Semana 2', etc."},
+      "step2": {"title": "2. Agregar Miembros", "description": "Haz clic en el botón '+ Agregar' a la izquierda para agregar miembros del equipo. Después de ingresar un nombre de miembro, aparecerán en la lista de la izquierda. Puedes arrastrar miembros para ajustar su orden o usar el menú contextual para insertar nuevos miembros en posiciones específicas."},
+      "step3": {"title": "3. Crear Tareas", "description": "Haz clic en el botón '+' en cualquier celda, o arrastra tarjetas de tareas desde el Task Storage de la derecha a la celda de intersección correspondiente de miembro y Sprint. Cada tarea puede tener un nombre, color e hipervínculo. También puedes duplicar tareas y establecer enlaces a documentos relacionados o URLs."},
+      "step4": {"title": "4. Ajustar y Exportar", "description": "Arrastra tarjetas de tareas para reasignarlas a diferentes miembros o moverlas a diferentes períodos. Después de planificar, usa la función de exportación de la barra de herramientas para exportar el diagrama de Gantt como imagen (PNG), PDF o formato JSON para compartir fácilmente con el equipo o archivar."}
+    },
+    "tips": {
+      "title": "Consejos Avanzados",
+      "tip1": "Usa colores para distinguir tipos de tareas: por ejemplo, rojo para tareas urgentes, azul para tareas de desarrollo, verde para tareas de prueba",
+      "tip2": "Establece hipervínculos para tareas: Cmd/Ctrl + Clic para abrir rápidamente documentos relacionados, tickets de Jira u otras referencias",
+      "tip3": "Usa Task Storage: Las tareas de las que no estés seguro a quién asignar pueden colocarse temporalmente en el área de Storage, luego arrastrarlas a la posición apropiada más tarde",
+      "tip4": "Exporta regularmente respaldos JSON: Exporta todo el proyecto como archivo JSON para respaldo de versiones o sincronización entre diferentes computadoras",
+      "tip5": "Aprovecha las funciones Deshacer/Rehacer: Soporta Cmd+Z para deshacer y Cmd+Shift+Z para rehacer, no te preocupes por los errores"
+    },
+    "useCases": {
+      "title": "Casos de Uso",
+      "project": {"title": "Planificación de Proyectos", "description": "Planifica varias fases de proyectos de desarrollo de software y asigna tareas de miembros del equipo"},
+      "team": {"title": "Colaboración de Equipo", "description": "Visualiza la asignación de trabajo de miembros del equipo para asegurar el equilibrio de la carga de trabajo"},
+      "sprint": {"title": "Desarrollo Ágil", "description": "Gestiona la asignación de tareas y el seguimiento del progreso del Scrum Sprint"}
+    },
+    "security": {
+      "title": "Seguridad de Datos",
+      "p1": "Todos los datos se almacenan localmente en tu navegador (LocalStorage) y nunca se suben a ningún servidor. Esto significa que tu información del proyecto es completamente privada y solo tú puedes acceder a ella.",
+      "p2": "Recomendamos usar regularmente la función 'Exportar JSON' para respaldar tus datos en caso de que se borren los datos del navegador. Los archivos JSON exportados se pueden importar en cualquier momento para restaurar el contenido de tu proyecto."
+    }
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Preguntas comunes sobre Ganttleman respondidas",
+    "general": {
+      "title": "Preguntas Generales",
+      "q1": {"question": "¿Es Ganttleman gratis?", "answer": "Sí, Ganttleman es completamente gratis. Todas las funciones se pueden usar sin limitaciones, no se requiere registro ni pago."},
+      "q2": {"question": "¿Necesito registrar una cuenta?", "answer": "No. No requerimos registro y no recopilamos tu información personal. Todas las herramientas se pueden usar directamente."},
+      "q3": {"question": "¿Están seguros mis datos?", "answer": "Muy seguros. Todas las herramientas se ejecutan localmente en tu navegador, y los datos no se suben a nuestros servidores. Los datos del diagrama de Gantt se almacenan en el LocalStorage del navegador y solo tú puedes acceder a ellos."},
+      "q4": {"question": "¿Qué navegadores son compatibles?", "answer": "Ganttleman es compatible con todos los navegadores modernos incluyendo Chrome, Firefox, Safari, Edge, etc. Recomendamos usar la última versión de tu navegador para la mejor experiencia."}
+    },
+    "gantt": {
+      "title": "Relacionado con Diagrama de Gantt",
+      "q1": {"question": "¿Cómo respaldo mis datos del diagrama de Gantt?", "answer": "Haz clic en el botón 'Exportar JSON' en la barra de herramientas para exportar todo el proyecto como archivo JSON. Recomendamos respaldos regulares en caso de que se borren los datos del navegador."},
+      "q2": {"question": "¿Puedo sincronizar datos entre diferentes computadoras?", "answer": "Dado que los datos se almacenan localmente en el navegador, la sincronización automática no está disponible. Sin embargo, puedes usar las funciones 'Exportar JSON' e 'Importar JSON' para transferir datos manualmente entre diferentes computadoras."},
+      "q3": {"question": "¿Cómo comparto el diagrama de Gantt con mi equipo?", "answer": "Puedes usar las funciones 'Exportar PNG' o 'Exportar PDF' para exportar el diagrama de Gantt como imagen o archivo PDF, luego compartirlo con miembros del equipo por correo electrónico, Slack u otros métodos. El formato PDF también admite hipervínculos clicables."},
+      "q4": {"question": "¿Para qué sirven los enlaces de las tarjetas de tareas?", "answer": "Puedes establecer hipervínculos para tareas para vincular a documentos relacionados, tickets de Jira, issues de GitHub u otras referencias. Usa Cmd/Ctrl + Clic para abrir rápidamente los enlaces. Al exportar como PDF, estos enlaces también se conservan y son clicables."},
+      "q5": {"question": "¿Qué pasa si borro accidentalmente datos?", "answer": "Puedes usar Cmd+Z (Mac) o Ctrl+Z (Windows) para deshacer operaciones. Ganttleman admite funcionalidad de Deshacer/Rehacer de múltiples pasos. Si ya cerraste la página, necesitarás restaurar desde un respaldo JSON exportado previamente."}
+    },
+    "technical": {
+      "title": "Preguntas Técnicas",
+      "q1": {"question": "¿Por qué desapareció mi diagrama de Gantt después de borrar los datos del navegador?", "answer": "Los datos del diagrama de Gantt se almacenan en el LocalStorage del navegador. Si borras los datos del navegador (incluyendo datos del sitio, cookies, etc.), los datos del diagrama de Gantt también se eliminarán. Por eso recomendamos exportar respaldos JSON regularmente."},
+      "q2": {"question": "¿Puedo usarlo en móvil?", "answer": "Sí, pero la herramienta de diagrama de Gantt funciona mejor en computadoras. Las pantallas móviles son más pequeñas y las operaciones de arrastre son menos convenientes. Otras herramientas como el formateador JSON, el codificador Base64, etc. funcionan perfectamente bien en móvil."},
+      "q3": {"question": "¿Qué pasa si encuentro problemas o bugs?", "answer": "Si encuentras algún problema o descubres bugs, contáctanos a través de la información de contacto en el pie de página. Abordaremos y solucionaremos los problemas lo antes posible."}
+    },
+    "tools": {
+      "title": "Otras Herramientas",
+      "q1": {"question": "¿El formateador JSON valida la sintaxis?", "answer": "Sí, cuando haces clic en el botón 'Analizar y Editar', la herramienta valida automáticamente la sintaxis JSON. Si hay errores, mostrará mensajes de error y ubicaciones de error."},
+      "q2": {"question": "¿La compresión de imágenes reduce la calidad?", "answer": "Habrá cierta pérdida de calidad, pero generalmente es imperceptible a simple vista. Puedes ajustar el control deslizante de calidad de compresión para controlar el nivel de compresión. Recomendamos configurarlo entre 70-85% para un buen equilibrio entre tamaño de archivo y calidad."},
+      "q3": {"question": "¿Es segura la herramienta de encriptación?", "answer": "Todas las operaciones de encriptación se realizan localmente en tu navegador, y las claves y datos no se suben a servidores. Sin embargo, debes mantener tus claves seguras, ya que los datos no se pueden desencriptar sin ellas. Esta herramienta es adecuada para propósitos generales; para datos extremadamente sensibles, recomendamos usar software de encriptación profesional."}
+    },
+    "contact": {
+      "title": "¿Tienes otras preguntas?",
+      "description": "Si tu pregunta no está listada aquí o necesitas más ayuda, no dudes en contactarnos por correo electrónico."
+    }
   }
 }

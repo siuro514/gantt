@@ -36,6 +36,12 @@ export default function Footer() {
             <Link to={langPrefix + '/about'} style={{ color: 'inherit', textDecoration: 'none', margin: '0 8px', fontSize: '0.875rem' }}>
               {t('footer.links.about')}
             </Link>
+            <Link to={langPrefix + '/gantt-guide'} style={{ color: 'inherit', textDecoration: 'none', margin: '0 8px', fontSize: '0.875rem' }}>
+              {t('ganttGuide.title')}
+            </Link>
+            <Link to={langPrefix + '/faq'} style={{ color: 'inherit', textDecoration: 'none', margin: '0 8px', fontSize: '0.875rem' }}>
+              {t('faq.title')}
+            </Link>
             <Link to={langPrefix + '/privacy'} style={{ color: 'inherit', textDecoration: 'none', margin: '0 8px', fontSize: '0.875rem' }}>
               {t('footer.links.privacy')}
             </Link>

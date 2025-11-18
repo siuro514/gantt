@@ -493,5 +493,170 @@
         "copySuffix": "(copy)"
       },
     "add": "Add"
+  },
+  "ganttGuide": {
+    "title": "Gantt Chart User Guide",
+    "subtitle": "Complete feature guide and usage tips",
+    "description": "Learn how to use Ganttleman's Resource Gantt Chart tool for team task management and scheduling.",
+    "whatIs": {
+      "title": "What is a Gantt Chart?",
+      "p1": "A Gantt chart is a project management tool that displays project schedules in a bar chart format. Invented by Henry Gantt in the 1910s, it remains one of the most popular project management visualization tools today.",
+      "p2": "In Ganttleman's Resource Gantt Chart, we apply the traditional Gantt chart concept to team resource allocation. Each Member corresponds to a row, different time periods (Sprints) correspond to columns, and Task cards are placed at the intersection of members and sprints.",
+      "p3": "This visualization allows you to see at a glance: which members are responsible for which tasks during what time period, whether the team's workload is balanced, and whether there are resource conflicts."
+    },
+    "features": {
+      "title": "Key Features",
+      "drag": {
+        "title": "Drag & Drop",
+        "description": "Directly drag task cards to different members or time periods, intuitive and simple"
+      },
+      "sprint": {
+        "title": "Sprint Management",
+        "description": "Create multiple Sprint time periods, set start and end dates"
+      },
+      "member": {
+        "title": "Member Management",
+        "description": "Add team members, adjust order, clearly track everyone's tasks"
+      },
+      "color": {
+        "title": "Color Coding",
+        "description": "Set colors for tasks to quickly distinguish different types or priorities"
+      },
+      "export": {
+        "title": "Export Functions",
+        "description": "Export as PNG, PDF or JSON format for easy sharing and backup"
+      },
+      "storage": {
+        "title": "Local Storage",
+        "description": "Automatically saves to browser, loads automatically on next visit"
+      }
+    },
+    "quickStart": {
+      "title": "Quick Start",
+      "step1": {
+        "title": "1. Create Sprints",
+        "description": "Click the '+ Add' button at the top to create Sprints (time periods). Each Sprint can have a name, start date, and end date. You can create multiple Sprints to plan different phases of work, such as 'Week 1', 'Week 2', etc."
+      },
+      "step2": {
+        "title": "2. Add Members",
+        "description": "Click the '+ Add' button on the left to add team members. After entering a member name, they will appear in the left list. You can drag members to adjust their order or use the right-click menu to insert new members at specific positions."
+      },
+      "step3": {
+        "title": "3. Create Tasks",
+        "description": "Click the '+' button in any cell, or drag task cards from the Task Storage on the right to the corresponding member and Sprint intersection. Each task can have a name, color, and hyperlink. You can also duplicate tasks and set links to related documents or URLs."
+      },
+      "step4": {
+        "title": "4. Adjust & Export",
+        "description": "Drag task cards to reassign them to different members or move them to different time periods. After planning, use the toolbar's export function to export the Gantt chart as an image (PNG), PDF, or JSON format for easy sharing with the team or archiving."
+      }
+    },
+    "tips": {
+      "title": "Advanced Tips",
+      "tip1": "Use colors to distinguish task types: e.g., red for urgent tasks, blue for development tasks, green for testing tasks",
+      "tip2": "Set hyperlinks for tasks: Cmd/Ctrl + Click to quickly open related documents, Jira tickets, or other references",
+      "tip3": "Use Task Storage: Tasks that you're unsure about assigning can be temporarily placed in Storage, then dragged to the appropriate position later",
+      "tip4": "Regularly export JSON backups: Export the entire project as a JSON file for version backup or syncing between different computers",
+      "tip5": "Make good use of Undo/Redo: Supports Cmd+Z for undo and Cmd+Shift+Z for redo, so don't worry about mistakes"
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "project": {
+        "title": "Project Planning",
+        "description": "Plan various phases of software development projects and assign team member tasks"
+      },
+      "team": {
+        "title": "Team Collaboration",
+        "description": "Visualize team member work allocation to ensure workload balance"
+      },
+      "sprint": {
+        "title": "Agile Development",
+        "description": "Manage Scrum Sprint task allocation and progress tracking"
+      }
+    },
+    "security": {
+      "title": "Data Security",
+      "p1": "All data is stored locally in your browser (LocalStorage) and is never uploaded to any server. This means your project information is completely private and only accessible to you.",
+      "p2": "We recommend regularly using the 'Export JSON' function to backup your data in case browser data is cleared. Exported JSON files can be imported at any time to restore your project content."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Common questions about Ganttleman answered",
+    "general": {
+      "title": "General Questions",
+      "q1": {
+        "question": "Is Ganttleman free?",
+        "answer": "Yes, Ganttleman is completely free. All features can be used without limitations, no registration or payment required."
+      },
+      "q2": {
+        "question": "Do I need to register an account?",
+        "answer": "No. We don't require registration and don't collect your personal information. All tools can be used directly."
+      },
+      "q3": {
+        "question": "Is my data safe?",
+        "answer": "Very safe. All tools run locally in your browser, and data is not uploaded to our servers. Gantt chart data is stored in the browser's LocalStorage and only you can access it."
+      },
+      "q4": {
+        "question": "Which browsers are supported?",
+        "answer": "Ganttleman supports all modern browsers including Chrome, Firefox, Safari, Edge, etc. We recommend using the latest version of your browser for the best experience."
+      }
+    },
+    "gantt": {
+      "title": "Gantt Chart Related",
+      "q1": {
+        "question": "How do I backup my Gantt chart data?",
+        "answer": "Click the 'Export JSON' button in the toolbar to export the entire project as a JSON file. We recommend regular backups in case browser data is cleared."
+      },
+      "q2": {
+        "question": "Can I sync data between different computers?",
+        "answer": "Since data is stored locally in the browser, automatic syncing is not available. However, you can use 'Export JSON' and 'Import JSON' functions to manually transfer data between different computers."
+      },
+      "q3": {
+        "question": "How do I share the Gantt chart with my team?",
+        "answer": "You can use 'Export PNG' or 'Export PDF' functions to export the Gantt chart as an image or PDF file, then share it with team members via email, Slack, or other methods. The PDF format also supports clickable hyperlinks."
+      },
+      "q4": {
+        "question": "What are task card links for?",
+        "answer": "You can set hyperlinks for tasks to link to related documents, Jira tickets, GitHub issues, or other references. Use Cmd/Ctrl + Click to quickly open links. When exported as PDF, these links are preserved and clickable."
+      },
+      "q5": {
+        "question": "What if I accidentally delete data?",
+        "answer": "You can use Cmd+Z (Mac) or Ctrl+Z (Windows) to undo operations. Ganttleman supports multi-step Undo/Redo functionality. If you've already closed the page, you'll need to restore from a previously exported JSON backup."
+      }
+    },
+    "technical": {
+      "title": "Technical Questions",
+      "q1": {
+        "question": "Why did my Gantt chart disappear after clearing browser data?",
+        "answer": "Gantt chart data is stored in the browser's LocalStorage. If you clear browser data (including site data, cookies, etc.), the Gantt chart data will also be deleted. This is why we recommend regularly exporting JSON backups."
+      },
+      "q2": {
+        "question": "Can I use it on mobile?",
+        "answer": "Yes, but the Gantt chart tool works better on computers. Mobile screens are smaller and dragging operations are less convenient. Other tools like JSON formatter, Base64 encoder, etc. work perfectly fine on mobile."
+      },
+      "q3": {
+        "question": "What if I encounter problems or bugs?",
+        "answer": "If you encounter any issues or find bugs, please contact us through the contact information in the footer. We will address and fix issues as soon as possible."
+      }
+    },
+    "tools": {
+      "title": "Other Tools",
+      "q1": {
+        "question": "Does the JSON formatter validate syntax?",
+        "answer": "Yes, when you click the 'Parse and Edit' button, the tool automatically validates JSON syntax. If there are errors, it will display error messages and error locations."
+      },
+      "q2": {
+        "question": "Does image compression reduce quality?",
+        "answer": "There will be some quality loss, but it's usually imperceptible to the naked eye. You can adjust the compression quality slider to control the compression level. We recommend setting it between 70-85% for a good balance between file size and quality."
+      },
+      "q3": {
+        "question": "Is the encryption tool secure?",
+        "answer": "All encryption operations are performed locally in your browser, and keys and data are not uploaded to servers. However, you must keep your keys safe, as data cannot be decrypted without them. This tool is suitable for general purposes; for extremely sensitive data, we recommend using professional encryption software."
+      }
+    },
+    "contact": {
+      "title": "Have other questions?",
+      "description": "If your question is not listed here or you need more help, feel free to contact us via email."
+    }
   }
 }
