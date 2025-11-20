@@ -264,19 +264,24 @@ export default function TaskCard({ task, isDragging = false }: TaskCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={style}
-      elevation={isHovered ? 4 : 2}
+      elevation={0}
       sx={{
         cursor: actualIsDragging ? 'grabbing' : 'grab',
         height: 42,
         width: '100%',
-        transition: (isResizing || actualIsDragging) ? 'none' : 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+        border: '1px solid',
+        borderColor: 'rgba(0, 0, 0, 0.08)',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
+        transition: (isResizing || actualIsDragging) ? 'none' : 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
         '&:hover': {
-          transform: isResizing || actualIsDragging ? 'none' : 'scale(1.02) translateY(-2px)',
-          boxShadow: 4,
+          borderColor: 'rgba(0, 0, 0, 0.12)',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          transform: actualIsDragging ? 'none' : 'translateY(-1px)',
         },
         visibility: actualIsDragging ? 'hidden' : 'visible',
         position: 'relative',
         backgroundColor: task.backgroundColor || 'background.paper',
+        willChange: actualIsDragging ? 'transform' : 'auto',
       }}
       {...attributes}
       {...listeners}

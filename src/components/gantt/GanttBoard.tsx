@@ -34,7 +34,8 @@ export default function GanttBoard({ navbarOffset = 0 }: GanttBoardProps) {
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      distance: 8,
+      delay: 100,
+      tolerance: 5,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
@@ -142,13 +143,13 @@ export default function GanttBoard({ navbarOffset = 0 }: GanttBoardProps) {
             const containerLeft = containerRect.left;
             const scrollLeft = scrollContainer.scrollLeft;
             
-            // Member 名稱欄寬度（sticky，固定在左側）+ borderRight
+            // Member 名稱欄寬度（sticky，固定在左側）
+            // 注意：borderRight 已經包含在 MEMBER_COLUMN_WIDTH 的視覺邊界內
             const MEMBER_COLUMN_WIDTH = 150;
-            const MEMBER_BORDER_WIDTH = 2; // borderRight: 2
             
             // 計算卡片相對於甘特圖內容區域的位置
             const relativeToContainer = cardLeft - containerLeft;
-            const relativeToGantt = relativeToContainer - MEMBER_COLUMN_WIDTH - MEMBER_BORDER_WIDTH;
+            const relativeToGantt = relativeToContainer - MEMBER_COLUMN_WIDTH;
             const absolutePosition = relativeToGantt + scrollLeft;
             
             console.log('Drop position calculation:', {
@@ -241,9 +242,21 @@ export default function GanttBoard({ navbarOffset = 0 }: GanttBoardProps) {
         <StorageArea />
       </Box>
 
-      <DragOverlay dropAnimation={null}>
+      <DragOverlay
+        dropAnimation={{
+          duration: 200,
+          easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+        }}
+        style={{
+          cursor: 'grabbing',
+        }}
+      >
         {activeTask && activeType === 'task' && (
-          <Box sx={{ width: activeTask.width }}>
+          <Box sx={{ 
+            width: activeTask.width,
+            willChange: 'transform',
+            transform: 'translate3d(0, 0, 0)', // Force GPU acceleration
+          }}>
             <TaskCard task={activeTask} />
           </Box>
         )}
