@@ -325,33 +325,54 @@
   },
   "imageCompressor": {
     "title": "圖片壓縮工具",
-    "description": "線上壓縮圖片大小，保持良好畫質，支援 JPG、PNG、WebP 格式",
+    "description": "線上壓縮圖片大小，支援多張批次處理，自動產生 Android/iOS 多種解析度",
     "upload": {
       "title": "點擊或拖曳圖片到此處",
-      "subtitle": "支援 JPG、PNG、WebP 格式",
+      "subtitle": "支援 JPG、PNG、WebP 格式，可同時上傳多張圖片",
       "error": "請選擇圖片檔案"
+    },
+    "platform": {
+      "title": "平台設定",
+      "normal": "普通壓縮",
+      "baseResolution": "基準解析度",
+      "androidInfo": "選擇您上傳的圖片對應的 Android density（通常為 xxxhdpi），將自動產生 hdpi、xhdpi、xxhdpi、xxxhdpi 四種解析度的圖片",
+      "iosInfo": "選擇您上傳的圖片對應的 iOS scale（通常為 @3x），將自動產生 @1x、@2x、@3x 三種解析度的圖片"
     },
     "compression": {
       "quality": "壓縮品質：{{quality}}%",
       "originalSize": "原始大小：",
       "compressedSize": "壓縮後：",
-      "reduction": "(減少 {{ratio}}%)"
+      "reduction": "（減少 {{ratio}}%）"
+    },
+    "format": {
+      "title": "輸出格式",
+      "jpegDesc": "適合照片，檔案小",
+      "pngDesc": "支援透明，高壓縮",
+      "webpDesc": "新格式，體積更小"
     },
     "buttons": {
       "download": "下載",
+      "downloadAll": "下載全部",
       "clear": "清除"
     },
     "preview": {
-      "original": "原始圖片",
+      "original": "原始",
       "compressed": "壓縮後",
       "size": "大小："
     },
+    "summary": {
+      "title": "已處理圖片",
+      "images": "張"
+    },
+    "processing": "處理中...",
+    "resolutions": "解析度",
     "tips": {
       "title": "使用提示",
       "tip1": "調整品質滑桿可以控制壓縮程度，數值越低檔案越小但畫質會降低",
       "tip2": "建議品質設定在 70-85% 之間，可以在檔案大小和畫質間取得良好平衡",
-      "tip3": "壓縮後的圖片格式為 JPEG，適合照片類圖片",
-      "tip4": "所有處理都在瀏覽器本機完成，不會上傳你的圖片"
+      "tip3": "選擇 Android 或 iOS 平台後，會自動產生多種解析度的圖片，下載時會打包成 zip 檔案",
+      "tip4": "Android 會產生 drawable-hdpi 到 drawable-xxxhdpi 各個資料夾，iOS 會產生 @1x、@2x、@3x",
+      "tip5": "所有處理都在瀏覽器本機完成，不會上傳你的圖片"
     }
   },
   "crypto": {

@@ -325,11 +325,18 @@
   },
   "imageCompressor": {
     "title": "Compresor de imágenes",
-    "description": "Comprime imágenes en línea manteniendo buena calidad, compatible con formatos JPG, PNG, WebP",
+    "description": "Compresión de imágenes en línea con procesamiento por lotes, genera automáticamente imágenes multi-resolución para Android/iOS",
     "upload": {
-      "title": "Haz clic o arrastra la imagen aquí",
-      "subtitle": "Compatible con formatos JPG, PNG, WebP",
-      "error": "Por favor selecciona un archivo de imagen"
+      "title": "Haz clic o arrastra las imágenes aquí",
+      "subtitle": "Compatible con formatos JPG, PNG, WebP, múltiples archivos a la vez",
+      "error": "Por favor selecciona archivos de imagen"
+    },
+    "platform": {
+      "title": "Configuración de plataforma",
+      "normal": "Compresión normal",
+      "baseResolution": "Resolución base",
+      "androidInfo": "Seleccione la densidad de Android de su imagen cargada (generalmente xxxhdpi) y se generarán automáticamente hdpi, xhdpi, xxhdpi, xxxhdpi",
+      "iosInfo": "Seleccione la escala de iOS de su imagen cargada (generalmente @3x) y se generarán automáticamente @1x, @2x, @3x"
     },
     "compression": {
       "quality": "Calidad de compresión: {{quality}}%",
@@ -337,21 +344,35 @@
       "compressedSize": "Comprimido: ",
       "reduction": "(Reducido {{ratio}}%)"
     },
+    "format": {
+      "title": "Formato de Salida",
+      "jpegDesc": "Mejor para fotos, pequeño",
+      "pngDesc": "Transparencia, alta compresión",
+      "webpDesc": "Moderno, más pequeño"
+    },
     "buttons": {
       "download": "Descargar",
+      "downloadAll": "Descargar Todo",
       "clear": "Limpiar"
     },
     "preview": {
-      "original": "Imagen original",
+      "original": "Original",
       "compressed": "Comprimida",
       "size": "Tamaño: "
     },
+    "summary": {
+      "title": "Imágenes Procesadas",
+      "images": "imágenes"
+    },
+    "processing": "Procesando...",
+    "resolutions": "Resoluciones",
     "tips": {
       "title": "Consejos de uso",
       "tip1": "Ajusta el control deslizante de calidad para controlar el nivel de compresión: valores más bajos significan menor tamaño de archivo pero calidad reducida",
       "tip2": "La configuración de calidad recomendada está entre 70-85% para un buen equilibrio entre tamaño de archivo y calidad",
-      "tip3": "El formato de imagen comprimida es JPEG, adecuado para fotos",
-      "tip4": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus imágenes"
+      "tip3": "Cuando se selecciona la plataforma Android o iOS, se generarán múltiples imágenes de resolución y se empaquetarán como un archivo zip",
+      "tip4": "Android genera carpetas de drawable-hdpi a drawable-xxxhdpi, iOS genera @1x, @2x, @3x",
+      "tip5": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus imágenes"
     }
   },
   "gantt": {

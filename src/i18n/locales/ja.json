@@ -325,11 +325,18 @@
   },
   "imageCompressor": {
     "title": "画像圧縮ツール",
-    "description": "オンラインで画像サイズを圧縮、良好な画質を維持、JPG、PNG、WebP形式に対応",
+    "description": "バッチ処理対応のオンライン画像圧縮、Android/iOS用マルチ解像度画像を自動生成",
     "upload": {
-      "title": "クリックまたは画像をここにドラッグ",
-      "subtitle": "JPG、PNG、WebP形式に対応",
+      "title": "画像をクリックまたはドラッグしてください",
+      "subtitle": "JPG、PNG、WebP形式対応、複数ファイル同時アップロード可能",
       "error": "画像ファイルを選択してください"
+    },
+    "platform": {
+      "title": "プラットフォーム設定",
+      "normal": "通常圧縮",
+      "baseResolution": "基準解像度",
+      "androidInfo": "アップロードした画像に対応する Android density（通常は xxxhdpi）を選択すると、hdpi、xhdpi、xxhdpi、xxxhdpi の4種類の解像度の画像が自動生成されます",
+      "iosInfo": "アップロードした画像に対応する iOS scale（通常は @3x）を選択すると、@1x、@2x、@3x の3種類の解像度の画像が自動生成されます"
     },
     "compression": {
       "quality": "圧縮品質：{{quality}}%",
@@ -337,8 +344,15 @@
       "compressedSize": "圧縮後：",
       "reduction": "({{ratio}}% 削減)"
     },
+    "format": {
+      "title": "出力形式",
+      "jpegDesc": "写真に最適、小さいサイズ",
+      "pngDesc": "透明対応、高圧縮",
+      "webpDesc": "新形式、より小さい"
+    },
     "buttons": {
       "download": "ダウンロード",
+      "downloadAll": "すべてダウンロード",
       "clear": "クリア"
     },
     "preview": {
@@ -346,12 +360,19 @@
       "compressed": "圧縮後",
       "size": "サイズ："
     },
+    "summary": {
+      "title": "処理済み画像",
+      "images": "枚"
+    },
+    "processing": "処理中...",
+    "resolutions": "解像度",
     "tips": {
       "title": "使用ヒント",
       "tip1": "品質スライダーを調整して圧縮度を制御できます。値が低いほどファイルサイズは小さくなりますが、画質は低下します",
       "tip2": "品質は70〜85%の間に設定することをお勧めします。ファイルサイズと画質のバランスが良好です",
-      "tip3": "圧縮後の画像形式はJPEGで、写真タイプの画像に適しています",
-      "tip4": "すべての処理はブラウザ内でローカルに完了し、画像をアップロードすることはありません"
+      "tip3": "AndroidまたはiOSプラットフォームを選択すると、複数の解像度画像が生成され、zipファイルとしてパッケージ化されます",
+      "tip4": "Androidではdrawable-hdpiからdrawable-xxxhdpiまでのフォルダが生成され、iOSでは@1x、@2x、@3xが生成されます",
+      "tip5": "すべての処理はブラウザ内でローカルに完了し、画像をアップロードすることはありません"
     }
   },
   "gantt": {

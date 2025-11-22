@@ -325,11 +325,18 @@
   },
   "imageCompressor": {
     "title": "이미지 압축 도구",
-    "description": "좋은 품질을 유지하면서 온라인으로 이미지를 압축하고 JPG, PNG, WebP 형식을 지원합니다",
+    "description": "일괄 처리 지원으로 온라인 이미지 압축, Android/iOS 다중 해상도 이미지 자동 생성",
     "upload": {
-      "title": "클릭하거나 이미지를 여기로 드래그하세요",
-      "subtitle": "JPG, PNG, WebP 형식 지원",
-      "error": "이미지 파일을 선택하세요"
+      "title": "이미지를 클릭하거나 드래그하세요",
+      "subtitle": "JPG, PNG, WebP 형식 지원, 여러 파일 동시 업로드 가능",
+      "error": "이미지 파일을 선택해주세요"
+    },
+    "platform": {
+      "title": "플랫폼 설정",
+      "normal": "일반 압축",
+      "baseResolution": "기준 해상도",
+      "androidInfo": "업로드한 이미지에 해당하는 Android density(일반적으로 xxxhdpi)를 선택하면 hdpi, xhdpi, xxhdpi, xxxhdpi 네 가지 해상도의 이미지가 자동으로 생성됩니다",
+      "iosInfo": "업로드한 이미지에 해당하는 iOS scale(일반적으로 @3x)을 선택하면 @1x, @2x, @3x 세 가지 해상도의 이미지가 자동으로 생성됩니다"
     },
     "compression": {
       "quality": "압축 품질: {{quality}}%",
@@ -337,21 +344,35 @@
       "compressedSize": "압축 후: ",
       "reduction": "({{ratio}}% 감소)"
     },
+    "format": {
+      "title": "출력 형식",
+      "jpegDesc": "사진에 적합, 작은 크기",
+      "pngDesc": "투명 지원, 고압축",
+      "webpDesc": "최신 형식, 더 작음"
+    },
     "buttons": {
       "download": "다운로드",
+      "downloadAll": "모두 다운로드",
       "clear": "지우기"
     },
     "preview": {
-      "original": "원본 이미지",
-      "compressed": "압축 후",
+      "original": "원본",
+      "compressed": "압축됨",
       "size": "크기: "
     },
+    "summary": {
+      "title": "처리된 이미지",
+      "images": "개"
+    },
+    "processing": "처리 중...",
+    "resolutions": "해상도",
     "tips": {
       "title": "사용 팁",
-      "tip1": "품질 슬라이더를 조정하여 압축 수준을 제어할 수 있습니다. 값이 낮을수록 파일 크기는 작아지지만 품질이 떨어집니다",
-      "tip2": "권장 품질 설정은 70-85%입니다. 파일 크기와 품질 간의 균형이 좋습니다",
-      "tip3": "압축된 이미지 형식은 JPEG이며 사진에 적합합니다",
-      "tip4": "모든 처리는 브라우저에서 로컬로 완료되며 이미지가 업로드되지 않습니다"
+      "tip1": "품질 슬라이더를 조정하여 압축 수준을 제어하세요. 값이 낮을수록 파일 크기가 작아지지만 품질이 저하됩니다",
+      "tip2": "파일 크기와 품질 사이의 좋은 균형을 위해 70-85% 품질 설정을 권장합니다",
+      "tip3": "Android 또는 iOS 플랫폼을 선택하면 여러 해상도의 이미지가 생성되고 zip 파일로 패키징됩니다",
+      "tip4": "Android는 drawable-hdpi부터 drawable-xxxhdpi 폴더를 생성하고, iOS는 @1x, @2x, @3x를 생성합니다",
+      "tip5": "모든 처리는 브라우저에서 로컬로 완료되며 이미지를 업로드하지 않습니다"
     }
   },
   "gantt": {

@@ -325,11 +325,18 @@
   },
   "imageCompressor": {
     "title": "Image Compressor",
-    "description": "Compress images online while maintaining good quality, supports JPG, PNG, WebP formats",
+    "description": "Compress images online with batch processing support, auto-generate Android/iOS multi-resolution images",
     "upload": {
-      "title": "Click or drag image here",
-      "subtitle": "Supports JPG, PNG, WebP formats",
-      "error": "Please select an image file"
+      "title": "Click or drag images here",
+      "subtitle": "Supports JPG, PNG, WebP formats, multiple files at once",
+      "error": "Please select image files"
+    },
+    "platform": {
+      "title": "Platform Settings",
+      "normal": "Normal Compression",
+      "baseResolution": "Base Resolution",
+      "androidInfo": "Select the Android density of your uploaded image (usually xxxhdpi), and hdpi, xhdpi, xxhdpi, xxxhdpi will be generated automatically",
+      "iosInfo": "Select the iOS scale of your uploaded image (usually @3x), and @1x, @2x, @3x will be generated automatically"
     },
     "compression": {
       "quality": "Compression Quality: {{quality}}%",
@@ -337,21 +344,35 @@
       "compressedSize": "Compressed: ",
       "reduction": "(Reduced {{ratio}}%)"
     },
+    "format": {
+      "title": "Output Format",
+      "jpegDesc": "Best for photos, small size",
+      "pngDesc": "Transparency, high compression",
+      "webpDesc": "Modern, smaller size"
+    },
     "buttons": {
       "download": "Download",
+      "downloadAll": "Download All",
       "clear": "Clear"
     },
     "preview": {
-      "original": "Original Image",
+      "original": "Original",
       "compressed": "Compressed",
       "size": "Size: "
     },
+    "summary": {
+      "title": "Processed Images",
+      "images": "images"
+    },
+    "processing": "Processing...",
+    "resolutions": "Resolutions",
     "tips": {
       "title": "Usage Tips",
       "tip1": "Adjust the quality slider to control compression level - lower values mean smaller file size but reduced quality",
       "tip2": "Recommended quality setting is between 70-85% for a good balance between file size and quality",
-      "tip3": "Compressed image format is JPEG, suitable for photos",
-      "tip4": "All processing is completed locally in your browser and will not upload your images"
+      "tip3": "When Android or iOS platform is selected, multiple resolution images will be generated and packaged as a zip file",
+      "tip4": "Android generates drawable-hdpi to drawable-xxxhdpi folders, iOS generates @1x, @2x, @3x",
+      "tip5": "All processing is completed locally in your browser and will not upload your images"
     }
   },
   "crypto": {
