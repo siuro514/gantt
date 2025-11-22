@@ -33,6 +33,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useTranslation } from 'react-i18next';
 import JSZip from 'jszip';
 import imageCompression from 'browser-image-compression';
@@ -78,15 +81,21 @@ export default function ImageCompressorPage() {
   const [baseResolution, setBaseResolution] = useState<string>('xxxhdpi');
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('png');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
-  const [previewImage, setPreviewImage] = useState<{ url: string; name: string } | null>(null);
+  const [previewImage, setPreviewImage] = useState<{ originalUrl: string; compressedUrl: string; name: string; originalSize: number; compressedSize: number } | null>(null);
+  const [previewZoom, setPreviewZoom] = useState<number>(1);
   const [editingImageId, setEditingImageId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const originalScrollRef = useRef<HTMLDivElement>(null);
+  const compressedScrollRef = useRef<HTMLDivElement>(null);
 
   // 页面加载时滚动到顶部
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // 防止 Dialog 開啟時的頁面縮放
+  // 不需要全域的防止縮放，只在圖片預覽區域處理即可
 
   // 當輸出格式、品質、平台或基準解析度改變時，重新處理所有圖片
   useEffect(() => {
@@ -1002,7 +1011,13 @@ export default function ImageCompressorPage() {
                 <Card elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
                   <Box 
                     sx={{ position: 'relative', cursor: imageFile.processing ? 'default' : 'pointer' }}
-                    onClick={() => !imageFile.processing && setPreviewImage({ url: displayImage, name: imageFile.name })}
+                    onClick={() => !imageFile.processing && setPreviewImage({ 
+                      originalUrl: imageFile.originalDataUrl, 
+                      compressedUrl: displayImage, 
+                      name: imageFile.name,
+                      originalSize: imageFile.originalSize,
+                      compressedSize: displaySize
+                    })}
                   >
                     <Box
                       component="img"
@@ -1230,7 +1245,13 @@ export default function ImageCompressorPage() {
                       flexShrink: 0,
                       cursor: imageFile.processing ? 'default' : 'pointer',
                     }}
-                    onClick={() => !imageFile.processing && setPreviewImage({ url: displayImage, name: imageFile.name })}
+                    onClick={() => !imageFile.processing && setPreviewImage({ 
+                      originalUrl: imageFile.originalDataUrl, 
+                      compressedUrl: displayImage, 
+                      name: imageFile.name,
+                      originalSize: imageFile.originalSize,
+                      compressedSize: displaySize
+                    })}
                   >
                     <Box
                       component="img"
@@ -1498,35 +1519,294 @@ export default function ImageCompressorPage() {
         </Box>
       </Paper>
 
-      {/* Preview Dialog */}
+      {/* Preview Dialog with Before/After Comparison */}
       <Dialog
         open={previewImage !== null}
-        onClose={() => setPreviewImage(null)}
+        onClose={() => {
+          setPreviewImage(null);
+          setPreviewZoom(1);
+        }}
         maxWidth="lg"
-        fullWidth
+        PaperProps={{
+          onWheel: (e: React.WheelEvent) => {
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          },
+          sx: {
+            touchAction: 'pan-x pan-y',
+          },
+        }}
       >
         {previewImage && (
           <>
             <DialogTitle>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h6">{previewImage.name}</Typography>
-                <IconButton onClick={() => setPreviewImage(null)}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Typography variant="h6">{previewImage.name}</Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <IconButton 
+                      size="small" 
+                      onClick={() => setPreviewZoom(Math.max(1, previewZoom - 0.25))}
+                      disabled={previewZoom <= 1}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <Typography variant="body2" sx={{ minWidth: 60, textAlign: 'center' }}>
+                      {Math.round(previewZoom * 100)}%
+                    </Typography>
+                    <IconButton 
+                      size="small" 
+                      onClick={() => setPreviewZoom(Math.min(10, previewZoom + 0.25))}
+                      disabled={previewZoom >= 10}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton 
+                      size="small" 
+                      onClick={() => setPreviewZoom(1)}
+                      disabled={previewZoom === 1}
+                    >
+                      <RestartAltIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+                <IconButton onClick={() => {
+                  setPreviewImage(null);
+                  setPreviewZoom(1);
+                }}>
                   <CloseIcon />
                 </IconButton>
               </Box>
             </DialogTitle>
-            <DialogContent>
-              <Box
-                component="img"
-                src={previewImage.url}
-                alt={previewImage.name}
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '70vh',
-                  objectFit: 'contain',
-                }}
-              />
+            <DialogContent
+              onWheel={(e) => {
+                if (e.ctrlKey || e.metaKey) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
+              onTouchStart={(e) => {
+                if (e.touches.length > 1) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
+              onTouchMove={(e) => {
+                if (e.touches.length > 1) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
+              sx={{
+                touchAction: 'pan-x pan-y',
+              }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                      {t('imageCompressor.preview.original')}
+                    </Typography>
+                    <Box sx={{ height: '28px', display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {t('imageCompressor.preview.size')}{(previewImage.originalSize / 1024).toFixed(2)} KB
+                      </Typography>
+                    </Box>
+                    <Box
+                      ref={originalScrollRef}
+                      onScroll={(e) => {
+                        if (compressedScrollRef.current) {
+                          compressedScrollRef.current.scrollTop = e.currentTarget.scrollTop;
+                          compressedScrollRef.current.scrollLeft = e.currentTarget.scrollLeft;
+                        }
+                      }}
+                      onWheel={(e) => {
+                        if (e.ctrlKey || e.metaKey) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          
+                          const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                          const newZoom = Math.max(1, Math.min(10, previewZoom + delta));
+                          
+                          // Only update scroll position if zoom actually changed
+                          if (newZoom !== previewZoom) {
+                            const container = e.currentTarget;
+                            const rect = container.getBoundingClientRect();
+                            
+                            // Calculate mouse position relative to container
+                            const mouseX = e.clientX - rect.left;
+                            const mouseY = e.clientY - rect.top;
+                            
+                            // Calculate scroll position before zoom
+                            const scrollX = container.scrollLeft;
+                            const scrollY = container.scrollTop;
+                            
+                            // Calculate mouse position in content coordinates
+                            const contentX = (scrollX + mouseX) / previewZoom;
+                            const contentY = (scrollY + mouseY) / previewZoom;
+                            
+                            setPreviewZoom(newZoom);
+                            
+                            // Adjust scroll to keep mouse position fixed
+                            requestAnimationFrame(() => {
+                              if (originalScrollRef.current && compressedScrollRef.current) {
+                                const newScrollX = contentX * newZoom - mouseX;
+                                const newScrollY = contentY * newZoom - mouseY;
+                                originalScrollRef.current.scrollLeft = newScrollX;
+                                originalScrollRef.current.scrollTop = newScrollY;
+                                compressedScrollRef.current.scrollLeft = newScrollX;
+                                compressedScrollRef.current.scrollTop = newScrollY;
+                              }
+                            });
+                          }
+                        }
+                      }}
+                      onTouchStart={(e) => {
+                        if (e.touches.length > 1) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                      }}
+                      onTouchMove={(e) => {
+                        if (e.touches.length > 1) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                      }}
+                      sx={{
+                        maxHeight: '500px',
+                        maxWidth: '100%',
+                        overflow: 'auto',
+                        border: '2px solid',
+                        borderColor: 'divider',
+                        borderRadius: 1,
+                        touchAction: 'pan-x pan-y',
+                        userSelect: 'none',
+                        WebkitUserSelect: 'none',
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={previewImage.originalUrl}
+                        alt={`${previewImage.name} - Original`}
+                        sx={{
+                          width: `${previewZoom * 100}%`,
+                          height: 'auto',
+                          display: 'block',
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography variant="subtitle1" color="primary" gutterBottom>
+                      {t('imageCompressor.preview.compressed')}
+                    </Typography>
+                    <Box sx={{ height: '28px', display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {t('imageCompressor.preview.size')}{(previewImage.compressedSize / 1024).toFixed(2)} KB
+                      </Typography>
+                      {previewImage.compressedSize > 0 && (
+                        <Chip 
+                          label={`-${Math.round((1 - previewImage.compressedSize / previewImage.originalSize) * 100)}%`}
+                          size="small"
+                          color="success"
+                          sx={{ ml: 1 }}
+                        />
+                      )}
+                    </Box>
+                    <Box
+                      ref={compressedScrollRef}
+                      onScroll={(e) => {
+                        if (originalScrollRef.current) {
+                          originalScrollRef.current.scrollTop = e.currentTarget.scrollTop;
+                          originalScrollRef.current.scrollLeft = e.currentTarget.scrollLeft;
+                        }
+                      }}
+                      onWheel={(e) => {
+                        if (e.ctrlKey || e.metaKey) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          
+                          const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                          const newZoom = Math.max(1, Math.min(10, previewZoom + delta));
+                          
+                          // Only update scroll position if zoom actually changed
+                          if (newZoom !== previewZoom) {
+                            const container = e.currentTarget;
+                            const rect = container.getBoundingClientRect();
+                            
+                            // Calculate mouse position relative to container
+                            const mouseX = e.clientX - rect.left;
+                            const mouseY = e.clientY - rect.top;
+                            
+                            // Calculate scroll position before zoom
+                            const scrollX = container.scrollLeft;
+                            const scrollY = container.scrollTop;
+                            
+                            // Calculate mouse position in content coordinates
+                            const contentX = (scrollX + mouseX) / previewZoom;
+                            const contentY = (scrollY + mouseY) / previewZoom;
+                            
+                            setPreviewZoom(newZoom);
+                            
+                            // Adjust scroll to keep mouse position fixed
+                            requestAnimationFrame(() => {
+                              if (originalScrollRef.current && compressedScrollRef.current) {
+                                const newScrollX = contentX * newZoom - mouseX;
+                                const newScrollY = contentY * newZoom - mouseY;
+                                originalScrollRef.current.scrollLeft = newScrollX;
+                                originalScrollRef.current.scrollTop = newScrollY;
+                                compressedScrollRef.current.scrollLeft = newScrollX;
+                                compressedScrollRef.current.scrollTop = newScrollY;
+                              }
+                            });
+                          }
+                        }
+                      }}
+                      onTouchStart={(e) => {
+                        if (e.touches.length > 1) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                      }}
+                      onTouchMove={(e) => {
+                        if (e.touches.length > 1) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                      }}
+                      sx={{
+                        maxHeight: '500px',
+                        maxWidth: '100%',
+                        overflow: 'auto',
+                        border: '2px solid',
+                        borderColor: 'divider',
+                        borderRadius: 1,
+                        touchAction: 'pan-x pan-y',
+                        userSelect: 'none',
+                        WebkitUserSelect: 'none',
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={previewImage.compressedUrl}
+                        alt={`${previewImage.name} - Compressed`}
+                        sx={{
+                          width: `${previewZoom * 100}%`,
+                          height: 'auto',
+                          display: 'block',
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
             </DialogContent>
           </>
         )}
