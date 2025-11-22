@@ -807,7 +807,35 @@ export default function ImageCompressorPage() {
             exclusive
             onChange={handlePlatformChange}
             aria-label="platform selection"
+            orientation="vertical"
             sx={{
+              display: { xs: 'flex', sm: 'none' },
+              width: '100%',
+              '& .MuiToggleButton-root': {
+                textTransform: 'none',
+              }
+            }}
+          >
+            <ToggleButton value="normal">
+              <ImageIcon sx={{ mr: 1 }} />
+              {t('imageCompressor.platform.normal')}
+            </ToggleButton>
+            <ToggleButton value="android">
+              <AndroidIcon sx={{ mr: 1 }} />
+              Android
+            </ToggleButton>
+            <ToggleButton value="ios">
+              <AppleIcon sx={{ mr: 1 }} />
+              iOS
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
+            value={platform || 'normal'}
+            exclusive
+            onChange={handlePlatformChange}
+            aria-label="platform selection"
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
               '& .MuiToggleButton-root': {
                 textTransform: 'none',
               }
@@ -828,7 +856,13 @@ export default function ImageCompressorPage() {
           </ToggleButtonGroup>
 
           {platform && (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' },
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: 2,
+              width: { xs: '100%', sm: 'auto' }
+            }}>
               <Typography variant="body2" color="text.secondary">
                 {t('imageCompressor.platform.baseResolution')}
               </Typography>
@@ -837,7 +871,36 @@ export default function ImageCompressorPage() {
                 exclusive
                 onChange={handleBaseResolutionChange}
                 size="small"
+                orientation="vertical"
                 sx={{
+                  display: { xs: 'flex', sm: 'none' },
+                  width: '100%',
+                  '& .MuiToggleButton-root': {
+                    textTransform: 'none',
+                  }
+                }}
+              >
+                {platform === 'android' ? (
+                  Object.keys(ANDROID_DENSITIES).map((density) => (
+                    <ToggleButton key={density} value={density}>
+                      {density}
+                    </ToggleButton>
+                  ))
+                ) : (
+                  Object.keys(IOS_SCALES).map((scale) => (
+                    <ToggleButton key={scale} value={scale}>
+                      {scale}
+                    </ToggleButton>
+                  ))
+                )}
+              </ToggleButtonGroup>
+              <ToggleButtonGroup
+                value={baseResolution}
+                exclusive
+                onChange={handleBaseResolutionChange}
+                size="small"
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
                   '& .MuiToggleButton-root': {
                     textTransform: 'none',
                   }
@@ -945,8 +1008,16 @@ export default function ImageCompressorPage() {
       {images.length > 0 && (
         <Accordion defaultExpanded sx={{ mb: 3, borderRadius: 1 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', pr: 2 }}>
-              <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'flex-start',
+              width: '100%', 
+              pr: 2,
+              flexWrap: 'wrap',
+              gap: 2
+            }}>
+              <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                 {t('imageCompressor.summary.title')} ({images.length} {t('imageCompressor.summary.images')})
                 {compressionRatio > 0 && (
                   <Chip 
@@ -957,7 +1028,7 @@ export default function ImageCompressorPage() {
                   />
                 )}
               </Typography>
-              <Box sx={{ display: 'flex', gap: 1 }} onClick={(e) => e.stopPropagation()}>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }} onClick={(e) => e.stopPropagation()}>
                 <ToggleButtonGroup
                   value={viewMode}
                   exclusive
@@ -976,16 +1047,28 @@ export default function ImageCompressorPage() {
                   startIcon={<DownloadIcon />}
                   onClick={handleDownloadAll}
                   size="small"
+                  sx={{
+                    minWidth: { xs: 'auto', sm: '64px' },
+                    '& .MuiButton-startIcon': { mr: { xs: 0, sm: 1 } }
+                  }}
                 >
-                  {t('imageCompressor.buttons.downloadAll')}
+                  <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                    {t('imageCompressor.buttons.downloadAll')}
+                  </Box>
                 </Button>
                 <Button
                   variant="outlined"
                   startIcon={<DeleteIcon />}
                   onClick={handleClear}
                   size="small"
+                  sx={{
+                    minWidth: { xs: 'auto', sm: '64px' },
+                    '& .MuiButton-startIcon': { mr: { xs: 0, sm: 1 } }
+                  }}
                 >
-                  {t('imageCompressor.buttons.clear')}
+                  <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                    {t('imageCompressor.buttons.clear')}
+                  </Box>
                 </Button>
               </Box>
             </Box>
@@ -1236,14 +1319,20 @@ export default function ImageCompressorPage() {
 
             return (
               <Card key={imageFile.id} elevation={0} sx={{ mb: 2, border: '1px solid', borderColor: 'divider' }}>
-                <Box sx={{ display: 'flex', p: 1.5, gap: 2 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  p: 1.5, 
+                  gap: 2 
+                }}>
                   <Box 
                     sx={{ 
                       position: 'relative',
-                      width: 100, 
-                      height: 100, 
+                      width: { xs: '100%', sm: 100 },
+                      height: { xs: 200, sm: 100 },
                       flexShrink: 0,
                       cursor: imageFile.processing ? 'default' : 'pointer',
+                      display: { xs: 'none', sm: 'block' }
                     }}
                     onClick={() => !imageFile.processing && setPreviewImage({ 
                       originalUrl: imageFile.originalDataUrl, 
@@ -1404,7 +1493,13 @@ export default function ImageCompressorPage() {
                     </Box>
 
                     {/* 第三行：解析度平鋪和下載按鈕 */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, pl: 1 }}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'flex-start', sm: 'center' },
+                      gap: 1, 
+                      pl: { xs: 0, sm: 1 }
+                    }}>
                       {platform && totalResolutions > 1 && (
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, flexWrap: 'wrap', flex: 1 }}>
                         {Object.entries(imageFile.compressedImages).map(([key, _]) => (
@@ -1440,7 +1535,11 @@ export default function ImageCompressorPage() {
                         startIcon={<DownloadIcon />}
                         onClick={() => handleDownload(imageFile)}
                         size="small"
-                        sx={{ ml: 'auto', flexShrink: 0 }}
+                        sx={{ 
+                          ml: { xs: 0, sm: 'auto' },
+                          flexShrink: 0,
+                          width: { xs: '100%', sm: 'auto' }
+                        }}
                       >
                         {t('imageCompressor.buttons.download')}
                       </Button>
