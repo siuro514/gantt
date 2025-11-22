@@ -7,7 +7,6 @@ import {
   Paper,
   Slider,
   Alert,
-  CircularProgress,
   Grid,
   ToggleButtonGroup,
   ToggleButton,
@@ -15,10 +14,13 @@ import {
   Card,
   CardContent,
   IconButton,
-  LinearProgress,
   Dialog,
   DialogContent,
   DialogTitle,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  CircularProgress,
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -26,9 +28,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ImageIcon from '@mui/icons-material/Image';
 import AndroidIcon from '@mui/icons-material/Android';
 import AppleIcon from '@mui/icons-material/Apple';
+import heic2any from 'heic2any';
 import CloseIcon from '@mui/icons-material/Close';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import JSZip from 'jszip';
 import imageCompression from 'browser-image-compression';
@@ -43,6 +47,8 @@ interface ImageFile {
   originalSize: number;
   compressedImages: { [key: string]: string };
   sizes: { [key: string]: number };
+  processing: boolean;
+  progress: number;
 }
 
 type Platform = 'android' | 'ios' | null;
@@ -67,13 +73,14 @@ export default function ImageCompressorPage() {
   const { t } = useTranslation();
   const [images, setImages] = useState<ImageFile[]>([]);
   const [quality, setQuality] = useState<number>(80);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [platform, setPlatform] = useState<Platform>(null);
   const [baseResolution, setBaseResolution] = useState<string>('xxxhdpi');
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('png');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [previewImage, setPreviewImage] = useState<{ url: string; name: string } | null>(null);
+  const [editingImageId, setEditingImageId] = useState<string | null>(null);
+  const [editingName, setEditingName] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 页面加载时滚动到顶部
@@ -92,48 +99,76 @@ export default function ImageCompressorPage() {
   const reprocessAllImages = async () => {
     if (images.length === 0) return;
     
-    setLoading(true);
+    // 重置所有圖片的處理狀態
+    setImages((prev) =>
+      prev.map((img) => ({
+        ...img,
+        processing: true,
+        progress: 0,
+        compressedImages: {},
+        sizes: {},
+      }))
+    );
+    
     setError('');
     
     try {
-      const updatedImages = await Promise.all(
-        images.map(async (img) => {
-          try {
-            if (platform) {
-              // 創建新的對象，避免修改原始對象
-              const newImageFile: ImageFile = {
-                ...img,
-                compressedImages: {},
-                sizes: {},
-              };
-              return await processImageForPlatform(newImageFile, img.originalDataUrl, quality, outputFormat);
-            } else {
-              const compressed = await compressImage(img.originalDataUrl, quality, 1, outputFormat);
-              return {
-                ...img,
-                compressedDataUrl: compressed.dataUrl,
-                compressedSize: compressed.size,
-                compressedImages: {
-                  [outputFormat]: compressed.dataUrl,
-                },
-                sizes: {
-                  [outputFormat]: compressed.size,
-                },
-              };
-            }
-          } catch (error) {
-            console.error('Error reprocessing image:', error);
-            return img;
+      // 異步處理每個圖片
+      images.forEach(async (img) => {
+        try {
+          if (platform) {
+            const processedImage = await processImageForPlatformWithProgress(
+              img.id,
+              img.originalDataUrl,
+              img.name,
+              img.originalFile,
+              img.originalSize,
+              quality,
+              outputFormat,
+              platform,
+              baseResolution
+            );
+            
+            setImages((prev) =>
+              prev.map((image) =>
+                image.id === img.id ? processedImage : image
+              )
+            );
+          } else {
+            setImages((prev) =>
+              prev.map((image) =>
+                image.id === img.id ? { ...image, progress: 10 } : image
+              )
+            );
+            
+            const compressed = await compressImage(img.originalDataUrl, quality, 1, outputFormat);
+            
+            setImages((prev) =>
+              prev.map((image) =>
+                image.id === img.id
+                  ? {
+                      ...image,
+                      compressedImages: { [outputFormat]: compressed.dataUrl },
+                      sizes: { [outputFormat]: compressed.size },
+                      processing: false,
+                      progress: 100,
+                    }
+                  : image
+              )
+            );
           }
-        })
-      );
-      
-      setImages(updatedImages);
+        } catch (error) {
+          console.error('Error reprocessing image:', error);
+          setImages((prev) =>
+            prev.map((image) =>
+              image.id === img.id ? { ...image, processing: false, progress: 0 } : image
+            )
+          );
+        }
+      });
     } catch (error) {
       console.error('Error in reprocessAllImages:', error);
       setError(String(error));
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -158,12 +193,47 @@ export default function ImageCompressorPage() {
     event.stopPropagation();
   };
 
-  const processFiles = (files: File[]) => {
+  const processFiles = async (files: File[]) => {
     const validFiles: File[] = [];
+    const originalSizes: number[] = []; // 保存原始檔案大小
+    
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (file.type.startsWith('image/')) {
+      const fileName = file.name.toLowerCase();
+      const isHEIC = fileName.endsWith('.heic') || fileName.endsWith('.heif') || 
+                     file.type === 'image/heic' || file.type === 'image/heif';
+      
+      if (isHEIC) {
+        try {
+          // 保存原始 HEIC 檔案大小
+          const originalSize = file.size;
+          
+          // 將 HEIC 轉換為 PNG
+          const convertedBlob = await heic2any({
+            blob: file,
+            toType: 'image/png',
+            quality: 1
+          });
+          
+          // heic2any 可能返回 Blob 或 Blob[]
+          const blob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+          
+          // 創建一個新的 File 對象
+          const convertedFile = new File(
+            [blob], 
+            file.name.replace(/\.(heic|heif)$/i, '.png'), 
+            { type: 'image/png' }
+          );
+          
+          validFiles.push(convertedFile);
+          originalSizes.push(originalSize); // 使用原始 HEIC 大小
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          setError(`Failed to convert ${file.name}`);
+        }
+      } else if (file.type.startsWith('image/')) {
         validFiles.push(file);
+        originalSizes.push(file.size); // 使用實際檔案大小
       }
     }
 
@@ -173,45 +243,79 @@ export default function ImageCompressorPage() {
     }
 
     setError('');
-    setLoading(true);
 
-    const newImages: ImageFile[] = [];
-    let processed = 0;
+    // 立即創建圖片條目並添加到列表中
+    const newImages: ImageFile[] = validFiles.map((file, index) => ({
+      id: `${Date.now()}-${Math.random()}`,
+      name: file.name,
+      originalFile: file,
+      originalDataUrl: '',
+      originalSize: originalSizes[index], // 使用保存的原始大小
+      compressedImages: {},
+      sizes: {},
+      processing: true,
+      progress: 0,
+    }));
 
-    validFiles.forEach((file) => {
+    setImages((prev) => [...prev, ...newImages]);
+
+    // 異步處理每個圖片
+    validFiles.forEach((file, index) => {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const result = e.target?.result as string;
-        const imageFile: ImageFile = {
-          id: `${Date.now()}-${Math.random()}`,
-          name: file.name,
-          originalFile: file,
-          originalDataUrl: result,
-          originalSize: file.size,
-          compressedImages: {},
-          sizes: {},
-        };
+        const imageId = newImages[index].id;
+        
+        // 更新 originalDataUrl
+        setImages((prev) =>
+          prev.map((img) =>
+            img.id === imageId ? { ...img, originalDataUrl: result, progress: 10 } : img
+          )
+        );
 
-        if (platform) {
-          processImageForPlatform(imageFile, result, quality, outputFormat).then((processedImage) => {
-            newImages.push(processedImage);
-            processed++;
-            if (processed === validFiles.length) {
-              setImages((prev) => [...prev, ...newImages]);
-              setLoading(false);
-            }
-          });
-        } else {
-          compressImage(result, quality, 1, outputFormat).then(({ dataUrl, size }) => {
-            imageFile.compressedImages[outputFormat] = dataUrl;
-            imageFile.sizes[outputFormat] = size;
-            newImages.push(imageFile);
-            processed++;
-            if (processed === validFiles.length) {
-              setImages((prev) => [...prev, ...newImages]);
-              setLoading(false);
-            }
-          });
+        try {
+          if (platform) {
+            const processedImage = await processImageForPlatformWithProgress(
+              imageId,
+              result,
+              file.name,
+              file,
+              file.size,
+              quality,
+              outputFormat,
+              platform,
+              baseResolution
+            );
+            
+            setImages((prev) =>
+              prev.map((img) =>
+                img.id === imageId ? processedImage : img
+              )
+            );
+          } else {
+            const compressed = await compressImage(result, quality, 1, outputFormat);
+            
+            setImages((prev) =>
+              prev.map((img) =>
+                img.id === imageId
+                  ? {
+                      ...img,
+                      compressedImages: { [outputFormat]: compressed.dataUrl },
+                      sizes: { [outputFormat]: compressed.size },
+                      processing: false,
+                      progress: 100,
+                    }
+                  : img
+              )
+            );
+          }
+        } catch (error) {
+          console.error('Error processing image:', error);
+          setImages((prev) =>
+            prev.map((img) =>
+              img.id === imageId ? { ...img, processing: false, progress: 0 } : img
+            )
+          );
         }
       };
       reader.readAsDataURL(file);
@@ -411,49 +515,85 @@ export default function ImageCompressorPage() {
     });
   };
 
-  const processImageForPlatform = async (imageFile: ImageFile, imageSrc: string, quality: number, format: OutputFormat = 'jpeg'): Promise<ImageFile> => {
-    const densities = platform === 'android' ? ANDROID_DENSITIES : IOS_SCALES;
-    const baseScale = platform === 'android' ? ANDROID_DENSITIES[baseResolution as keyof typeof ANDROID_DENSITIES] : IOS_SCALES['@3x'];
+  const processImageForPlatformWithProgress = async (
+    imageId: string,
+    imageSrc: string,
+    name: string,
+    originalFile: File,
+    originalSize: number,
+    quality: number,
+    format: OutputFormat,
+    currentPlatform: Platform,
+    currentBaseResolution: string
+  ): Promise<ImageFile> => {
+    const densities = currentPlatform === 'android' ? ANDROID_DENSITIES : IOS_SCALES;
+    const baseScale = currentPlatform === 'android' 
+      ? ANDROID_DENSITIES[currentBaseResolution as keyof typeof ANDROID_DENSITIES] 
+      : IOS_SCALES[currentBaseResolution as keyof typeof IOS_SCALES];
 
-    // 清空舊的壓縮數據，避免不同平台的數據混合
-    imageFile.compressedImages = {};
-    imageFile.sizes = {};
+    const compressedImages: { [key: string]: string } = {};
+    const sizes: { [key: string]: number } = {};
+    const totalSteps = Object.keys(densities).length;
+    let currentStep = 0;
 
     for (const [key, targetScale] of Object.entries(densities)) {
       const scale = targetScale / baseScale;
       const { dataUrl, size } = await compressImage(imageSrc, quality, scale, format);
-      imageFile.compressedImages[key] = dataUrl;
-      imageFile.sizes[key] = size;
+      compressedImages[key] = dataUrl;
+      sizes[key] = size;
+      
+      currentStep++;
+      const progress = 10 + Math.round((currentStep / totalSteps) * 90);
+      
+      // 更新進度
+      setImages((prev) =>
+        prev.map((img) =>
+          img.id === imageId ? { ...img, progress } : img
+        )
+      );
     }
 
-    return imageFile;
+    return {
+      id: imageId,
+      name,
+      originalFile,
+      originalDataUrl: imageSrc,
+      originalSize,
+      compressedImages,
+      sizes,
+      processing: false,
+      progress: 100,
+    };
   };
 
   const handleQualityChange = (_: Event, newValue: number | number[]) => {
-    const newQuality = newValue as number;
+    const newQuality = Math.max(10, Math.min(100, newValue as number));
     setQuality(newQuality);
   };
 
-  const handlePlatformChange = (_: React.MouseEvent<HTMLElement>, newPlatform: Platform) => {
-    setPlatform(newPlatform);
-    if (newPlatform === 'ios') {
-      setBaseResolution('@3x');
-    } else if (newPlatform === 'android') {
-      setBaseResolution('xxxhdpi');
+  const handlePlatformChange = (_: React.MouseEvent<HTMLElement>, newPlatform: Platform | 'normal') => {
+    if (newPlatform === null) {
+      // 點擊已選擇的按鈕時，不做任何改變
+      return;
     }
-    // 切換平台時重新處理圖片
-    if (images.length > 0) {
-      setTimeout(() => reprocessAllImages(), 0);
+    
+    if (newPlatform === 'normal') {
+      setPlatform(null);
+    } else {
+      setPlatform(newPlatform);
+      if (newPlatform === 'ios') {
+        setBaseResolution('@3x');
+      } else if (newPlatform === 'android') {
+        setBaseResolution('xxxhdpi');
+      }
     }
+    // useEffect 會自動重新處理圖片
   };
 
   const handleBaseResolutionChange = (_: React.MouseEvent<HTMLElement>, newResolution: string) => {
     if (newResolution) {
       setBaseResolution(newResolution);
-      // 切換基準解析度時重新處理圖片
-      if (images.length > 0 && platform) {
-        setTimeout(() => reprocessAllImages(), 0);
-      }
+      // useEffect 會自動重新處理圖片
     }
   };
 
@@ -551,6 +691,11 @@ export default function ImageCompressorPage() {
     setImages((prev) => prev.filter((img) => img.id !== id));
   };
 
+  const handleStartEdit = (imageFile: ImageFile) => {
+    setEditingImageId(imageFile.id);
+    setEditingName(imageFile.name);
+  };
+
   const handleClear = () => {
     setImages([]);
     setQuality(80);
@@ -576,8 +721,10 @@ export default function ImageCompressorPage() {
 
   const getTotalCompressedSize = () => {
     return images.reduce((sum, img) => {
-      const sizes = Object.values(img.sizes);
-      return sum + (sizes.length > 0 ? sizes[0] : 0);
+      // 如果有平台設定，使用基準解析度；否則使用第一個 key
+      const displayKey = platform ? baseResolution : Object.keys(img.compressedImages)[0];
+      const size = img.sizes[displayKey] || Object.values(img.sizes)[0] || 0;
+      return sum + size;
     }, 0);
   };
 
@@ -585,12 +732,23 @@ export default function ImageCompressorPage() {
     ? Math.round(((getTotalOriginalSize() - getTotalCompressedSize()) / getTotalOriginalSize()) * 100)
     : 0;
 
-  // 計算單張圖片的壓縮比例
+  // 計算單張圖片的壓縮比例（與基準解析度比較）
   const getImageCompressionRatio = (imageFile: ImageFile): number => {
-    const firstCompressedKey = Object.keys(imageFile.compressedImages)[0];
-    const compressedSize = imageFile.sizes[firstCompressedKey] || 0;
-    if (imageFile.originalSize > 0 && compressedSize > 0) {
-      return Math.round(((imageFile.originalSize - compressedSize) / imageFile.originalSize) * 100);
+    // 如果有平台設定，使用基準解析度的大小來比較
+    if (platform) {
+      const baseKey = platform === 'android' ? baseResolution : baseResolution;
+      const compressedSize = imageFile.sizes[baseKey] || 0;
+      
+      if (imageFile.originalSize > 0 && compressedSize > 0) {
+        return Math.round(((imageFile.originalSize - compressedSize) / imageFile.originalSize) * 100);
+      }
+    } else {
+      // 沒有平台設定時，與原始檔案比較
+      const firstCompressedKey = Object.keys(imageFile.compressedImages)[0];
+      const compressedSize = imageFile.sizes[firstCompressedKey] || 0;
+      if (imageFile.originalSize > 0 && compressedSize > 0) {
+        return Math.round(((imageFile.originalSize - compressedSize) / imageFile.originalSize) * 100);
+      }
     }
     return 0;
   };
@@ -636,12 +794,17 @@ export default function ImageCompressorPage() {
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
           <ToggleButtonGroup
-            value={platform}
+            value={platform || 'normal'}
             exclusive
             onChange={handlePlatformChange}
             aria-label="platform selection"
+            sx={{
+              '& .MuiToggleButton-root': {
+                textTransform: 'none',
+              }
+            }}
           >
-            <ToggleButton value={null}>
+            <ToggleButton value="normal">
               <ImageIcon sx={{ mr: 1 }} />
               {t('imageCompressor.platform.normal')}
             </ToggleButton>
@@ -665,6 +828,11 @@ export default function ImageCompressorPage() {
                 exclusive
                 onChange={handleBaseResolutionChange}
                 size="small"
+                sx={{
+                  '& .MuiToggleButton-root': {
+                    textTransform: 'none',
+                  }
+                }}
               >
                 {platform === 'android' ? (
                   Object.keys(ANDROID_DENSITIES).map((density) => (
@@ -703,6 +871,11 @@ export default function ImageCompressorPage() {
           onChange={handleOutputFormatChange}
           aria-label="output format selection"
           fullWidth
+          sx={{
+            '& .MuiToggleButton-root': {
+              textTransform: 'none',
+            }
+          }}
         >
           <ToggleButton value="png">
             <Box sx={{ textAlign: 'center' }}>
@@ -739,8 +912,8 @@ export default function ImageCompressorPage() {
         <Slider
           value={quality}
           onChange={handleQualityChange}
-          min={10}
-          max={100}
+          min={9.5}
+          max={100.5}
           step={5}
           marks={[
             { value: 10, label: '10%' },
@@ -749,97 +922,122 @@ export default function ImageCompressorPage() {
             { value: 100, label: '100%' },
           ]}
           valueLabelDisplay="auto"
+          sx={{
+            '& .MuiSlider-thumb': {
+              '&:before': {
+                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
+              },
+            },
+          }}
         />
       </Paper>
 
-      {loading && (
-        <Box sx={{ mb: 3 }}>
-          <LinearProgress />
-          <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
-            {t('imageCompressor.processing')}
-          </Typography>
-        </Box>
-      )}
-
       {/* Images Summary */}
       {images.length > 0 && (
-        <Paper sx={{ p: 3, mb: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box>
-              <Typography variant="h6" gutterBottom>
+        <Accordion defaultExpanded sx={{ mb: 3, borderRadius: 1 }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', pr: 2 }}>
+              <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 {t('imageCompressor.summary.title')} ({images.length} {t('imageCompressor.summary.images')})
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t('imageCompressor.compression.originalSize')}{formatSize(getTotalOriginalSize())} → {t('imageCompressor.compression.compressedSize')}{formatSize(getTotalCompressedSize())}
                 {compressionRatio > 0 && (
-                  <Typography component="span" color="success.main" sx={{ ml: 1, fontWeight: 600 }}>
-                    {t('imageCompressor.compression.reduction', { ratio: compressionRatio })}
-                  </Typography>
+                  <Chip 
+                    label={t('imageCompressor.compression.reduction', { ratio: compressionRatio })}
+                    color="success"
+                    size="small"
+                    sx={{ fontWeight: 600 }}
+                  />
                 )}
               </Typography>
+              <Box sx={{ display: 'flex', gap: 1 }} onClick={(e) => e.stopPropagation()}>
+                <ToggleButtonGroup
+                  value={viewMode}
+                  exclusive
+                  onChange={(_, newMode) => newMode && setViewMode(newMode)}
+                  size="small"
+                >
+                  <ToggleButton value="grid">
+                    <GridViewIcon />
+                  </ToggleButton>
+                  <ToggleButton value="list">
+                    <ViewListIcon />
+                  </ToggleButton>
+                </ToggleButtonGroup>
+                <Button
+                  variant="contained"
+                  startIcon={<DownloadIcon />}
+                  onClick={handleDownloadAll}
+                  size="small"
+                >
+                  {t('imageCompressor.buttons.downloadAll')}
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleClear}
+                  size="small"
+                >
+                  {t('imageCompressor.buttons.clear')}
+                </Button>
+              </Box>
             </Box>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <ToggleButtonGroup
-                value={viewMode}
-                exclusive
-                onChange={(e, newMode) => newMode && setViewMode(newMode)}
-                size="small"
-              >
-                <ToggleButton value="grid">
-                  <GridViewIcon />
-                </ToggleButton>
-                <ToggleButton value="list">
-                  <ViewListIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <Button
-                variant="contained"
-                startIcon={<DownloadIcon />}
-                onClick={handleDownloadAll}
-                disabled={loading}
-              >
-                {t('imageCompressor.buttons.downloadAll')}
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-                onClick={handleClear}
-              >
-                {t('imageCompressor.buttons.clear')}
-              </Button>
-            </Box>
-          </Box>
-        </Paper>
-      )}
+          </AccordionSummary>
+          <AccordionDetails>
 
       {/* Image Cards */}
       {viewMode === 'grid' ? (
         <Grid container spacing={3}>
           {images.map((imageFile) => {
             const firstCompressedKey = Object.keys(imageFile.compressedImages)[0];
-            const firstCompressedImage = imageFile.compressedImages[firstCompressedKey];
             const totalResolutions = Object.keys(imageFile.compressedImages).length;
             const compressionRatio = getImageCompressionRatio(imageFile);
+            const isEditing = editingImageId === imageFile.id;
+            
+            // 如果有平台設定，使用基準解析度；否則使用第一個 key
+            const displayKey = platform ? baseResolution : firstCompressedKey;
+            const displaySize = imageFile.sizes[displayKey] || imageFile.sizes[firstCompressedKey] || 0;
+            const displayImage = imageFile.compressedImages[displayKey] || imageFile.compressedImages[firstCompressedKey] || imageFile.originalDataUrl;
 
             return (
               <Grid item xs={12} sm={6} md={4} key={imageFile.id}>
-                <Card>
+                <Card elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
                   <Box 
-                    sx={{ position: 'relative', cursor: 'pointer' }}
-                    onClick={() => setPreviewImage({ url: firstCompressedImage || imageFile.originalDataUrl, name: imageFile.name })}
+                    sx={{ position: 'relative', cursor: imageFile.processing ? 'default' : 'pointer' }}
+                    onClick={() => !imageFile.processing && setPreviewImage({ url: displayImage, name: imageFile.name })}
                   >
                     <Box
                       component="img"
-                      src={firstCompressedImage || imageFile.originalDataUrl}
+                      src={displayImage || imageFile.originalDataUrl}
                       alt={imageFile.name}
                       sx={{
                         width: '100%',
                         height: 200,
                         objectFit: 'cover',
                         backgroundColor: 'grey.100',
+                        opacity: imageFile.processing ? 0.6 : 1,
                       }}
                     />
-                    {compressionRatio > 0 && (
+                    {imageFile.processing && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        }}
+                      >
+                        <CircularProgress size={40} sx={{ mb: 2 }} />
+                        <Typography variant="body2" color="white" fontWeight={600}>
+                          {imageFile.progress}%
+                        </Typography>
+                      </Box>
+                    )}
+                    {!imageFile.processing && compressionRatio > 0 && (
                       <Chip
                         label={`-${compressionRatio}%`}
                         color="success"
@@ -873,31 +1071,126 @@ export default function ImageCompressorPage() {
                     </IconButton>
                   </Box>
                   <CardContent>
-                    <Typography variant="subtitle2" noWrap gutterBottom title={imageFile.name}>
-                      {imageFile.name}
-                    </Typography>
-                    <Box sx={{ mb: 2 }}>
-                      <Typography variant="caption" color="text.secondary" display="block">
-                        {t('imageCompressor.preview.original')}: {formatSize(imageFile.originalSize)}
-                      </Typography>
-                      {firstCompressedKey && (
-                        <Typography variant="caption" color="text.secondary" display="block">
-                          {t('imageCompressor.preview.compressed')}: {formatSize(imageFile.sizes[firstCompressedKey])}
+                    {/* 檔名編輯區 */}
+                    <Box sx={{ mb: 1 }}>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={editingName}
+                          onChange={(e) => {
+                            setEditingName(e.target.value);
+                            setImages((prev) =>
+                              prev.map((img) =>
+                                img.id === imageFile.id ? { ...img, name: e.target.value } : img
+                              )
+                            );
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === 'Escape') {
+                              setEditingImageId(null);
+                            }
+                          }}
+                          onBlur={() => setEditingImageId(null)}
+                          onClick={(e) => e.stopPropagation()}
+                          style={{
+                            width: '100%',
+                            padding: '8px 12px',
+                            border: 'none',
+                            borderBottom: '2px solid #1976d2',
+                            borderRadius: '4px 4px 0 0',
+                            fontSize: '0.875rem',
+                            fontFamily: 'inherit',
+                            backgroundColor: '#f5f5f5',
+                            outline: 'none',
+                            transition: 'all 0.2s',
+                          }}
+                          autoFocus
+                        />
+                      ) : (
+                        <Typography 
+                          variant="subtitle2" 
+                          noWrap 
+                          sx={{ 
+                            cursor: 'pointer',
+                            px: 1.5,
+                            py: 1,
+                            borderRadius: 1,
+                            transition: 'all 0.2s',
+                            '&:hover': {
+                              backgroundColor: 'action.hover',
+                            }
+                          }} 
+                          title={imageFile.name}
+                          onClick={() => handleStartEdit(imageFile)}
+                        >
+                          {imageFile.name}
                         </Typography>
                       )}
                     </Box>
-                    {platform && totalResolutions > 1 && (
-                      <Box sx={{ mb: 2 }}>
-                        <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                          {t('imageCompressor.resolutions')}:
+
+                    {/* 檔案大小資訊 */}
+                    <Box sx={{ mb: 1, px: 1.5 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body2" fontWeight={500}>
+                          {formatSize(imageFile.originalSize)}
                         </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {Object.keys(imageFile.compressedImages).map((key) => (
-                            <Chip key={key} label={key} size="small" />
+                        {displaySize > 0 && (
+                          <>
+                            <Typography variant="body2" color="text.secondary">→</Typography>
+                            <Typography variant="body2" fontWeight={600} color="success.main">
+                              {formatSize(displaySize)}
+                            </Typography>
+                            {platform && (
+                              <Chip 
+                                label={displayKey} 
+                                size="small" 
+                                sx={{ 
+                                  height: 20, 
+                                  fontSize: '0.65rem',
+                                  bgcolor: 'grey.200',
+                                  '& .MuiChip-label': { px: 0.75, py: 0 }
+                                }} 
+                              />
+                            )}
+                          </>
+                        )}
+                      </Box>
+                    </Box>
+
+                    {/* 解析度詳細資訊 */}
+                    {platform && totalResolutions > 1 && (
+                      <Box sx={{ mb: 2, px: 1.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, flexWrap: 'wrap' }}>
+                          {Object.entries(imageFile.compressedImages).map(([key, _]) => (
+                            <Chip 
+                              key={key}
+                              label={
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                  <Chip 
+                                    label={key} 
+                                    size="small" 
+                                    sx={{ 
+                                      height: 18, 
+                                      fontSize: '0.65rem',
+                                      bgcolor: 'grey.300',
+                                      color: 'text.primary',
+                                      '& .MuiChip-label': { px: 0.75, py: 0.5 }
+                                    }} 
+                                  />
+                                  <Typography variant="caption" sx={{ fontSize: '0.7rem', fontWeight: 500, px: 0.75 }}>
+                                    {formatSize(imageFile.sizes[key])}
+                                  </Typography>
+                                </Box>
+                              }
+                              size="small"
+                              variant="outlined"
+                              sx={{ height: 26, '& .MuiChip-label': { px: 0.5, py: 0.5 } }}
+                            />
                           ))}
                         </Box>
                       </Box>
                     )}
+
                     <Button
                       fullWidth
                       variant="outlined"
@@ -917,26 +1210,31 @@ export default function ImageCompressorPage() {
         <Box>
           {images.map((imageFile) => {
             const firstCompressedKey = Object.keys(imageFile.compressedImages)[0];
-            const firstCompressedImage = imageFile.compressedImages[firstCompressedKey];
             const totalResolutions = Object.keys(imageFile.compressedImages).length;
             const compressionRatio = getImageCompressionRatio(imageFile);
+            const isEditing = editingImageId === imageFile.id;
+            
+            // 如果有平台設定，使用基準解析度；否則使用第一個 key
+            const displayKey = platform ? baseResolution : firstCompressedKey;
+            const displaySize = imageFile.sizes[displayKey] || imageFile.sizes[firstCompressedKey] || 0;
+            const displayImage = imageFile.compressedImages[displayKey] || imageFile.compressedImages[firstCompressedKey] || imageFile.originalDataUrl;
 
             return (
-              <Card key={imageFile.id} sx={{ mb: 2 }}>
-                <Box sx={{ display: 'flex', p: 2, gap: 2 }}>
+              <Card key={imageFile.id} elevation={0} sx={{ mb: 2, border: '1px solid', borderColor: 'divider' }}>
+                <Box sx={{ display: 'flex', p: 1.5, gap: 2 }}>
                   <Box 
                     sx={{ 
                       position: 'relative',
-                      width: 120, 
-                      height: 120, 
+                      width: 100, 
+                      height: 100, 
                       flexShrink: 0,
-                      cursor: 'pointer',
+                      cursor: imageFile.processing ? 'default' : 'pointer',
                     }}
-                    onClick={() => setPreviewImage({ url: firstCompressedImage || imageFile.originalDataUrl, name: imageFile.name })}
+                    onClick={() => !imageFile.processing && setPreviewImage({ url: displayImage, name: imageFile.name })}
                   >
                     <Box
                       component="img"
-                      src={firstCompressedImage || imageFile.originalDataUrl}
+                      src={displayImage || imageFile.originalDataUrl}
                       alt={imageFile.name}
                       sx={{
                         width: '100%',
@@ -944,9 +1242,32 @@ export default function ImageCompressorPage() {
                         objectFit: 'cover',
                         borderRadius: 1,
                         backgroundColor: 'grey.100',
+                        opacity: imageFile.processing ? 0.6 : 1,
                       }}
                     />
-                    {compressionRatio > 0 && (
+                    {imageFile.processing && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          borderRadius: 1,
+                        }}
+                      >
+                        <CircularProgress size={40} sx={{ mb: 1 }} />
+                        <Typography variant="body2" color="white" fontWeight={600}>
+                          {imageFile.progress}%
+                        </Typography>
+                      </Box>
+                    )}
+                    {!imageFile.processing && compressionRatio > 0 && (
                       <Chip
                         label={`-${compressionRatio}%`}
                         color="success"
@@ -960,54 +1281,158 @@ export default function ImageCompressorPage() {
                       />
                     )}
                   </Box>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1 }}>
-                      <Typography variant="subtitle1" noWrap title={imageFile.name} sx={{ fontWeight: 600 }}>
-                        {imageFile.name}
-                      </Typography>
+                  <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                    {/* 第一行：檔名、按鈕 */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      {/* 檔名 */}
+                      <Box sx={{ minWidth: 0, flexShrink: 1 }}>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            value={editingName}
+                            onChange={(e) => {
+                              setEditingName(e.target.value);
+                              setImages((prev) =>
+                                prev.map((img) =>
+                                  img.id === imageFile.id ? { ...img, name: e.target.value } : img
+                                )
+                              );
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === 'Escape') {
+                                setEditingImageId(null);
+                              }
+                            }}
+                            onBlur={() => setEditingImageId(null)}
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              minWidth: '150px',
+                              padding: '6px 12px',
+                              border: 'none',
+                              borderBottom: '2px solid #1976d2',
+                              borderRadius: '4px 4px 0 0',
+                              fontSize: '0.875rem',
+                              fontFamily: 'inherit',
+                              fontWeight: 600,
+                              backgroundColor: '#f5f5f5',
+                              outline: 'none',
+                              transition: 'all 0.2s',
+                            }}
+                            autoFocus
+                          />
+                        ) : (
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              fontWeight: 600,
+                              cursor: 'pointer',
+                              px: 1,
+                              py: 0.5,
+                              borderRadius: 1,
+                              transition: 'all 0.2s',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              '&:hover': {
+                                backgroundColor: 'action.hover',
+                              }
+                            }} 
+                            title={imageFile.name}
+                            onClick={() => handleStartEdit(imageFile)}
+                          >
+                            {imageFile.name}
+                          </Typography>
+                        )}
+                      </Box>
+
+                      {/* 刪除按鈕 */}
                       <IconButton
                         size="small"
                         onClick={() => handleRemoveImage(imageFile.id)}
+                        sx={{ ml: 'auto', flexShrink: 0 }}
                       >
                         <CloseIcon />
                       </IconButton>
                     </Box>
-                    <Box sx={{ mb: 2 }}>
-                      <Typography variant="body2" color="text.secondary">
-                        {t('imageCompressor.preview.original')}: {formatSize(imageFile.originalSize)}
+
+                    {/* 第二行：檔案大小 */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, pl: 1 }}>
+                      <Typography variant="body2" fontWeight={500}>
+                        {formatSize(imageFile.originalSize)}
                       </Typography>
-                      {firstCompressedKey && (
-                        <Typography variant="body2" color="text.secondary">
-                          {t('imageCompressor.preview.compressed')}: {formatSize(imageFile.sizes[firstCompressedKey])}
-                        </Typography>
+                      {displaySize > 0 && (
+                        <>
+                          <Typography variant="body2" color="text.secondary">→</Typography>
+                          <Typography variant="body2" fontWeight={600} color="success.main">
+                            {formatSize(displaySize)}
+                          </Typography>
+                          {platform && (
+                            <Chip 
+                              label={displayKey} 
+                              size="small" 
+                              sx={{ 
+                                height: 20, 
+                                fontSize: '0.65rem',
+                                bgcolor: 'grey.200',
+                                '& .MuiChip-label': { px: 0.75, py: 0 }
+                              }} 
+                            />
+                          )}
+                        </>
                       )}
                     </Box>
-                    {platform && totalResolutions > 1 && (
-                      <Box sx={{ mb: 2 }}>
-                        <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                          {t('imageCompressor.resolutions')}:
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {Object.keys(imageFile.compressedImages).map((key) => (
-                            <Chip key={key} label={key} size="small" />
-                          ))}
-                        </Box>
+
+                    {/* 第三行：解析度平鋪和下載按鈕 */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, pl: 1 }}>
+                      {platform && totalResolutions > 1 && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, flexWrap: 'wrap', flex: 1 }}>
+                        {Object.entries(imageFile.compressedImages).map(([key, _]) => (
+                          <Chip 
+                            key={key}
+                            label={
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                <Chip 
+                                  label={key} 
+                                  size="small" 
+                                  sx={{ 
+                                    height: 18, 
+                                    fontSize: '0.65rem',
+                                    bgcolor: 'grey.300',
+                                    color: 'text.primary',
+                                    '& .MuiChip-label': { px: 0.75, py: 0.5 }
+                                  }} 
+                                />
+                                <Typography variant="caption" sx={{ fontSize: '0.7rem', fontWeight: 500, px: 0.75 }}>
+                                  {formatSize(imageFile.sizes[key])}
+                                </Typography>
+                              </Box>
+                            }
+                            size="small"
+                            variant="outlined"
+                            sx={{ height: 26, '& .MuiChip-label': { px: 0.5, py: 0.5 } }}
+                          />
+                        ))}
                       </Box>
-                    )}
-                    <Button
-                      variant="outlined"
-                      startIcon={<DownloadIcon />}
-                      onClick={() => handleDownload(imageFile)}
-                      size="small"
-                    >
-                      {t('imageCompressor.buttons.download')}
-                    </Button>
+                      )}
+                      <Button
+                        variant="outlined"
+                        startIcon={<DownloadIcon />}
+                        onClick={() => handleDownload(imageFile)}
+                        size="small"
+                        sx={{ ml: 'auto', flexShrink: 0 }}
+                      >
+                        {t('imageCompressor.buttons.download')}
+                      </Button>
+                    </Box>
                   </Box>
                 </Box>
               </Card>
             );
           })}
         </Box>
+      )}
+          </AccordionDetails>
+        </Accordion>
       )}
 
       {/* Upload Section */}
@@ -1042,7 +1467,7 @@ export default function ImageCompressorPage() {
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.heic,.heif"
           multiple
           style={{ display: 'none' }}
           onChange={handleFileSelect}

@@ -328,7 +328,7 @@
     "description": "Compresión de imágenes en línea con procesamiento por lotes, genera automáticamente imágenes multi-resolución para Android/iOS",
     "upload": {
       "title": "Haz clic o arrastra las imágenes aquí",
-      "subtitle": "Compatible con formatos JPG, PNG, WebP, múltiples archivos a la vez",
+      "subtitle": "Compatible con formatos JPG, PNG, WebP, AVIF, HEIC, múltiples archivos a la vez",
       "error": "Por favor selecciona archivos de imagen"
     },
     "platform": {
@@ -368,11 +368,11 @@
     "resolutions": "Resoluciones",
     "tips": {
       "title": "Consejos de uso",
-      "tip1": "Ajusta el control deslizante de calidad para controlar el nivel de compresión: valores más bajos significan menor tamaño de archivo pero calidad reducida",
+      "tip1": "Compatible con formatos JPG, PNG, WebP, AVIF, HEIC - los archivos HEIC se convierten automáticamente a PNG",
       "tip2": "La configuración de calidad recomendada está entre 70-85% para un buen equilibrio entre tamaño de archivo y calidad",
       "tip3": "Cuando se selecciona la plataforma Android o iOS, se generarán múltiples imágenes de resolución y se empaquetarán como un archivo zip",
       "tip4": "Android genera carpetas de drawable-hdpi a drawable-xxxhdpi, iOS genera @1x, @2x, @3x",
-      "tip5": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus imágenes"
+      "tip5": "Todo el procesamiento se completa localmente en tu navegador y no se cargarán tus imágenes a ningún servidor"
     }
   },
   "gantt": {

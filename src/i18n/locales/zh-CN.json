@@ -328,7 +328,7 @@
     "description": "在线压缩图片大小，支持多张批量处理，自动生成 Android/iOS 多种解析度",
     "upload": {
       "title": "点击或拖拽图片到此处",
-      "subtitle": "支持 JPG、PNG、WebP 格式，可同时上传多张图片",
+      "subtitle": "支持 JPG、PNG、WebP、AVIF、HEIC 格式，可同时上传多张图片",
       "error": "请选择图片文件"
     },
     "platform": {
@@ -368,11 +368,11 @@
     "resolutions": "解析度",
     "tips": {
       "title": "使用提示",
-      "tip1": "调整品质滑杆可以控制压缩程度，数值越低文件越小但画质会降低",
-      "tip2": "建议品质设定在 70-85% 之间，可以在文件大小和画质间取得良好平衡",
+      "tip1": "支持 JPG、PNG、WebP、AVIF、HEIC 等多种图片格式，HEIC 会自动转换为 PNG 处理",
+      "tip2": "调整品质滑杆可以控制压缩程度，建议设定在 70-85% 之间取得最佳平衡",
       "tip3": "选择 Android 或 iOS 平台后，会自动产生多种分辨率的图片，下载时会打包成 zip 文件",
       "tip4": "Android 会产生 drawable-hdpi 到 drawable-xxxhdpi 各个文件夹，iOS 会产生 @1x、@2x、@3x",
-      "tip5": "所有处理都在浏览器本地完成，不会上传你的图片"
+      "tip5": "所有处理都在浏览器本地完成，不会上传你的图片到服务器"
     }
   },
   "crypto": {

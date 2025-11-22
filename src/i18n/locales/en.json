@@ -328,7 +328,7 @@
     "description": "Compress images online with batch processing support, auto-generate Android/iOS multi-resolution images",
     "upload": {
       "title": "Click or drag images here",
-      "subtitle": "Supports JPG, PNG, WebP formats, multiple files at once",
+      "subtitle": "Supports JPG, PNG, WebP, AVIF, HEIC formats, upload multiple images at once",
       "error": "Please select image files"
     },
     "platform": {
@@ -368,11 +368,11 @@
     "resolutions": "Resolutions",
     "tips": {
       "title": "Usage Tips",
-      "tip1": "Adjust the quality slider to control compression level - lower values mean smaller file size but reduced quality",
-      "tip2": "Recommended quality setting is between 70-85% for a good balance between file size and quality",
+      "tip1": "Supports JPG, PNG, WebP, AVIF, HEIC formats - HEIC files are automatically converted to PNG",
+      "tip2": "Adjust quality slider between 70-85% for optimal balance between file size and quality",
       "tip3": "When Android or iOS platform is selected, multiple resolution images will be generated and packaged as a zip file",
       "tip4": "Android generates drawable-hdpi to drawable-xxxhdpi folders, iOS generates @1x, @2x, @3x",
-      "tip5": "All processing is completed locally in your browser and will not upload your images"
+      "tip5": "All processing is completed locally in your browser and will not upload your images to any server"
     }
   },
   "crypto": {
